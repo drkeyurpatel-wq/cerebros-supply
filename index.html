@@ -4,317 +4,779 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f2a6b">
 <title>Cerebros Supply</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#14212b;--muted:#5b6a72;--paper:#f1f4f3;--surface:#fff;--line:#d3dbd8;--accent:#0b6e69;--accent-soft:#e2f1ef;
---good:#1d7a46;--warn:#a86400;--bad:#b3261e;--bad-soft:#fbe9e7;--warn-soft:#fdf1dc;--good-soft:#e3f3ea;
---display:"Manrope","Segoe UI",Arial,sans-serif;--body:"Public Sans","Segoe UI",Arial,sans-serif;color-scheme:light}
-*{box-sizing:border-box}html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
-button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.top{background:var(--ink);color:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
-.brand{font-family:var(--display);font-weight:800;font-size:20px}.brand small{display:block;font-family:var(--body);font-weight:400;font-size:12.5px;opacity:.8}
-.top button{background:#2b3a45;color:#fff;border:0;border-radius:8px;padding:8px 12px;font-weight:600}
-.tabs{display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--line)}
-.tabs a{white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:3px solid transparent}
-.tabs a.on{color:var(--accent);border-bottom-color:var(--accent)}
-.badge{background:var(--accent);color:#fff;border-radius:99px;font-size:12px;padding:1px 8px;margin-left:6px}
-main{max-width:1040px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px}
-h1{font-family:var(--display);font-size:22px;margin:0}h2{font-family:var(--display);font-size:17px;margin:0}
-.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.tile b{display:block;font-family:var(--display);font-size:21px;font-variant-numeric:tabular-nums}.tile span{font-size:13px;color:var(--muted)}
-.meter{height:10px;background:#e4e9e7;border-radius:99px;overflow:hidden;margin-top:8px}.meter i{display:block;height:100%;background:var(--accent)}.meter i.w{background:var(--warn)}.meter i.b{background:var(--bad)}
-.alert{border-radius:12px;padding:12px 14px;font-weight:500}
-.alert.bad{background:var(--bad-soft);border:1px solid #efb8b2;color:#7a1a14}.alert.warn{background:var(--warn-soft);border:1px solid #ecd9b0;color:#5e3a00}.alert.good{background:var(--good-soft);border:1px solid #b7dcc6;color:#0f5a31}
-.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.tools input[type=search]{flex:1 1 220px}
-input,select,textarea{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);max-width:100%}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:9px 14px;font-weight:600;color:var(--muted)}
-.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.list{display:flex;flex-direction:column;gap:8px}
-.row{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
-.row .nm{flex:1 1 260px;min-width:0}.row .nm b{display:block}.row .nm small{color:var(--muted)}
-.price{text-align:right;font-variant-numeric:tabular-nums;min-width:120px}.price b{font-size:18px;font-family:var(--display)}.price s{color:var(--muted);font-size:13px}
-.save{color:var(--good);font-size:13px;font-weight:600}
-.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
-.qty button{border:0;background:#eef2f1;width:40px;height:40px;font-size:20px;font-weight:700}.qty input{width:62px;height:40px;border:0;text-align:center;font-weight:700;padding:0;border-radius:0}
-.btn{border:0;border-radius:10px;background:var(--accent);color:#fff;padding:11px 16px;font-weight:700}
-.btn.ghost{background:#fff;color:var(--accent);border:1.5px solid var(--accent)}.btn.red{background:#fff;color:var(--bad);border:1.5px solid var(--bad)}
-.btn.small{padding:8px 12px;font-size:14px}.btn:disabled{background:#b9c4c1;border-color:#b9c4c1;color:#fff;cursor:not-allowed}
-.pill{display:inline-block;border-radius:99px;padding:3px 10px;font-size:12.5px;font-weight:700;white-space:nowrap}
-.pill.g{background:var(--good-soft);color:var(--good)}.pill.w{background:var(--warn-soft);color:var(--warn)}.pill.b{background:var(--bad-soft);color:var(--bad)}.pill.n{background:#e8edf0;color:#3d4c55}
-.case{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px;background:var(--accent-soft);padding:10px;border-radius:10px}
-label.f{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px;flex:1 1 180px}
-.sum{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px}
-.sum div{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}.sum .t{font-family:var(--display);font-size:20px;font-weight:800;border-top:1px solid var(--line);padding-top:8px}
-.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
-table{border-collapse:collapse;width:100%;min-width:640px}th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top}
-th{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}tr:last-child td{border-bottom:0}
-.empty{color:var(--muted);padding:24px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:12px}
-.steps{display:flex;gap:4px;margin-top:6px}.steps i{height:6px;flex:1;border-radius:9px;background:#dfe6e3}.steps i.d{background:var(--accent)}
-.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 16px;border-radius:10px;max-width:92vw;display:none;z-index:50}
-.toast.err{background:var(--bad)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;max-width:420px;margin:6vh auto 0;width:100%}
-.form{display:flex;flex-wrap:wrap;gap:10px}.form .wide{flex-basis:100%}
-dialog{border:0;border-radius:14px;padding:18px;width:min(720px,94vw);max-height:90vh}dialog::backdrop{background:rgba(20,33,43,.5)}
-dialog form,dialog .dbody{display:flex;flex-direction:column;gap:12px}
+:root{
+  /* layout: marketplace shell — sticky header with search + category bar, product grids and rails; back office = dark sidebar + light work area */
+  --brand:#0f2a6b;--brand-2:#1d4ed8;--brand-soft:#e8efff;--deal:#ea580c;--deal-soft:#fff1e6;
+  --ink:#101828;--ink-2:#344054;--muted:#667085;--bg:#f2f4f8;--surface:#fff;--line:#e4e7ec;--line-2:#d0d5dd;
+  --good:#067647;--good-soft:#e7f6ee;--warn:#b54708;--warn-soft:#fef4e6;--bad:#b42318;--bad-soft:#fef1f0;
+  --font:"Plus Jakarta Sans","Segoe UI",Roboto,Arial,sans-serif;--r:14px;--sh:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);--sh-lg:0 12px 32px rgba(16,24,40,.14);
+  color-scheme:light}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:3px solid var(--brand-2);outline-offset:2px;border-radius:6px}
+h1,h2,h3{margin:0;letter-spacing:-.01em;text-wrap:balance}h1{font-size:26px;font-weight:800}h2{font-size:20px;font-weight:800}h3{font-size:16px;font-weight:700}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+input,select,textarea{border:1px solid var(--line-2);border-radius:10px;padding:10px 12px;background:#fff;width:100%;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--brand-2);outline:3px solid #cddcff;outline-offset:0}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.form label.f{flex:1 1 200px}
+.sh input,.sh select{color:var(--ink)}
+.check{display:flex;gap:8px;align-items:center;font-weight:600;font-size:14px}.check input{width:18px;height:18px;flex:none}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:11px 18px;font-weight:700;background:var(--brand-2);color:#fff;white-space:nowrap;transition:background .15s}
+.btn:hover{background:#1a43c0}.btn.lg{padding:14px 22px;font-size:16px}.btn.sm{padding:8px 12px;font-size:13px}.btn.block{width:100%}
+.btn.deal{background:var(--deal)}.btn.deal:hover{background:#c2410c}
+.btn.ghost{background:#fff;color:var(--brand-2);box-shadow:inset 0 0 0 1.5px var(--brand-2)}.btn.ghost:hover{background:var(--brand-soft)}
+.btn.plain{background:#fff;color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line-2)}.btn.plain:hover{background:#f9fafb}
+.btn.red{background:#fff;color:var(--bad);box-shadow:inset 0 0 0 1.5px #f3b4ae}
+.btn:disabled{background:#d0d5dd;box-shadow:none;color:#fff;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.pill.g{background:var(--good-soft);color:var(--good)}.pill.w{background:var(--warn-soft);color:var(--warn)}.pill.b{background:var(--bad-soft);color:var(--bad)}.pill.n{background:#eef1f5;color:var(--ink-2)}.pill.blue{background:var(--brand-soft);color:var(--brand-2)}
+.alert{border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px}
+.alert.bad{background:var(--bad-soft);color:#7a271a;border:1px solid #fbd0cb}.alert.warn{background:var(--warn-soft);color:#7a2e0e;border:1px solid #fbdcae}.alert.good{background:var(--good-soft);color:#054f31;border:1px solid #b5e3c9}.alert.info{background:var(--brand-soft);color:#173a8f;border:1px solid #c9d8ff}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.empty{background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r);padding:40px 20px;text-align:center;color:var(--muted)}
+/* ---------- store header ---------- */
+.sh{position:sticky;top:0;z-index:40;background:var(--brand);color:#fff;box-shadow:0 2px 10px rgba(15,42,107,.25)}
+.sh-top{display:flex;align-items:center;gap:18px;padding-top:12px;padding-bottom:12px}
+.logo{display:flex;align-items:center;gap:10px;font-size:19px;letter-spacing:-.01em;flex:none}.logo b{font-weight:800}.logo span{font-weight:500;opacity:.85}
+.logo svg{width:34px;height:34px;flex:none}
+.search{position:relative;flex:1 1 auto;min-width:0}
+.search input{height:46px;border:0;border-radius:12px;padding-left:44px;font-size:15px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.search .si{position:absolute;left:14px;top:13px;width:20px;height:20px;color:var(--muted)}
+.sugg{position:absolute;left:0;right:0;top:52px;background:#fff;color:var(--ink);border-radius:14px;box-shadow:var(--sh-lg);overflow:hidden;z-index:60}
+.sugg a,.sugg button{display:flex;gap:12px;align-items:center;padding:10px 14px;width:100%;text-align:left}
+.sugg a:hover,.sugg a.on,.sugg button:hover{background:#f5f8ff}
+.sugg .sp{width:44px;height:44px;flex:none}.sugg .sn{flex:1;min-width:0}.sugg .sn b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sugg .sn small{color:var(--muted)}
+.sugg .sv{font-weight:800}.sugg .all{border-top:1px solid var(--line);color:var(--brand-2);font-weight:700;justify-content:center}
+.sugg .shead{padding:10px 14px 4px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hact{display:flex;align-items:center;gap:6px;flex:none}
+.hbtn{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;color:#fff;font-weight:600;font-size:14px}
+.hbtn:hover{background:rgba(255,255,255,.1)}
+.hbtn .two{display:flex;flex-direction:column;line-height:1.15}.hbtn .two small{font-size:11.5px;opacity:.75;font-weight:500}.hbtn .two b{font-size:14px}
+.hbtn svg{width:22px;height:22px}
+.cartbtn{background:var(--deal);position:relative}.cartbtn:hover{background:#c2410c}
+.cartbtn .cnt{position:absolute;top:-6px;left:20px;background:#fff;color:var(--deal);border-radius:99px;font-size:11px;font-weight:800;min-width:19px;height:19px;display:grid;place-items:center;padding:0 5px}
+.forh{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border-radius:10px;padding:4px 4px 4px 10px;font-size:12.5px;font-weight:600}
+.forh select{width:auto;max-width:200px;padding:6px 8px;border:0;font-size:13px;font-weight:600}
+.sh-nav{background:#0b2258;border-top:1px solid rgba(255,255,255,.08)}
+.sh-nav .wrap{display:flex;gap:4px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.sh-nav a,.sh-nav button{color:#dbe4ff;padding:10px 12px;font-size:14px;font-weight:600;white-space:nowrap;border-radius:8px}
+.sh-nav a:hover,.sh-nav button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.sh-nav .allcats{color:#fff;display:flex;gap:8px;align-items:center}.sh-nav .allcats svg{width:18px;height:18px}
+.sh-nav .hot{color:#ffb98a}
+.mega{position:absolute;left:0;right:0;top:100%;background:#fff;color:var(--ink);box-shadow:var(--sh-lg);border-top:1px solid var(--line)}
+.mega .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding-top:22px;padding-bottom:26px}
+.mega h3{display:flex;align-items:center;gap:10px;margin-bottom:10px}.mega h3 .mp{width:40px;height:40px}
+.mega a{display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;font-weight:500}.mega a:hover{background:#f5f8ff;color:var(--brand-2)}.mega a small{color:var(--muted)}
+/* ---------- store main ---------- */
+.smain{padding:22px 0 90px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:14px;display:flex;gap:6px;flex-wrap:wrap}.crumbs a:hover{color:var(--brand-2)}
+.hero{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;margin-bottom:26px}
+.hero-a{border-radius:20px;padding:34px 36px;color:#fff;background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.14),transparent 40%),linear-gradient(120deg,#0f2a6b 0%,#1d4ed8 70%,#3b82f6 100%);position:relative;overflow:hidden;min-height:230px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.hero-a h1{font-size:34px;line-height:1.1;max-width:15ch}.hero-a p{margin:0;max-width:44ch;opacity:.9;font-size:16px}
+.hero-a .hs{display:flex;gap:22px;margin-top:6px;flex-wrap:wrap}.hero-a .hs div b{display:block;font-size:22px;font-weight:800}.hero-a .hs div small{opacity:.8;font-size:12.5px}
+.hero-a .art{position:absolute;right:-10px;bottom:-14px;width:210px;opacity:.95}
+.hero-b{border-radius:20px;padding:22px;background:#fff;border:1px solid var(--line);box-shadow:var(--sh);display:flex;flex-direction:column;gap:12px}
+.ccard{border-radius:16px;padding:18px;color:#fff;background:linear-gradient(135deg,#111827,#1f3a8a);position:relative;overflow:hidden}
+.ccard:after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.07)}
+.ccard small{opacity:.75;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}.ccard .big{font-size:28px;font-weight:800;margin:4px 0 12px}
+.ccard .bar{height:8px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}.ccard .bar i{display:block;height:100%;background:#34d399}.ccard .bar i.w{background:#fbbf24}.ccard .bar i.b{background:#f87171}
+.ccard .row2{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;opacity:.85}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini div{background:#f7f9fc;border-radius:12px;padding:10px 12px}.mini b{display:block;font-size:17px}.mini small{color:var(--muted);font-size:12px}
+.sec{margin:30px 0 14px;display:flex;align-items:end;justify-content:space-between;gap:12px}.sec a{color:var(--brand-2);font-weight:700;font-size:14px}
+.cats3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cat3{display:flex;align-items:center;gap:16px;padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:var(--sh);transition:transform .15s,box-shadow .15s}
+.cat3:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}.cat3 .cp{width:86px;height:86px;flex:none}.cat3 b{display:block;font-size:17px}.cat3 small{color:var(--muted)}
+.needs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.need{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px;border-radius:14px;background:#fff;border:1px solid var(--line);text-align:center;font-weight:700;font-size:13.5px;transition:border-color .15s}
+.need:hover{border-color:var(--brand-2);color:var(--brand-2)}.need .np{width:64px;height:64px}.need small{color:var(--muted);font-weight:500}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:14px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.rail>*{scroll-snap-align:start}
+@media(min-width:1100px){.rail{grid-auto-columns:calc((100% - 70px)/6)}}
+/* product card */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s,transform .15s}
+.card:hover{box-shadow:var(--sh-lg);transform:translateY(-2px)}
+.card-img{position:relative;display:block;aspect-ratio:1/1;padding:14px}
+.card-img .pic{width:100%;height:100%}
+.off{position:absolute;left:10px;top:10px;background:var(--deal);color:#fff;font-weight:800;font-size:12px;border-radius:8px;padding:4px 8px}
+.cold{position:absolute;right:10px;top:10px;background:#e0f2fe;color:#075985;font-weight:700;font-size:11px;border-radius:8px;padding:4px 7px}
+.smp{position:absolute;right:10px;bottom:10px;background:rgba(16,24,40,.7);color:#fff;font-weight:600;font-size:10.5px;border-radius:6px;padding:2px 6px}
+.card-b{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card-sub{font-size:11.5px;font-weight:700;color:var(--brand-2);text-transform:uppercase;letter-spacing:.04em}
+.card-t{font-weight:700;font-size:14.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.card-t:hover{color:var(--brand-2)}
+.card-p{font-size:12.5px;color:var(--muted)}
+.card-pr{display:flex;align-items:baseline;gap:8px;margin:6px 0 8px;flex-wrap:wrap}.card-pr b{font-size:19px;font-weight:800}.card-pr s{color:var(--muted);font-size:13px}
+.card .btn{width:100%;margin-top:auto}
+.qty{display:flex;align-items:center;justify-content:space-between;border-radius:10px;background:var(--brand-soft);margin-top:auto;overflow:hidden}
+.qty button{width:42px;height:42px;font-size:20px;font-weight:800;color:var(--brand-2)}.qty button:hover{background:#d6e3ff}
+.qty input{width:64px;border:0;background:transparent;text-align:center;font-weight:800;padding:0;height:42px;font-size:15px}
+.qty input:focus{outline:none}
+.pic{position:relative;display:block;border-radius:12px;background:var(--pbg);overflow:hidden}
+.pic svg{width:100%;height:100%;display:block}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+/* listing */
+.listing{display:grid;grid-template-columns:250px 1fr;gap:22px;align-items:start}
+.filters{position:sticky;top:130px;padding:16px;display:flex;flex-direction:column;gap:18px;max-height:calc(100vh - 150px);overflow:auto}
+.filters h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.ftree a{display:flex;justify-content:space-between;padding:6px 8px;border-radius:8px;font-size:14px;font-weight:600}.ftree a:hover{background:#f5f8ff}.ftree a.on{background:var(--brand-soft);color:var(--brand-2)}
+.ftree .subs{margin-left:10px;border-left:2px solid var(--line);padding-left:6px}.ftree .subs a{font-weight:500}
+.ftree small{color:var(--muted);font-weight:500}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line-2);background:#fff;border-radius:99px;padding:7px 12px;font-weight:600;font-size:13px;color:var(--ink-2)}.chip.on{background:var(--brand-2);border-color:var(--brand-2);color:#fff}
+.lhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.lhead select{width:auto}
+.active-f{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.active-f button{background:#fff;border:1px solid var(--line-2);border-radius:99px;padding:5px 10px;font-size:12.5px;font-weight:600}
+.fbtn{display:none!important}
+/* product page */
+.pdp{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.pdp-img{padding:26px;position:sticky;top:130px}.pdp-img .pic{aspect-ratio:1/1}
+.pdp-i{display:flex;flex-direction:column;gap:14px}
+.pdp-i h1{font-size:28px;line-height:1.2}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.pbox{padding:20px;display:flex;flex-direction:column;gap:14px}
+.pbig{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.pbig b{font-size:32px;font-weight:800}.pbig s{color:var(--muted);font-size:16px}
+.pbig .save{background:var(--deal-soft);color:var(--deal);font-weight:800;border-radius:8px;padding:4px 9px;font-size:13px}
+.pact{display:grid;grid-template-columns:160px 1fr 1fr;gap:10px}.pact .qty{margin:0}
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.perks div{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2)}.perks svg{width:22px;height:22px;color:var(--brand-2);flex:none}.perks b{display:block;color:var(--ink)}
+.spec{width:100%;border-collapse:collapse}.spec td{padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.spec td:first-child{color:var(--muted);width:40%}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:#fff;z-index:80;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;box-shadow:var(--sh-lg)}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+.db{flex:1;overflow:auto;padding:8px 20px}
+.df{border-top:1px solid var(--line);padding:16px 20px;display:flex;flex-direction:column;gap:10px;background:#fcfcfd}
+.cl{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.cl .pic{width:64px;height:64px}.cl b{font-size:14px;display:block;line-height:1.3}.cl small{color:var(--muted)}
+.cl .clr{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:10px}.cl .qty{width:132px;margin:0}.cl .qty button{width:36px;height:36px}.cl .qty input{height:36px;width:56px}
+.rm{color:var(--muted);font-size:12.5px;font-weight:600;text-decoration:underline}
+.tot{display:flex;justify-content:space-between;font-size:14px}.tot.big{font-size:18px;font-weight:800}.tot .save{color:var(--good);font-weight:700}
+.cbar{height:8px;border-radius:99px;background:#eaecf0;overflow:hidden}.cbar i{display:block;height:100%;background:var(--good)}.cbar i.w{background:#f79009}.cbar i.b{background:var(--bad)}
+.x{width:36px;height:36px;border-radius:10px;display:grid;place-items:center}.x:hover{background:#f2f4f7}.x svg{width:20px;height:20px}
+/* checkout */
+.co{display:grid;grid-template-columns:1fr 380px;gap:22px;align-items:start}
+.step{padding:20px;display:flex;flex-direction:column;gap:14px}
+.step h3{display:flex;gap:10px;align-items:center}.step h3 i{font-style:normal;width:26px;height:26px;border-radius:50%;background:var(--brand-2);color:#fff;display:grid;place-items:center;font-size:13px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slot{border:1.5px solid var(--line-2);border-radius:12px;padding:12px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.slot input{display:none}.slot b{font-size:14px}.slot small{color:var(--muted)}
+.slot:has(input:checked){border-color:var(--brand-2);background:var(--brand-soft)}
+.summ{position:sticky;top:130px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.sl{display:flex;gap:10px;align-items:center;font-size:13.5px}.sl .pic{width:44px;height:44px;flex:none}.sl span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.caseln{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:start;padding:12px;border-radius:12px;background:#f7f9fc}.caseln .pic{width:52px;height:52px}
+.caseln .form{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+/* orders */
+.olist{display:flex;flex-direction:column;gap:12px}
+.oc{padding:16px 18px;display:grid;grid-template-columns:1fr auto;gap:10px 20px;align-items:center}
+.oc .thumbs{display:flex;gap:6px;margin-top:10px}.oc .thumbs .pic{width:42px;height:42px}.oc .thumbs span{width:42px;height:42px;border-radius:10px;background:#f2f4f7;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+.oc .oa{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.track{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:6px 0}
+.track div{position:relative;text-align:center;font-size:12.5px;font-weight:600;color:var(--muted);padding-top:26px}
+.track div:before{content:"";position:absolute;top:8px;left:0;right:0;height:4px;background:#e4e7ec}
+.track div:first-child:before{left:50%}.track div:last-child:before{right:50%}
+.track div:after{content:"";position:absolute;top:2px;left:calc(50% - 8px);width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #d0d5dd}
+.track div.d{color:var(--ink)}.track div.d:before{background:var(--good)}.track div.d:after{border-color:var(--good);background:var(--good)}
+.track div.c:after{border-color:var(--brand-2);background:#fff;box-shadow:0 0 0 4px #d6e3ff}
+.otable{width:100%;border-collapse:collapse}.otable td,.otable th{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:middle}
+.otable th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.otable .n{text-align:right;font-variant-numeric:tabular-nums}
+.otable .it{display:flex;gap:10px;align-items:center}.otable .it .pic{width:46px;height:46px;flex:none}
+.done{text-align:center;padding:40px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:620px;margin:20px auto}
+.done .ok{width:72px;height:72px;border-radius:50%;background:var(--good-soft);display:grid;place-items:center}.done .ok svg{width:40px;height:40px;color:var(--good)}
+/* account */
+.acc{display:grid;grid-template-columns:380px 1fr;gap:22px;align-items:start}
+.tw{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;min-width:620px}
+table.t th,table.t td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:middle}
+table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:#fafbfc}
+table.t td.n,table.t th.n{text-align:right;font-variant-numeric:tabular-nums}
+table.t tr:last-child td{border-bottom:0}
+table.t tbody tr:hover{background:#fafcff}
+/* bottom nav (mobile) */
+.bnav{display:none}
+/* ---------- back office ---------- */
+.office{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+.side{background:#0b1634;color:#c7d2ec;padding:18px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;overflow:auto}
+.side .logo{color:#fff;margin:0 6px 18px}
+.side a,.side button{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:600;font-size:14px;color:#c7d2ec;width:100%;text-align:left}
+.side a:hover,.side button:hover{background:rgba(255,255,255,.06);color:#fff}
+.side a.on{background:#1d4ed8;color:#fff}
+.side svg{width:19px;height:19px;flex:none}
+.side .badge{margin-left:auto;background:var(--deal);color:#fff;border-radius:99px;font-size:11px;padding:1px 7px}
+.side .sep{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
+.side .me{margin-top:auto;padding:12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13px}.side .me b{display:block;color:#fff}
+.omain{padding:26px 30px 60px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.ohead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.ohead p{margin:4px 0 0;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.kpi{padding:16px 18px}.kpi small{color:var(--muted);font-weight:600;font-size:12.5px}.kpi b{display:block;font-size:26px;font-weight:800;margin-top:4px}.kpi span{font-size:12.5px;color:var(--muted)}
+.kpi.hot b{color:var(--deal)}.kpi.badk b{color:var(--bad)}
+.split{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+.pic.thumb{width:44px;height:44px;flex:none;border-radius:10px}
+.box{padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.hbar{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:13.5px}
+.hbar i{display:block;height:12px;border-radius:99px;background:linear-gradient(90deg,#1d4ed8,#60a5fa)}
+.hbar b{text-align:right;font-variant-numeric:tabular-nums}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.col{background:#e9edf4;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:200px}
+.col>h3{display:flex;justify-content:space-between;padding:4px 6px;font-size:14px}
+.oc2{background:#fff;border-radius:12px;padding:14px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:8px}
+.oc2 .r{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.oc2 small{color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tools input[type=search]{max-width:320px}
+.form{display:flex;flex-wrap:wrap;gap:12px}.form .wide{flex-basis:100%}
+/* dialogs, toast, auth */
+dialog{border:0;border-radius:18px;padding:0;width:min(760px,94vw);max-height:92vh;box-shadow:var(--sh-lg)}
+dialog::backdrop{background:rgba(16,24,40,.5)}
+dialog form,dialog .dbody{padding:22px;display:flex;flex-direction:column;gap:14px}
 .acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
-.bill h2{font-size:20px}.bill .two{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}.bill small{color:var(--muted)}
-@media print{body>*:not(dialog){display:none!important}dialog{position:static;width:100%;max-height:none;padding:0}dialog::backdrop{display:none}.noprint{display:none!important}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;max-width:92vw;display:none;z-index:100;font-weight:600;box-shadow:var(--sh-lg)}
+.toast.err{background:var(--bad)}
+.auth{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr}
+.auth-a{background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.12),transparent 40%),linear-gradient(140deg,#0b1634,#0f2a6b 55%,#1d4ed8);color:#fff;padding:48px;display:flex;flex-direction:column;justify-content:space-between;gap:30px}
+.auth-a h1{font-size:40px;line-height:1.1;max-width:14ch}.auth-a p{opacity:.85;font-size:17px;max-width:40ch}
+.auth-a ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}.auth-a li{display:flex;gap:12px;align-items:center;font-weight:600}
+.auth-a li span{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);display:grid;place-items:center;flex:none}.auth-a li svg{width:20px;height:20px}
+.auth-b{display:grid;place-items:center;padding:30px}
+.auth-card{width:min(400px,100%);display:flex;flex-direction:column;gap:14px}
+.bill h2{font-size:22px}.bill .two2{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}.bill small{color:var(--muted)}
+.sum2{display:flex;flex-direction:column;gap:6px;margin-left:auto;width:min(320px,100%)}.sum2 div{display:flex;justify-content:space-between}.sum2 .t{font-weight:800;font-size:18px;border-top:1px solid var(--line);padding-top:8px}
+@media print{body>*:not(dialog){display:none!important}dialog{position:static;width:100%;max-height:none;box-shadow:none}dialog::backdrop{display:none}.noprint{display:none!important}}
+/* responsive */
+@media(max-width:1000px){
+  .hero{grid-template-columns:1fr}.listing{grid-template-columns:1fr}.filters{position:fixed;inset:0 auto 0 0;width:min(320px,88vw);z-index:85;max-height:none;border-radius:0;transform:translateX(-102%);transition:transform .25s}
+  .filters.on{transform:none}.fbtn{display:inline-flex!important}
+  .pdp,.co,.acc,.split{grid-template-columns:1fr}.pdp-img,.summ{position:static}
+  .office{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:10px}.side .logo{margin:0 10px 0 4px}.side .sep,.side .me{display:none}.side a,.side button{width:auto;white-space:nowrap}
+  .board{grid-template-columns:1fr}
+  .auth{grid-template-columns:1fr}.auth-a{padding:28px}.auth-a h1{font-size:28px}.auth-a ul{display:none}
+}
+@media(max-width:720px){
+  .wrap{padding:0 14px}
+  .sh-top{flex-wrap:wrap;gap:10px}.search{order:3;flex-basis:100%}.hact .hide-s{display:none}
+  .logo span{display:none}
+  .cats3{grid-template-columns:1fr}.hero-a{padding:24px}.hero-a h1{font-size:26px}.hero-a .art{display:none}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}.card-b{padding:10px}.card-t{font-size:13.5px}.card-pr b{font-size:17px}
+  .rail{grid-auto-columns:46%}
+  .pact{grid-template-columns:1fr 1fr}.pact .qty{grid-column:1/-1}.perks{grid-template-columns:1fr}
+  .slots{grid-template-columns:1fr}.oc{grid-template-columns:1fr}.oc .oa{justify-content:flex-start}
+  .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:45;padding:6px 0 calc(6px + env(safe-area-inset-bottom))}
+  .bnav a,.bnav button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--muted);position:relative}
+  .bnav a.on{color:var(--brand-2)}.bnav svg{width:22px;height:22px}.bnav .cnt{position:absolute;top:-4px;left:calc(50% + 4px);background:var(--deal);color:#fff;border-radius:99px;font-size:10px;padding:0 5px}
+  .hbar{grid-template-columns:110px 1fr 70px}
+  .omain{padding:18px 14px 60px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<header class="top"><div class="brand">Cerebros Supply<small id="who">Order medicines, consumables and implants</small></div><div id="topbtns"></div></header>
-<nav class="tabs" id="tabs"></nav>
-<main id="view"><div class="empty">Loading…</div></main>
+<div id="app"><div class="empty" style="margin:20vh auto;max-width:300px">Loading…</div></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart"></aside>
 <dialog id="dlg"></dialog>
 <div class="toast" id="toast" role="status"></div>
 <script>
 const API="https://dwukvdtacwvnudqjlwrb.supabase.co/rest/v1/rpc/cerebros_api", KEY="sb_publishable_P7ywy1hZFdiJ-joKi_pEqA_JcO79gh5";
-const CATS=["Medicines","Consumables","Implants and stents"], STATUS={0:"Placed",1:"Accepted",2:"Out for delivery",3:"Delivered",9:"Cancelled"};
+const CATS=["Medicines","Consumables","Implants and stents"], CATN=["Medicines","Consumables","Implants & stents"];
+const STATUS={0:"Placed",1:"Accepted",2:"Out for delivery",3:"Delivered",9:"Cancelled"};
+const SLOTS=[["Today evening","If ordered by 2 pm"],["Tomorrow morning","Before 11 am"],["Tomorrow evening","Before 7 pm"]];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt=n=>"₹"+Math.round(+n||0).toLocaleString("en-IN");
 const fmtR=n=>"₹"+(+n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
-const dstr=d=>d?new Date(d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"2-digit"}):"";
+const lakh=n=>{n=+n||0;return n>=1e7?"₹"+(n/1e7).toFixed(2)+" Cr":n>=1e5?"₹"+(n/1e5).toFixed(1)+" L":fmt(n)};
+const dstr=d=>d?new Date(String(d).slice(0,10)+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"";
+const off=i=>+i.mrp>0?Math.round((1-i.rate/i.mrp)*100):0;
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
-const S={token:store.get("cs_token"),user:null,cat:-1,q:"",cart:{},caseInfo:{},items:[],credit:null,busy:false};
-function toast(t,err){const e=$("toast");e.textContent=t;e.className="toast"+(err?" err":"");e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",err?5000:2600)}
+const S={token:store.get("cs_token"),user:null,items:[],itemsAt:0,home:null,credit:null,cart:{},caseInfo:{},hospitals:[],forH:store.get("cs_forh"),mode:store.get("cs_mode")||"office",
+  f:{cat:-1,subs:[],save:0,min:"",max:"",cold:false,stock:false,sort:"pop",q:""},busy:false};
+/* ---------- icons ---------- */
+const I={
+ search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+ cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a1.5 1.5 0 0 0 1.5 1.1h8.8a1.5 1.5 0 0 0 1.5-1.1L21 7H6"/></svg>',
+ box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>',
+ user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+ home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m3 11 9-8 9 8v10H3z"/><path d="M9 21v-7h6v7"/></svg>',
+ grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+ menu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+ x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>',
+ truck:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',
+ card:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+ shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+ chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+ list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>',
+ hosp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14z"/><path d="M12 8v6M9 11h6M9 21v-3h6v3"/></svg>',
+ rupee:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4h12M6 9h12M14 4c3 0 4 2.2 4 5s-2 5-6 5H7l8 7"/></svg>',
+ tag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>',
+ users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5M16 4.5a3.5 3.5 0 0 1 0 7M22 20c-.6-2.4-2-4.1-4-5"/></svg>',
+ gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+ store:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9l2-5h14l2 5M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8"/></svg>',
+ snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4.9 6l14.2 12M4.9 18 19.1 6"/></svg>',
+ bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>'
+};
+const LOGO='<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#fff"/><path d="M20 8a12 12 0 1 0 8.5 20.5" fill="none" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round"/><rect x="17" y="14" width="6" height="12" rx="1.5" fill="#ea580c"/><rect x="14" y="17" width="12" height="6" rx="1.5" fill="#ea580c"/></svg>';
+/* ---------- product art ---------- */
+const HUES={"Antibiotics":215,"Critical care":350,"IV fluids":195,"Gastro":150,"Anticoagulants":5,"Analgesics":265,"Neuro":280,"IV access":200,"Gloves and masks":170,"Syringes and needles":225,"Catheters and drainage":40,"Sutures":320,"Airway and respiratory":185,"Dressings":30,"Cardiac":0,"Joint replacement":220,"Trauma":25,"Neuro-vascular":270};
+const hueOf=i=>{if(HUES[i.subcategory]!=null)return HUES[i.subcategory];let h=0;for(const c of String(i.subcategory||i.category))h=(h*31+c.charCodeAt(0))%360;return h};
+function kind(i){const s=(i.name+" "+i.pack).toLowerCase();
+  if(i.category===CATS[2])return /hip/.test(s)?"hip":/knee/.test(s)?"knee":/stent|balloon|wire|catheter|coil/.test(s)?"device":"plate";
+  if(/ampoule/.test(s))return"ampoule";if(/prefilled|syringe/.test(s))return"syringe";if(/vial/.test(s))return"vial";if(/strip|tab\./.test(s))return"blister";
+  if(/bottle|bag of|infusion/.test(s))return"bottle";if(/glove/.test(s))return"glove";if(/suture/.test(s))return"suture";if(/cannula|iv set|stopcock|tube|catheter|kit|ryles/.test(s))return"tube";if(/mask|respirator|filter|nebul/.test(s))return"mask";return"box"}
+function art(i){const h=hueOf(i),c1=`hsl(${h} 70% 42%)`,c2=`hsl(${h} 80% 62%)`,gl="#eef3f8",st="#c3ccd8",k=kind(i);
+  const metal='<defs><linearGradient id="gm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f9"/><stop offset=".5" stop-color="#c3cbd6"/><stop offset="1" stop-color="#8d99a8"/></linearGradient></defs>';
+  const shadow='<ellipse cx="100" cy="176" rx="56" ry="7" fill="#101828" opacity=".08"/>';
+  const S={
+  vial:`<rect x="76" y="32" width="48" height="22" rx="6" fill="${c1}"/><rect x="84" y="52" width="32" height="12" fill="#cfd6df"/><rect x="64" y="62" width="72" height="108" rx="16" fill="${gl}" stroke="${st}" stroke-width="2"/><rect x="66" y="118" width="68" height="50" rx="14" fill="${c2}" opacity=".5"/><rect x="64" y="84" width="72" height="40" fill="#fff" stroke="${st}" stroke-width="1.5"/><rect x="64" y="84" width="72" height="9" fill="${c1}"/><rect x="74" y="101" width="44" height="5" rx="2.5" fill="#98a2b3"/><rect x="74" y="111" width="28" height="4" rx="2" fill="#d0d5dd"/>`,
+  ampoule:`<rect x="78" y="96" width="44" height="76" rx="18" fill="${gl}" stroke="${st}" stroke-width="2"/><rect x="80" y="126" width="40" height="44" rx="16" fill="${c2}" opacity=".55"/><rect x="92" y="62" width="16" height="38" rx="7" fill="${gl}" stroke="${st}" stroke-width="2"/><rect x="88" y="76" width="24" height="6" rx="3" fill="${c1}"/><ellipse cx="100" cy="46" rx="12" ry="18" fill="${gl}" stroke="${st}" stroke-width="2"/><rect x="82" y="110" width="36" height="8" rx="2" fill="${c1}" opacity=".85"/>`,
+  blister:`<defs><linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2f4f7"/><stop offset="1" stop-color="#cdd4dd"/></linearGradient></defs><rect x="36" y="56" width="128" height="92" rx="14" fill="url(#gb)" stroke="#b6c0cc" stroke-width="2"/>${[0,1].map(r=>[0,1,2,3].map(c=>`<circle cx="${60+c*27}" cy="${84+r*36}" r="11" fill="${c2}" stroke="${c1}" stroke-width="2"/><ellipse cx="${56+c*27}" cy="${80+r*36}" rx="4" ry="3" fill="#fff" opacity=".6"/>`).join("")).join("")}`,
+  bottle:`<rect x="86" y="24" width="28" height="14" rx="4" fill="${c1}"/><rect x="92" y="36" width="16" height="10" fill="#cfd6df"/><path d="M68 58q0-12 12-12h40q12 0 12 12v104q0 12-12 12H80q-12 0-12-12z" fill="${gl}" stroke="${st}" stroke-width="2"/><rect x="70" y="92" width="60" height="80" rx="10" fill="${c2}" opacity=".42"/><rect x="68" y="100" width="64" height="42" fill="#fff" stroke="${st}" stroke-width="1.5"/><rect x="68" y="100" width="64" height="9" fill="${c1}"/><rect x="78" y="117" width="40" height="5" rx="2.5" fill="#98a2b3"/><rect x="78" y="127" width="26" height="4" rx="2" fill="#d0d5dd"/>${[64,72,80].map(y=>`<path d="M118 ${y}h10" stroke="${st}" stroke-width="2"/>`).join("")}`,
+  syringe:`<g transform="rotate(-32 100 100)"><rect x="12" y="84" width="9" height="32" rx="2" fill="${c1}"/><rect x="20" y="95" width="34" height="10" fill="#c3ccd8"/><rect x="50" y="86" width="96" height="28" rx="5" fill="${gl}" stroke="${st}" stroke-width="2"/><rect x="88" y="88" width="56" height="24" rx="3" fill="${c2}" opacity=".5"/><rect x="52" y="84" width="6" height="32" fill="#98a2b3"/>${[0,1,2,3,4].map(n=>`<path d="M${98+n*10} 86v8" stroke="#98a2b3" stroke-width="2"/>`).join("")}<rect x="146" y="93" width="16" height="14" rx="2" fill="${c1}"/><path d="M162 100h34" stroke="#8d99a8" stroke-width="2.5"/></g>`,
+  box:`<path d="M44 76h88v94H44z" fill="#fff" stroke="${st}" stroke-width="2"/><path d="M44 76l26-22h88l-26 22z" fill="#eef2f6" stroke="${st}" stroke-width="2"/><path d="M132 76l26-22v94l-26 22z" fill="#dde3ea" stroke="${st}" stroke-width="2"/><rect x="44" y="96" width="88" height="26" fill="${c1}"/><rect x="54" y="105" width="44" height="7" rx="3" fill="#fff" opacity=".9"/><rect x="54" y="134" width="56" height="5" rx="2.5" fill="#98a2b3"/><rect x="54" y="145" width="36" height="5" rx="2.5" fill="#d0d5dd"/><circle cx="116" cy="148" r="8" fill="${c2}"/>`,
+  glove:`<path d="M72 170V104l-8-30c-2-8 8-12 11-4l9 26V54c0-8 11-8 11 0v40V44c0-8 12-8 12 0v50-42c0-8 11-8 11 0v46-34c0-8 11-8 11 0v62c0 22-12 40-24 44H72z" fill="${c2}" stroke="${c1}" stroke-width="3" stroke-linejoin="round"/><path d="M72 152h52" stroke="${c1}" stroke-width="3" opacity=".5"/>`,
+  suture:`<rect x="46" y="58" width="108" height="92" rx="12" fill="#fff" stroke="${st}" stroke-width="2"/><rect x="46" y="58" width="108" height="22" rx="12" fill="${c1}"/><path d="M70 120c0-22 30-22 30 0s30 22 30 0" fill="none" stroke="${c1}" stroke-width="4" stroke-linecap="round"/><path d="M130 120c6-14 18-10 18 2" fill="none" stroke="#8d99a8" stroke-width="3" stroke-linecap="round"/><rect x="58" y="134" width="40" height="5" rx="2.5" fill="#98a2b3"/>`,
+  tube:`<path d="M40 156C30 90 90 70 110 104s70 20 50-36" fill="none" stroke="${c1}" stroke-width="8" stroke-linecap="round" opacity=".9"/><path d="M40 156C30 90 90 70 110 104s70 20 50-36" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round" opacity=".7"/><rect x="26" y="150" width="30" height="22" rx="5" fill="${c2}" stroke="${c1}" stroke-width="2"/><path d="M152 66l18-30" stroke="#8d99a8" stroke-width="3" stroke-linecap="round"/><rect x="146" y="58" width="20" height="16" rx="4" transform="rotate(-30 156 66)" fill="${c1}"/>`,
+  mask:`<path d="M44 92c30-18 82-18 112 0v36c-18 22-94 22-112 0z" fill="#fff" stroke="${c1}" stroke-width="3"/><path d="M54 104h92M54 116h92" stroke="${c2}" stroke-width="3" opacity=".6"/><path d="M44 96c-16 0-22 26-6 34M156 96c16 0 22 26 6 34" fill="none" stroke="#98a2b3" stroke-width="3"/>`,
+  device:`<path d="M24 150c40-60 60 10 100-40s40-50 60-50" fill="none" stroke="#98a2b3" stroke-width="3" stroke-linecap="round"/><rect x="58" y="86" width="96" height="30" rx="15" fill="${gl}" stroke="${c1}" stroke-width="3" transform="rotate(-18 106 101)"/><path d="M64 96l10 14 10-14 10 14 10-14 10 14 10-14 10 14 10-14" fill="none" stroke="${c1}" stroke-width="2.5" transform="rotate(-18 106 101)"/>`,
+  plate:`${metal}<rect x="38" y="82" width="124" height="36" rx="18" fill="url(#gm)" stroke="#7d8999" stroke-width="2"/>${[0,1,2,3,4].map(n=>`<circle cx="${58+n*21}" cy="100" r="7" fill="#5f6b7a"/><path d="M${54+n*21} 100h8" stroke="#c3cbd6" stroke-width="2"/>`).join("")}<rect x="120" y="128" width="12" height="44" rx="3" fill="url(#gm)" stroke="#7d8999" stroke-width="1.5" transform="rotate(20 126 150)"/>`,
+  hip:`${metal}<circle cx="82" cy="60" r="26" fill="url(#gm)" stroke="#7d8999" stroke-width="2"/><path d="M96 78l18 20 4 76h-14l-12-70-12-14z" fill="url(#gm)" stroke="#7d8999" stroke-width="2" stroke-linejoin="round"/><circle cx="74" cy="52" r="7" fill="#fff" opacity=".7"/>`,
+  knee:`${metal}<path d="M52 70c0-18 96-18 96 0v14c0 10-20 12-24 2-6-12-42-12-48 0-4 10-24 8-24-2z" fill="url(#gm)" stroke="#7d8999" stroke-width="2"/><rect x="58" y="112" width="84" height="16" rx="6" fill="${c2}" opacity=".7"/><path d="M60 136h80l-14 14v26h-52v-26z" fill="url(#gm)" stroke="#7d8999" stroke-width="2" stroke-linejoin="round"/>`};
+  return `<svg viewBox="0 0 200 200" aria-hidden="true">${shadow}${S[k]||S.box}</svg>`}
+const pic=(i,cls)=>`<span class="pic ${cls||""}" style="--pbg:hsl(${hueOf(i)} 70% 96%)">${art(i)}${i.image_url?`<img src="${esc(i.image_url)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span>`;
+/* ---------- core ---------- */
+function toast(t,err){const e=$("toast");e.textContent=t;e.className="toast"+(err?" err":"");e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",err?5200:2400)}
 async function api(action,data){
   let r,j;
   try{r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY},body:JSON.stringify({p_action:action,p_token:S.token,p_data:data||{}})});j=await r.json()}
   catch(e){throw new Error("No connection. Check the internet and try again.")}
   const msg=!r.ok?(j&&j.message)||"Something went wrong":(j&&j.error)||null;
-  if(msg){if(msg==="Please log in again"){S.token=null;S.user=null;store.del("cs_token");boot()}throw new Error(msg)}
+  if(msg){if(msg==="Please log in again"&&S.token){S.token=null;S.user=null;store.del("cs_token");boot()}throw new Error(msg)}
   return j;
 }
-const run=async(fn)=>{if(S.busy)return;S.busy=true;try{await fn()}catch(e){toast(e.message,true)}finally{S.busy=false}};
-const isH=()=>["staff","owner"].includes(S.user.role), isM=()=>S.user.role==="manager";
-function tabsFor(){const r=S.user.role;
-  if(isH())return [["order","Order items"],["cart","Cart"],["orders","My orders"],["bills","Bills and credit"]].concat(r==="owner"?[["users","Staff"]]:[]);
-  return [["desk-orders","Orders"],["hospitals","Hospitals"],["payments","Bills and payments"],["demand","Combined demand"]].concat(isM()?[["items","Items and rates"],["users","Users"],["company","Company"]]:[]);}
-const route=()=>{const h=location.hash.slice(1),ok=tabsFor().map(t=>t[0]);return ok.includes(h)?h:ok[0]};
-function go(n){if(location.hash==="#"+n)render();else location.hash=n}
-const cartLines=()=>Object.entries(S.cart).filter(([id,q])=>q>0&&S.items.some(i=>i.id==id)).map(([id,q])=>({id:+id,q}));
+const isH=()=>S.user&&["staff","owner"].includes(S.user.role), isM=()=>S.user&&S.user.role==="manager";
+const hp=d=>Object.assign({},d||{},!isH()&&S.forH?{hospital_id:S.forH}:{});
+const run=async fn=>{if(S.busy)return;S.busy=true;try{await fn()}catch(e){toast(e.message,true)}finally{S.busy=false}};
+const cartKey=()=>"cs_cart_"+S.user.id+"_"+(isH()?S.user.hospital_id:S.forH||0);
+function loadCart(){const c=store.get(cartKey())||{};S.cart=c.cart||{};S.caseInfo=c.caseInfo||{}}
+function saveCart(){store.set(cartKey(),{cart:S.cart,caseInfo:S.caseInfo})}
 const item=id=>S.items.find(i=>i.id==id);
-const lineVal=l=>{const i=item(l.id);return i.rate*l.q*(1+i.gst_rate/100)};
-const cartTotal=()=>cartLines().reduce((s,l)=>s+lineVal(l),0);
-function saveCart(){store.set("cs_cart_"+S.user.id,{cart:S.cart,caseInfo:S.caseInfo})}
-function setQty(id,q){q=Math.max(0,Math.min(100000,Math.round(q)||0));if(q)S.cart[id]=q;else delete S.cart[id];saveCart()}
-function creditView(c,extra){
-  extra=extra||0;const used=+c.used+extra,lim=+c.limit;let st=c.state,why=c.why;
-  if(st!=="block"&&used>lim){st="block";why="This order takes you "+fmt(used-lim)+" over your credit limit. Pay a bill or reduce the order."}
-  else if(st==="ok"&&used>lim*.85){st="warn";why="You are close to your credit limit."}
-  const pct=lim>0?Math.min(100,used/lim*100):100;
-  return {st,html:`<div class="strip"><div class="tile"><b>${fmt(Math.max(0,lim-used))}</b><span>Credit left of ${fmt(lim)}</span><div class="meter"><i class="${st==="block"?"b":st==="warn"?"w":""}" style="width:${pct}%"></i></div></div>
-  <div class="tile"><b>${fmt(c.unpaid)}</b><span>Unpaid bills</span></div><div class="tile"><b>${c.terms} days</b><span>Time to pay each bill</span></div>
-  <div class="tile"><b>${c.overdue_days>0?c.overdue_days+" days":"None"}</b><span>Oldest bill past pay-by date</span></div></div>
-  ${st==="block"?`<div class="alert bad">Ordering is stopped. ${esc(why)}</div>`:st==="warn"?`<div class="alert warn">${esc(why)}</div>`:""}`};
-}
-const qtyBox=(id,n)=>`<div class="qty"><button data-dec="${id}" aria-label="Less">−</button><input id="q-${id}" data-q="${id}" inputmode="numeric" value="${n}"><button data-inc="${id}" aria-label="More">+</button></div>`;
-const orderLines=o=>o.lines.map(l=>esc(l.name)+" × "+(+l.qty)+(l.case_date?` (case ${dstr(l.case_date)}, ${esc(l.surgeon)})`:"")).join(", ");
-const V={
- async order(){
-  [S.items,S.credit]=await Promise.all([api("catalog"),api("credit")]);
-  return V._order();
- },
- _order(){
-  const q=S.q.trim().toLowerCase(),list=S.items.filter(i=>(S.cat<0||i.category===CATS[S.cat])&&(!q||i.name.toLowerCase().includes(q)));
-  return `<h1>Order items</h1>${creditView(S.credit,cartTotal()).html}
-  <div class="tools"><input id="search" type="search" placeholder="Search item name" value="${esc(S.q)}"><button class="chip ${S.cat<0?"on":""}" data-cat="-1">All</button>${CATS.map((c,i)=>`<button class="chip ${S.cat===i?"on":""}" data-cat="${i}">${c}</button>`).join("")}</div>
-  <div class="list">${list.map(i=>{const n=S.cart[i.id]||0;return `<div class="row"><div class="nm"><b>${esc(i.name)}</b><small>${i.category} · per ${esc(i.pack)} · GST ${+i.gst_rate}%${i.category===CATS[2]?" · ordered for a named case":""}</small></div>
-   <div class="price"><b>${fmtR(i.rate)}</b><br><s>MRP ${fmtR(i.mrp)}</s>${+i.mrp>+i.rate?` <span class="save">${Math.round((1-i.rate/i.mrp)*100)}% below MRP</span>`:""}</div>
-   ${n?qtyBox(i.id,n):`<button class="btn ghost" data-inc="${i.id}">Add</button>`}</div>`}).join("")||`<div class="empty">No item matches. Try a shorter name.</div>`}</div>
-  ${cartLines().length?`<button class="btn" data-go="cart">Go to cart · ${fmt(cartTotal())}</button>`:""}`;
- },
- async cart(){
-  [S.items,S.credit]=await Promise.all([api("catalog"),api("credit")]);
-  const lines=cartLines();if(!lines.length)return `<h1>Cart</h1><div class="empty">Your cart is empty.</div><button class="btn ghost" data-go="order">Order items</button>`;
-  const t=cartTotal(),cv=creditView(S.credit,t),tax=lines.reduce((s,l)=>s+item(l.id).rate*l.q,0),mrp=lines.reduce((s,l)=>s+item(l.id).mrp*l.q,0);
-  return `<h1>Cart</h1>${cv.html}<div class="list">${lines.map(l=>{const i=item(l.id),ci=S.caseInfo[i.id]||{};return `<div class="row"><div class="nm"><b>${esc(i.name)}</b><small>${fmtR(i.rate)} per ${esc(i.pack)}</small></div>${qtyBox(i.id,l.q)}<div class="price"><b>${fmt(i.rate*l.q)}</b></div>
-   ${i.category===CATS[2]?`<div class="case"><label class="f">Surgery date<input type="date" id="cd-${i.id}" data-cd="${i.id}" value="${esc(ci.case_date||"")}"></label><label class="f">Surgeon<input id="sg-${i.id}" data-sg="${i.id}" placeholder="Surgeon name" value="${esc(ci.surgeon||"")}"></label></div>`:""}</div>`}).join("")}</div>
-  <div class="sum"><div><span>Items</span><span>${fmt(tax)}</span></div><div><span>GST</span><span>${fmt(t-tax)}</span></div><div><span>Saving against MRP</span><span class="save">${fmt(mrp-tax)}</span></div><div class="t"><span>Order value</span><span>${fmt(t)}</span></div></div>
-  <button class="btn" id="place" ${cv.st==="block"?"disabled":""}>Place order</button>`;
- },
- async orders(){
-  const os=await api("my_orders");S.myOrders=os;
-  return `<h1>My orders</h1><div class="list">${os.map(o=>`<div class="row"><div class="nm"><b>${o.order_no} · ${fmt(o.value)}</b><small>${dstr(o.date)} · ${orderLines(o)}${o.bill_no?" · Bill "+o.bill_no:""}</small>
-   ${o.status===9?"":`<div class="steps">${[0,1,2,3].map(i=>`<i class="${i<=o.status?"d":""}"></i>`).join("")}</div>`}</div>
-   <span class="pill ${o.status===3?"g":o.status===9?"b":"n"}">${STATUS[o.status]}</span>
-   ${o.status===0?`<button class="btn red small" data-cancel="${o.id}">Cancel</button>`:""}<button class="btn ghost small" data-again="${o.id}">Order again</button></div>`).join("")||`<div class="empty">No orders yet.</div>`}</div>`;
- },
- async bills(){
-  const r=await api("my_bills");
-  return `<h1>Bills and credit</h1>${creditView(r.credit).html}${billTable(r.bills,false)}`;
- },
- async "desk-orders"(){
-  const os=await api("desk_orders");S.deskOrders=os;const next=["Accept","Send for delivery","Mark delivered"];
-  return `<h1>Orders</h1><div class="strip"><div class="tile"><b>${os.filter(o=>o.status===0).length}</b><span>New orders</span></div><div class="tile"><b>${fmt(os.reduce((s,o)=>s+ +o.value,0))}</b><span>Value in process</span></div></div>
-  <div class="list">${os.map(o=>{const blk=["hold","overdue","docs","inactive"].includes(o.credit.reason);return `<div class="row"><div class="nm"><b>${o.order_no} · ${esc(o.hospital)}</b><small>${dstr(o.date)} · ${fmt(o.value)} · ${orderLines(o)}</small>${blk?`<div><small style="color:var(--bad)">${esc(o.credit.why)}</small></div>`:""}</div>
-   <span class="pill ${blk?"b":"n"}">${blk?"Hospital stopped":STATUS[o.status]}</span><button class="btn red small" data-cancel="${o.id}">Cancel</button>
-   <button class="btn small" data-next="${o.id}" ${blk&&o.status===0?"disabled":""}>${next[o.status]}</button></div>`}).join("")||`<div class="empty">Nothing waiting.</div>`}</div>`;
- },
- async hospitals(){
-  const hs=await api("hospitals");S.hospitals=hs;
-  return `<h1>Hospitals</h1>${isM()?`<div><button class="btn" data-hosp="new">Add hospital</button></div>`:""}<div class="tw"><table><thead><tr><th>Hospital</th><th class="n">Limit</th><th class="n">Unpaid</th><th class="n">In orders</th><th class="n">Oldest late</th><th>Status</th><th></th></tr></thead><tbody>
-  ${hs.map(h=>{const c=h.credit,lab={hold:"On hold",overdue:"Bill late",docs:"Papers missing",limit:"Limit used up",inactive:"Closed"}[c.reason];return `<tr><td>${esc(h.name)}<br><small>${h.terms_days}-day terms${h.is_group?" · group unit":""}</small></td><td class="n">${fmt(h.credit_limit)}</td><td class="n">${fmt(c.unpaid)}</td><td class="n">${fmt(c.open_orders)}</td><td class="n">${c.overdue_days>0?c.overdue_days+" days":"–"}</td>
-   <td><span class="pill ${c.state==="block"?"b":c.state==="warn"?"w":"g"}">${c.state==="block"?lab:c.state==="warn"?"Near limit":"Can order"}</span></td><td>${isM()?`<button class="btn ghost small" data-hosp="${h.id}">Edit</button>`:""}</td></tr>`}).join("")}</tbody></table></div>`;
- },
- async payments(){
-  const [bs,ps,hs]=await Promise.all([api("bills"),api("payments"),api("hospitals")]);S.hospitals=hs;
-  const owing=hs.filter(h=>+h.credit.unpaid>0.5);
-  return `<h1>Bills and payments</h1><div class="strip"><div class="tile"><b>${fmt(hs.reduce((s,h)=>s+ +h.credit.unpaid,0))}</b><span>To collect</span></div><div class="tile"><b>${fmt(bs.filter(b=>b.late_days>0).reduce((s,b)=>s+ +b.due,0))}</b><span>Past pay-by date</span></div></div>
-  <h2>Record a payment</h2>${owing.length?`<form class="form" id="payform"><label class="f">Hospital<select id="pay-h" required>${owing.map(h=>`<option value="${h.id}">${esc(h.name)} — owes ${fmt(h.credit.unpaid)}</option>`).join("")}</select></label>
-   <label class="f">Amount received<input id="pay-a" inputmode="decimal" required></label><label class="f">Date<input id="pay-d" type="date" value="${new Date().toLocaleDateString("en-CA")}"></label>
-   <label class="f">Mode<select id="pay-m"><option>NEFT / RTGS</option><option>Cheque</option><option>UPI</option><option>Cash</option></select></label><label class="f">Reference<input id="pay-r" placeholder="UTR or cheque number"></label>
-   <div class="wide"><button class="btn">Save payment</button> <small>Oldest bills are settled first.</small></div></form>`:`<div class="empty">No hospital owes anything.</div>`}
-  <h2>Bills</h2>${billTable(bs,true)}
-  <h2>Payments received</h2><div class="tw"><table><thead><tr><th>Date</th><th>Hospital</th><th class="n">Amount</th><th>Mode</th><th>Reference</th></tr></thead><tbody>${ps.map(p=>`<tr><td>${dstr(p.pay_date)}</td><td>${esc(p.hospital)}</td><td class="n">${fmt(p.amount)}</td><td>${esc(p.mode)}</td><td>${esc(p.ref)}</td></tr>`).join("")||`<tr><td colspan="5">None yet.</td></tr>`}</tbody></table></div>`;
- },
- async demand(){
-  const d=S.days||30,rows=await api("demand",{days:d});
-  return `<h1>Combined demand</h1><div class="tools">${[7,30,90].map(n=>`<button class="chip ${d===n?"on":""}" data-days="${n}">Last ${n} days</button>`).join("")}</div>
-  <div class="alert good">Every hospital's orders for the same item add up here. Quote this quantity when asking the company or its C&amp;F agent for a better rate.</div>
-  <div class="tw"><table><thead><tr><th>Item</th><th>Supplier</th><th class="n">Hospitals</th><th class="n">Quantity</th><th class="n">Value</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.name)}<br><small>${r.category}</small></td><td>${esc(r.supplier)}</td><td class="n">${r.hospitals}</td><td class="n">${(+r.qty).toLocaleString("en-IN")} ${esc(r.pack)}</td><td class="n">${fmt(r.value)}</td></tr>`).join("")||`<tr><td colspan="5">No orders in this period.</td></tr>`}</tbody></table></div>`;
- },
- async items(){
-  const its=await api("items_all");S.allItems=its;const samples=its.filter(i=>i.is_sample).length;
-  return `<h1>Items and rates</h1><div class="tools"><button class="btn" data-item="new">Add item</button><button class="btn ghost" id="bulk">Paste from Excel</button>${samples?`<button class="btn red" id="rmsamples">Remove ${samples} sample items</button>`:""}</div>
-  ${samples?`<div class="alert warn">${samples} items are samples with made-up rates. Remove them before real ordering starts.</div>`:""}
-  <div class="tw"><table><thead><tr><th>Item</th><th>Pack</th><th class="n">MRP</th><th class="n">Rate</th><th class="n">Purchase</th><th class="n">GST</th><th>Supplier</th><th></th></tr></thead><tbody>${its.map(i=>`<tr><td>${esc(i.name)}<br><small>${i.category}${i.active?"":" · hidden"}${i.is_sample?" · sample":""}</small></td><td>${esc(i.pack)}</td><td class="n">${fmtR(i.mrp)}</td><td class="n">${fmtR(i.rate)}</td><td class="n">${i.purchase_rate==null?"–":fmtR(i.purchase_rate)}</td><td class="n">${+i.gst_rate}%</td><td>${esc(i.supplier)}</td><td><button class="btn ghost small" data-item="${i.id}">Edit</button></td></tr>`).join("")}</tbody></table></div>`;
- },
- async users(){
-  const us=await api("users");S.users=us;if(isM()&&!S.hospitals)S.hospitals=await api("hospitals");
-  const RL={staff:"Hospital staff",owner:"Hospital owner",desk:"Cerebros desk",manager:"Cerebros manager"};
-  return `<h1>${isM()?"Users":"Staff"}</h1><div><button class="btn" data-user="new">Add ${isM()?"user":"staff"}</button></div><div class="tw"><table><thead><tr><th>Name</th><th>Mobile</th><th>Role</th><th>Hospital</th><th>Status</th><th></th></tr></thead><tbody>
-  ${us.map(u=>`<tr><td>${esc(u.name)}</td><td>${u.mobile}</td><td>${RL[u.role]}</td><td>${esc(u.hospital||"–")}</td><td><span class="pill ${u.active?"g":"b"}">${u.active?"Active":"Removed"}</span></td><td>${isM()||u.role==="staff"?`<button class="btn ghost small" data-user="${u.id}">Edit</button>`:""}</td></tr>`).join("")}</tbody></table></div>`;
- },
- async company(){
-  const s=await api("settings_get");const f=(k,l)=>`<label class="f">${l}<input id="co-${k}" value="${esc(s["seller_"+k]||"")}"></label>`;
-  return `<h1>Company</h1><p style="margin:0;color:var(--muted)">These details print on every bill.</p><form class="form" id="coform">${f("name","Company name")}${f("gstin","GSTIN")}${f("dl_no","Drug licence numbers")}${f("phone","Phone")}<label class="f wide">Address<input id="co-address" value="${esc(s.seller_address||"")}"></label><div class="wide"><button class="btn">Save</button></div></form>`;
- }
-};
-function billTable(bs,showH){return `<div class="tw"><table><thead><tr><th>Bill</th>${showH?"<th>Hospital</th>":""}<th>Date</th><th>Pay by</th><th class="n">Amount</th><th class="n">Still to pay</th><th>Status</th><th></th></tr></thead><tbody>
- ${bs.map(b=>`<tr><td>${b.bill_no}</td>${showH?`<td>${esc(b.hospital)}</td>`:""}<td>${dstr(b.bill_date)}</td><td>${dstr(b.due_date)}</td><td class="n">${fmt(b.total)}</td><td class="n">${fmt(b.due)}</td>
- <td>${+b.due<=0.5?`<span class="pill g">Paid</span>`:b.late_days>0?`<span class="pill b">${b.late_days} days late</span>`:`<span class="pill n">Not due yet</span>`}</td><td><button class="btn ghost small" data-bill="${b.id}">View</button></td></tr>`).join("")||`<tr><td colspan="8">No bills yet.</td></tr>`}</tbody></table></div>`}
+const cartLines=()=>Object.entries(S.cart).map(([id,q])=>({i:item(id),q:+q})).filter(l=>l.i&&l.q>0);
+const cartCount=()=>cartLines().length;
+const cartTax=()=>cartLines().reduce((s,l)=>s+l.i.rate*l.q,0);
+const cartTotal=()=>cartLines().reduce((s,l)=>s+l.i.rate*l.q*(1+l.i.gst_rate/100),0);
+const cartMrp=()=>cartLines().reduce((s,l)=>s+l.i.mrp*l.q,0);
+function setQty(id,q){const i=item(id);q=Math.round(+q)||0;if(i&&q>0&&q<i.min_qty)q=i.min_qty;q=Math.max(0,Math.min(100000,q));if(q)S.cart[id]=q;else{delete S.cart[id];delete S.caseInfo[id]}saveCart()}
+async function ensureItems(force){if(force||!S.items.length||Date.now()-S.itemsAt>120000){S.items=await api("catalog");S.itemsAt=Date.now()}}
+async function loadCredit(){if(isH()||S.forH){try{S.home=await api("home",hp());S.credit=S.home.credit}catch(e){S.home=null;S.credit=null;if(!isH())toast(e.message,true)}}else{S.home=null;S.credit=null}}
+function creditState(extra){const c=S.credit;if(!c)return{st:"none",why:isH()?"":"Choose the hospital you are ordering for."};
+  const used=+c.used+(extra||0),lim=+c.limit;let st=c.state,why=c.why;
+  if(st!=="block"&&used>lim){st="block";why="This order takes the account "+fmt(used-lim)+" over its credit limit. Pay a bill or reduce the order."}
+  else if(st==="ok"&&used>lim*.85){st="warn";why="Close to the credit limit."}
+  return{st,why,used,lim,left:Math.max(0,lim-used),pct:lim>0?Math.min(100,used/lim*100):100}}
+/* ---------- routing ---------- */
+const STORE_R=/^(home|shop|checkout|orders|account|p-\d+|o-\d+|done-\d+)$/, OFFICE_R=["dash","board","hospitals","payments","catalogue","demand","users","company"];
+function route(){const h=location.hash.slice(1);
+  if(isH())return STORE_R.test(h)?h:"home";
+  if(STORE_R.test(h)){S.mode="store";store.set("cs_mode","store");return h}
+  if(OFFICE_R.includes(h)&&(isM()||!["catalogue","users","company"].includes(h))){S.mode="office";store.set("cs_mode","office");return h}
+  return S.mode==="store"?"home":"dash"}
+function go(n){if(location.hash==="#"+n)render();else location.hash=n}
 async function render(){
-  if(!S.user)return;const r=route();
-  $("tabs").innerHTML=tabsFor().map(([k,l])=>`<a href="#${k}" class="${k===r?"on":""}">${l}${k==="cart"&&cartLines().length?`<span class="badge">${cartLines().length}</span>`:""}</a>`).join("");
-  try{$("view").innerHTML=await V[r]()}catch(e){if(S.user)$("view").innerHTML=`<div class="alert bad">${esc(e.message)}</div><div><button class="btn ghost" data-go="${r}">Try again</button></div>`}
+  if(!S.user)return;closeDrawer(true);const r=route();window.scrollTo(0,0);
+  try{
+    if(r.match(STORE_R)&&(isH()||S.mode==="store")){await renderStore(r)}
+    else await renderOffice(r);
+  }catch(e){const v=$("view");if(v)v.innerHTML=`<div class="alert bad">${esc(e.message)}</div><p><button class="btn ghost" data-go="${r}">Try again</button></p>`}
 }
+/* ---------- store shell ---------- */
+function storeShell(){
+  const c=creditState(),cnt=cartCount();
+  const navs=CATS.map((c,i)=>`<a href="#shop" data-cat="${i}">${CATN[i]}</a>`).join("");
+  return `<header class="sh"><div class="wrap sh-top">
+   <a class="logo" href="#home">${LOGO}<b>Cerebros</b><span>Supply</span></a>
+   <div class="search">${I.search.replace("<svg",'<svg class="si"')}<input id="q" type="search" placeholder="Search 70+ medicines, consumables and implants" autocomplete="off" value="${esc(S.f.q)}" aria-label="Search products"><div id="sugg" class="sugg" hidden></div></div>
+   <div class="hact">
+    ${!isH()?`<label class="forh hide-s">Ordering for<select id="forh"><option value="">Choose hospital</option>${S.hospitals.map(h=>`<option value="${h.id}" ${h.id==S.forH?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label><a class="hbtn hide-s" href="#dash">${I.grid}<span>Back office</span></a>`:""}
+    <a class="hbtn hide-s" href="#account">${I.card}<span class="two"><small>Credit left</small><b>${c.st==="none"?"–":fmt(c.left)}</b></span></a>
+    <a class="hbtn hide-s" href="#orders">${I.box}<span class="two"><small>Track</small><b>Orders</b></span></a>
+    <button class="hbtn cartbtn" id="cartbtn" aria-label="Open cart">${I.cart}${cnt?`<span class="cnt">${cnt}</span>`:""}<span class="two"><small>Cart</small><b>${fmt(cartTotal())}</b></span></button>
+   </div></div>
+   <nav class="sh-nav"><div class="wrap"><button class="allcats" id="allcats">${I.menu}All categories</button>${navs}<a href="#shop" data-save="50" class="hot">Biggest savings</a><a href="#shop" data-cold="1">Cold chain</a>${S.home&&S.home.reorder.length?`<a href="#home" data-jump="again">Order again</a>`:""}</div></nav>
+   <div class="mega" id="mega" hidden><div class="wrap">${CATS.map((c,ci)=>{const its=S.items.filter(i=>i.category===c);const subs=[...new Set(its.map(i=>i.subcategory))];
+     return `<div><h3><span class="pic mp" style="--pbg:#f2f5fb">${its[0]?art(its[0]):""}</span>${CATN[ci]}</h3>${subs.map(s=>`<a href="#shop" data-cat="${ci}" data-sub="${esc(s)}">${esc(s)}<small>${its.filter(i=>i.subcategory===s).length}</small></a>`).join("")}<a href="#shop" data-cat="${ci}"><b>All ${CATN[ci].toLowerCase()}</b><small>${its.length}</small></a></div>`}).join("")}</div></div>
+  </header>
+  <main class="smain"><div class="wrap" id="view"></div></main>
+  <nav class="bnav">${[["home","Home",I.home],["shop","Shop",I.grid]].map(([k,l,ic])=>`<a href="#${k}" class="${route()===k?"on":""}">${ic}${l}</a>`).join("")}<button id="cartbtn2">${I.cart}${cnt?`<span class="cnt">${cnt}</span>`:""}Cart</button><a href="#orders" class="${route()==="orders"?"on":""}">${I.box}Orders</a><a href="#account" class="${route()==="account"?"on":""}">${I.user}Account</a></nav>`;
+}
+async function renderStore(r){
+  const tasks=[ensureItems()];if(!isH()&&!S.hospitals.length)tasks.push(api("hospitals").then(h=>S.hospitals=h));
+  await Promise.all(tasks);
+  if(!isH()&&!S.forH){const g=S.hospitals.find(h=>h.credit&&h.credit.state!=="block")||S.hospitals[0];if(g){S.forH=g.id;store.set("cs_forh",g.id)}}
+  loadCart();await loadCredit();
+  $("app").innerHTML=storeShell();
+  const [p,id]=r.split("-");
+  $("view").innerHTML=await (P[p]||P.home)(+id);
+  if(p==="shop")bindFilters();
+}
+function refreshHeader(){const v=$("view");if(!v)return;const keep=v.innerHTML,y=scrollY;const q=$("q")&&$("q").value;
+  $("app").innerHTML=storeShell();$("view").innerHTML=keep;if(route()==="shop")bindFilters();if(q!=null)$("q").value=q;scrollTo(0,y)}
+/* ---------- store components ---------- */
+function qtyBox(i,n){return `<div class="qty"><button data-dec="${i.id}" aria-label="One less">−</button><input data-q="${i.id}" inputmode="numeric" value="${n}" aria-label="Quantity"><button data-inc="${i.id}" aria-label="One more">+</button></div>`}
+function card(i){const n=S.cart[i.id]||0,o=off(i);
+  return `<div class="card"><a class="card-img" href="#p-${i.id}">${pic(i)}${o>=5?`<span class="off">${o}% off</span>`:""}${i.cold_chain?`<span class="cold">❄ Cold chain</span>`:""}${i.is_sample?`<span class="smp">Sample</span>`:""}</a>
+  <div class="card-b"><div class="card-sub">${esc(i.subcategory)}</div><a class="card-t" href="#p-${i.id}">${esc(i.name)}</a><div class="card-p">${i.brand?esc(i.brand)+" · ":""}per ${esc(i.pack)}</div>
+  <div class="card-pr"><b class="num">${fmtR(i.rate)}</b>${+i.mrp>+i.rate?`<s class="num">${fmtR(i.mrp)}</s>`:""}</div>
+  ${!i.in_stock?`<button class="btn plain" disabled>Out of stock</button>`:n?qtyBox(i,n):`<button class="btn" data-add="${i.id}">${I.cart.replace("<svg",'<svg width="18" height="18"')}Add</button>`}</div></div>`}
+const rail=(title,list,more)=>list.length?`<div class="sec"><h2>${title}</h2>${more||""}</div><div class="rail">${list.map(card).join("")}</div>`:"";
+/* ---------- store pages ---------- */
+const P={
+ async home(){
+  const its=S.items,avg=its.length?Math.round(its.reduce((s,i)=>s+off(i),0)/its.length):0,c=creditState(),h=S.home;
+  const byIds=ids=>(ids||[]).map(item).filter(Boolean);
+  const best=[...its].sort((a,b)=>off(b)-off(a)).slice(0,12);
+  const trending=byIds(h&&h.trending);const again=byIds(h&&h.reorder);
+  const subs=[...new Set(its.map(i=>i.subcategory))];
+  const hero=its.find(i=>/stent/i.test(i.name))||its[0];
+  return `${!isH()&&!S.forH?`<div class="alert warn" style="margin-bottom:16px">Choose the hospital you are ordering for at the top of the page.</div>`:""}
+  <section class="hero"><div class="hero-a"><h1>Hospital supplies at group buying rates</h1><p>Medicines, consumables and implants, bought with the combined volume of every hospital on Cerebros, billed on credit.</p>
+    <div class="hs"><div><b class="num">${its.length}</b><small>products</small></div><div><b class="num">${avg}%</b><small>average below MRP</small></div><div><b class="num">${c.st==="none"?"30–60":S.credit.terms}</b><small>days to pay</small></div></div>
+    <p><a class="btn deal lg" href="#shop" data-cat="-1" style="margin-top:6px">Shop all products</a></p>${hero?`<span class="art">${art(hero)}</span>`:""}</div>
+   <div class="hero-b"><div class="ccard"><small>${esc(h&&h.hospital?h.hospital.name:"Your hospital")} · credit available</small><div class="big num">${c.st==="none"?"–":fmt(c.left)}</div>
+     <div class="bar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.st==="none"?0:c.pct}%"></i></div><div class="row2"><span>Used ${c.st==="none"?"–":fmt(c.used)}</span><span>Limit ${c.st==="none"?"–":fmt(c.lim)}</span></div></div>
+    ${c.st==="block"?`<div class="alert bad">${esc(c.why)}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
+    <div class="mini"><div><b class="num">${h?h.open_orders:0}</b><small>orders on the way</small></div><div><b class="num">${S.credit&&S.credit.overdue_days>0?S.credit.overdue_days+" days":"None"}</b><small>oldest bill late</small></div></div>
+    <a class="btn plain block" href="#account">View bills and statement</a></div></section>
+  <div class="cats3">${CATS.map((cat,ci)=>{const l=its.filter(i=>i.category===cat);return `<a class="cat3" href="#shop" data-cat="${ci}"><span class="pic cp" style="--pbg:#f2f5fb">${l[0]?art(l.find(i=>kind(i)!=="box")||l[0]):""}</span><span><b>${CATN[ci]}</b><small>${l.length} products · up to ${l.length?Math.max(...l.map(off)):0}% off</small></span></a>`}).join("")}</div>
+  ${again.length?`<div id="again">${rail("Order again",again)}</div>`:""}
+  ${rail(trending.length?"Most ordered across hospitals":"Critical care essentials",trending.length?trending:its.filter(i=>i.subcategory==="Critical care"),`<a href="#shop" data-cat="-1">See all</a>`)}
+  <div class="sec"><h2>Shop by need</h2></div><div class="needs">${subs.map(s=>{const l=its.filter(i=>i.subcategory===s);return `<a class="need" href="#shop" data-cat="${CATS.indexOf(l[0].category)}" data-sub="${esc(s)}"><span class="pic np">${art(l[0])}</span>${esc(s)}<small>${l.length} items</small></a>`}).join("")}</div>
+  ${rail("Biggest savings",best,`<a href="#shop" data-save="50">See all</a>`)}
+  ${rail("Cold chain, delivered cold",its.filter(i=>i.cold_chain),"")}
+  ${rail("Implants for scheduled cases",its.filter(i=>i.category===CATS[2]).slice(0,12),`<a href="#shop" data-cat="2">See all</a>`)}`;
+ },
+ async shop(){return shopHTML()},
+ async p(id){
+  const i=item(id);if(!i)return `<div class="empty">This product is no longer listed. <a class="btn ghost" href="#shop">Back to shop</a></div>`;
+  const n=S.cart[i.id]||0,o=off(i),ci=CATS.indexOf(i.category),sim=S.items.filter(x=>x.subcategory===i.subcategory&&x.id!==i.id).concat(S.items.filter(x=>x.category===i.category&&x.subcategory!==i.subcategory)).slice(0,12);
+  return `<div class="crumbs"><a href="#home">Home</a>›<a href="#shop" data-cat="${ci}">${CATN[ci]}</a>›<a href="#shop" data-cat="${ci}" data-sub="${esc(i.subcategory)}">${esc(i.subcategory)}</a></div>
+  <div class="pdp"><div class="panel pdp-img">${pic(i)}</div>
+   <div class="pdp-i"><div class="badges"><span class="pill blue">${esc(i.subcategory)}</span>${i.cold_chain?`<span class="pill n">${I.snow.replace("<svg",'<svg width="14" height="14"')} Cold chain</span>`:""}${i.in_stock?`<span class="pill g">In stock</span>`:`<span class="pill b">Out of stock</span>`}${i.is_sample?`<span class="pill w">Sample listing</span>`:""}</div>
+    <h1>${esc(i.name)}</h1><div class="muted">${i.composition?esc(i.composition)+" · ":""}${i.brand?esc(i.brand)+" · ":""}${i.manufacturer?"by "+esc(i.manufacturer)+" · ":""}Sold per ${esc(i.pack)}</div>
+    <div class="panel pbox"><div class="pbig"><b class="num">${fmtR(i.rate)}</b>${+i.mrp>+i.rate?`<s class="num">MRP ${fmtR(i.mrp)}</s><span class="save">${o}% off</span>`:""}</div>
+     <div class="muted" style="font-size:13.5px">+ ${+i.gst_rate}% GST on the bill · ${fmtR(i.rate*(1+i.gst_rate/100))} including GST${i.min_qty>1?` · minimum order ${i.min_qty}`:""}</div>
+     ${i.category===CATS[2]?`<div class="alert info">Ordered against a named case. You'll add the surgery date and surgeon at checkout.</div>`:""}
+     ${i.in_stock?`<div class="pact">${n?qtyBox(i,n):`<div class="qty"><button data-pdec aria-label="One less">−</button><input id="pq" inputmode="numeric" value="${i.min_qty}" aria-label="Quantity"><button data-pinc aria-label="One more">+</button></div>`}
+       <button class="btn ghost lg" data-padd="${i.id}">${n?"Update cart":"Add to cart"}</button><button class="btn deal lg" data-pbuy="${i.id}">Buy now</button></div>`:`<button class="btn plain lg" disabled>Out of stock</button>`}
+     <div class="perks"><div>${I.card}<span><b>On credit</b>${S.credit?S.credit.terms:"30–60"} days to pay</span></div><div>${I.truck}<span><b>Delivery slot</b>Choose at checkout</span></div><div>${I.shield}<span><b>Batch and expiry</b>Printed on every bill</span></div></div></div>
+    <div class="panel pbox"><h3>Product details</h3><table class="spec">${[["Category",CATN[ci]],["Sub-category",i.subcategory],["Composition",i.composition],["Brand",i.brand],["Manufacturer",i.manufacturer],["Pack",i.pack],["HSN code",i.hsn],["GST",+i.gst_rate+"%"],["Storage",i.cold_chain?"2–8 °C, cold chain":"Room temperature"]].filter(r=>r[1]).map(r=>`<tr><td>${r[0]}</td><td><b>${esc(r[1])}</b></td></tr>`).join("")}</table></div>
+   </div></div>${rail("Similar products",sim,"")}`;
+ },
+ async checkout(){
+  const lines=cartLines();if(!lines.length)return `<div class="empty"><h2>Your cart is empty</h2><p>Add products to place an order.</p><a class="btn" href="#shop">Start shopping</a></div>`;
+  const t=cartTotal(),c=creditState(t),imp=lines.filter(l=>l.i.category===CATS[2]),addr=S.home&&S.home.hospital?S.home.hospital.address:"",ck=S.co||{};
+  return `<div class="crumbs"><a href="#home">Home</a>›<span>Checkout</span></div><h1 style="margin-bottom:16px">Checkout</h1>
+  <div class="co"><div style="display:flex;flex-direction:column;gap:16px">
+   <div class="panel step"><h3><i>1</i>Delivery</h3><label class="f">Deliver to<textarea id="co-to" rows="2" placeholder="Hospital address, department or store">${esc(ck.to??addr??"")}</textarea></label>
+    <div class="slots">${SLOTS.map(([s,sub],k)=>`<label class="slot"><input type="radio" name="slot" value="${s}" ${(ck.slot||SLOTS[1][0])===s?"checked":""}><b>${s}</b><small>${sub}</small></label>`).join("")}</div></div>
+   ${imp.length?`<div class="panel step"><h3><i>2</i>Case details for implants</h3>${imp.map(l=>{const ci=S.caseInfo[l.i.id]||{};return `<div class="caseln">${pic(l.i)}<div><b>${esc(l.i.name)} × ${l.q}</b><div class="form"><label class="f">Surgery date<input type="date" data-cd="${l.i.id}" value="${esc(ci.case_date||"")}"></label><label class="f">Surgeon<input data-sg="${l.i.id}" placeholder="Surgeon name" value="${esc(ci.surgeon||"")}"></label></div></div></div>`}).join("")}</div>`:""}
+   <div class="panel step"><h3><i>${imp.length?3:2}</i>Reference</h3><div class="form"><label class="f">Your PO number (optional)<input id="co-po" value="${esc(ck.po||"")}" placeholder="e.g. PO/2026/1142"></label><label class="f">Note for the Cerebros desk (optional)<input id="co-notes" value="${esc(ck.notes||"")}" placeholder="e.g. Deliver to ICU store"></label></div></div>
+  </div>
+  <aside class="panel summ"><h3>Order summary</h3><div style="display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto">${lines.map(l=>`<div class="sl">${pic(l.i)}<span>${esc(l.i.name)} × ${l.q}</span><b class="num">${fmt(l.i.rate*l.q)}</b></div>`).join("")}</div>
+   <div class="tot"><span>Items</span><span class="num">${fmt(cartTax())}</span></div><div class="tot"><span>GST</span><span class="num">${fmt(t-cartTax())}</span></div><div class="tot"><span>Saving against MRP</span><span class="save num">${fmt(cartMrp()-cartTax())}</span></div>
+   <div class="tot big"><span>Order value</span><span class="num">${fmt(t)}</span></div>
+   ${c.st==="none"?"":`<div class="cbar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.pct}%"></i></div><div class="tot"><span class="muted">Credit left after this order</span><b class="num">${fmt(c.left)}</b></div>`}
+   ${c.st==="block"||c.st==="none"?`<div class="alert bad">${esc(c.why)}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
+   <button class="btn deal lg block" id="place" ${c.st==="block"||c.st==="none"?"disabled":""}>Place order · ${fmt(t)}</button>
+   <small class="muted">Billed on ${S.credit?S.credit.terms:30}-day credit. The bill is made when the order is delivered.</small></aside></div>`;
+ },
+ async done(id){const o=await api("order_detail",{order_id:id});
+  return `<div class="panel done"><span class="ok">${I.check}</span><h1>Order placed</h1><p class="muted" style="margin:0">Order <b>${o.order_no}</b> for <b>${fmt(o.value)}</b> is with the Cerebros desk${o.delivery_slot?`, for delivery <b>${esc(o.delivery_slot.toLowerCase())}</b>`:""}.</p>
+   <div style="width:100%">${trackHTML(o.status)}</div><div class="acts" style="justify-content:center"><a class="btn" href="#o-${o.id}">Track order</a><a class="btn plain" href="#home">Continue shopping</a></div></div>`},
+ async orders(){const os=await api("my_orders",hp());S.myOrders=os;
+  return `<div class="crumbs"><a href="#home">Home</a>›<span>Orders</span></div><div class="lhead"><h1>Your orders</h1><span class="muted">${os.length} orders</span></div>
+  <div class="olist">${os.map(o=>`<div class="panel oc"><div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b style="font-size:16px">${o.order_no}</b>${statusPill(o.status)}<span class="muted">${dstr(o.date)}${o.po_no?" · PO "+esc(o.po_no):""}</span></div>
+     <div class="thumbs">${o.lines.slice(0,5).map(l=>pic(l)).join("")}${o.lines.length>5?`<span>+${o.lines.length-5}</span>`:""}</div></div>
+    <div class="oa"><div style="text-align:right;margin-right:6px"><small class="muted">${o.lines.length} items</small><b style="display:block;font-size:18px" class="num">${fmt(o.value)}</b></div>
+     <a class="btn sm" href="#o-${o.id}">Track</a><button class="btn plain sm" data-again="${o.id}">Order again</button></div></div>`).join("")||`<div class="empty"><h2>No orders yet</h2><p>Your orders will show here with live status.</p><a class="btn" href="#shop">Start shopping</a></div>`}</div>`},
+ async o(id){const o=await api("order_detail",{order_id:id});S.curOrder=o;
+  return `<div class="crumbs"><a href="#home">Home</a>›<a href="#orders">Orders</a>›<span>${o.order_no}</span></div>
+  <div class="lhead"><div><h1>${o.order_no}</h1><div class="muted">Placed ${dstr(o.date)}${o.po_no?" · PO "+esc(o.po_no):""}</div></div><div class="acts">${o.status===0?`<button class="btn red" data-cancel="${o.id}">Cancel order</button>`:""}${o.bill_id?`<button class="btn plain" data-bill="${o.bill_id}">View bill ${o.bill_no}</button>`:""}<button class="btn" data-again="${o.id}">Order again</button></div></div>
+  <div class="panel" style="padding:20px;margin-bottom:16px">${o.status===9?`<div class="alert bad">This order was cancelled.</div>`:trackHTML(o.status)}
+   <div class="form" style="margin-top:14px"><div style="flex:1 1 200px"><small class="muted">Deliver to</small><div><b>${esc(o.deliver_to||"–")}</b></div></div><div style="flex:1 1 160px"><small class="muted">Delivery slot</small><div><b>${esc(o.delivery_slot||"–")}</b></div></div><div style="flex:1 1 160px"><small class="muted">Note</small><div><b>${esc(o.notes||"–")}</b></div></div></div></div>
+  <div class="panel tw"><table class="otable"><thead><tr><th>Product</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">Amount</th></tr></thead><tbody>
+   ${o.lines.map(l=>`<tr><td><a class="it" href="#p-${l.item_id}">${pic(l)}<span><b>${esc(l.name)}</b><br><small class="muted">per ${esc(l.pack)}${l.case_date?` · case ${dstr(l.case_date)}, ${esc(l.surgeon)}`:""}${l.batch?` · batch ${esc(l.batch)}, exp ${dstr(l.expiry)}`:""}</small></span></a></td><td class="n">${+l.qty}</td><td class="n">${fmtR(l.rate)}</td><td class="n">${fmt(l.qty*l.rate)}</td></tr>`).join("")}
+   <tr><td colspan="3" class="n"><b>Total with GST</b></td><td class="n"><b>${fmt(o.value)}</b></td></tr></tbody></table></div>`},
+ async account(){const r=await api("my_bills",hp());S.credit=r.credit;const c=creditState(),bs=r.bills,late=bs.filter(b=>b.late_days>0);
+  let staff="";if(S.user.role==="owner"){const us=await api("users");S.users=us;staff=`<div class="sec"><h2>Staff logins</h2><button class="btn sm" data-user="new">Add staff</button></div><div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Status</th><th></th></tr></thead><tbody>${us.map(u=>`<tr><td>${esc(u.name)}${u.role==="owner"?" <span class='pill n'>Owner</span>":""}</td><td>${u.mobile}</td><td>${u.active?`<span class="pill g">Active</span>`:`<span class="pill b">Removed</span>`}</td><td>${u.role==="staff"?`<button class="btn plain sm" data-user="${u.id}">Edit</button>`:""}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="crumbs"><a href="#home">Home</a>›<span>Account</span></div><div class="lhead"><h1>Bills and credit</h1><div class="acts">${isH()?`<button class="btn plain" id="pinbtn">Change PIN</button><button class="btn plain" id="logout">Log out</button>`:""}</div></div>
+  <div class="acc"><div style="display:flex;flex-direction:column;gap:14px"><div class="ccard"><small>Credit available</small><div class="big num">${fmt(c.left)}</div><div class="bar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.pct}%"></i></div><div class="row2"><span>Used ${fmt(c.used)}</span><span>Limit ${fmt(c.lim)}</span></div></div>
+    ${c.st==="block"?`<div class="alert bad">Ordering is stopped. ${esc(c.why)}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
+    <div class="mini"><div><b class="num">${fmt(r.credit.unpaid)}</b><small>unpaid bills</small></div><div><b class="num">${fmt(r.credit.open_orders)}</b><small>in open orders</small></div><div><b class="num">${r.credit.terms} days</b><small>to pay each bill</small></div><div><b class="num">${fmt(late.reduce((s,b)=>s+ +b.due,0))}</b><small>past pay-by date</small></div></div>
+    <div class="alert good">Pay on time for three months in a row and Cerebros can extend your time to pay.</div></div>
+   <div><div class="panel tw"><table class="t"><thead><tr><th>Bill</th><th>Date</th><th>Pay by</th><th class="n">Amount</th><th class="n">Still to pay</th><th>Status</th><th></th></tr></thead><tbody>${bs.map(b=>`<tr><td><b>${b.bill_no}</b></td><td>${dstr(b.bill_date)}</td><td>${dstr(b.due_date)}</td><td class="n">${fmt(b.total)}</td><td class="n">${fmt(b.due)}</td><td>${billPill(b)}</td><td><button class="btn plain sm" data-bill="${b.id}">View</button></td></tr>`).join("")||`<tr><td colspan="7" class="muted">No bills yet. A bill is made when an order is delivered.</td></tr>`}</tbody></table></div>${staff}</div></div>`}
+};
+const statusPill=s=>`<span class="pill ${s===3?"g":s===9?"b":s===2?"w":"blue"}">${STATUS[s]}</span>`;
+const billPill=b=>+b.due<=0.5?`<span class="pill g">Paid</span>`:b.late_days>0?`<span class="pill b">${b.late_days} days late</span>`:`<span class="pill n">Not due yet</span>`;
+const trackHTML=s=>`<div class="track">${[0,1,2,3].map(k=>`<div class="${k<=s?"d":""} ${k===s+1?"c":""}">${STATUS[k]}</div>`).join("")}</div>`;
+/* ---------- listing ---------- */
+function filtered(){const f=S.f,q=f.q.trim().toLowerCase(),words=q.split(/\s+/).filter(Boolean);
+  let l=S.items.filter(i=>(f.cat<0||i.category===CATS[f.cat])&&(!f.subs.length||f.subs.includes(i.subcategory))&&off(i)>=f.save&&(!f.cold||i.cold_chain)&&(!f.stock||i.in_stock)
+    &&(f.min===""||+i.rate>=+f.min)&&(f.max===""||+i.rate<=+f.max)&&(!words.length||words.every(w=>(i.name+" "+i.subcategory+" "+(i.composition||"")+" "+(i.brand||"")+" "+(i.manufacturer||"")).toLowerCase().includes(w))));
+  const tr=(S.home&&S.home.trending)||[],rank=i=>{const k=tr.indexOf(i.id);return k<0?999:k};
+  const so={pop:(a,b)=>rank(a)-rank(b)||off(b)-off(a),low:(a,b)=>a.rate-b.rate,high:(a,b)=>b.rate-a.rate,save:(a,b)=>off(b)-off(a),name:(a,b)=>a.name.localeCompare(b.name)}[f.sort];
+  return l.sort(so)}
+function shopHTML(){
+  const f=S.f,l=filtered(),title=f.q?`Results for “${esc(f.q)}”`:f.subs.length===1?esc(f.subs[0]):f.cat>=0?CATN[f.cat]:"All products";
+  const tree=CATS.map((c,ci)=>{const its=S.items.filter(i=>i.category===c),subs=[...new Set(its.map(i=>i.subcategory))];
+    return `<a href="#shop" data-fcat="${ci}" class="${f.cat===ci&&!f.subs.length?"on":""}">${CATN[ci]}<small>${its.length}</small></a>${f.cat===ci?`<div class="subs">${subs.map(s=>`<a href="#shop" data-fsub="${esc(s)}" class="${f.subs.includes(s)?"on":""}">${esc(s)}<small>${its.filter(i=>i.subcategory===s).length}</small></a>`).join("")}</div>`:""}`}).join("");
+  const act=[f.q&&["q","“"+f.q+"”"],f.cat>=0&&["cat",CATN[f.cat]],...f.subs.map(s=>["sub:"+s,s]),f.save&&["save",f.save+"% off or more"],f.cold&&["cold","Cold chain"],f.stock&&["stock","In stock"],(f.min!==""||f.max!=="")&&["price","₹"+(f.min||0)+" – "+(f.max?"₹"+f.max:"any")]].filter(Boolean);
+  return `<div class="crumbs"><a href="#home">Home</a>›<span>${title}</span></div>
+  <div class="listing"><aside class="panel filters" id="filters"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Filters</h3><button class="x fbtn" data-closef aria-label="Close filters">${I.x}</button></div>
+    <div><h3>Category</h3><div class="ftree"><a href="#shop" data-fcat="-1" class="${f.cat<0?"on":""}">All products<small>${S.items.length}</small></a>${tree}</div></div>
+    <div><h3>Savings</h3><div class="fchips">${[0,25,50,75].map(v=>`<button class="chip ${f.save===v?"on":""}" data-fsave="${v}">${v?v+"%+":"Any"}</button>`).join("")}</div></div>
+    <div><h3>Price per unit</h3><div style="display:flex;gap:8px"><input id="fmin" inputmode="numeric" placeholder="Min ₹" value="${esc(f.min)}"><input id="fmax" inputmode="numeric" placeholder="Max ₹" value="${esc(f.max)}"></div></div>
+    <div style="display:flex;flex-direction:column;gap:10px"><label class="check"><input type="checkbox" id="fcold" ${f.cold?"checked":""}>Cold chain only</label><label class="check"><input type="checkbox" id="fstock" ${f.stock?"checked":""}>In stock only</label></div>
+    ${act.length?`<button class="btn plain" data-fclear>Clear all filters</button>`:""}</aside>
+   <div><div class="lhead"><div><h1>${title}</h1><span class="muted">${l.length} products</span></div><div class="tools"><button class="btn plain fbtn" data-openf>Filters</button><label class="check" style="font-weight:600">Sort<select id="fsort">${[["pop","Most ordered"],["save","Biggest saving"],["low","Price: low to high"],["high","Price: high to low"],["name","Name"]].map(([k,t])=>`<option value="${k}" ${f.sort===k?"selected":""}>${t}</option>`).join("")}</select></label></div></div>
+    ${act.length?`<div class="active-f">${act.map(([k,t])=>`<button data-unf="${esc(k)}">${esc(t)} ✕</button>`).join("")}</div>`:""}
+    ${l.length?`<div class="grid">${l.map(card).join("")}</div>`:`<div class="empty"><h2>No products match</h2><p>Try fewer filters or a shorter search.</p><button class="btn ghost" data-fclear>Clear all filters</button></div>`}</div></div>`}
+function bindFilters(){const rer=()=>{$("view").innerHTML=shopHTML();bindFilters()};
+  const on=(id,ev,fn)=>{const e=$(id);if(e)e.addEventListener(ev,fn)};
+  on("fsort","change",e=>{S.f.sort=e.target.value;rer()});on("fcold","change",e=>{S.f.cold=e.target.checked;rer()});on("fstock","change",e=>{S.f.stock=e.target.checked;rer()});
+  on("fmin","change",e=>{S.f.min=e.target.value.replace(/\D/g,"");rer()});on("fmax","change",e=>{S.f.max=e.target.value.replace(/\D/g,"");rer()})}
+function resetF(o){S.f=Object.assign({cat:-1,subs:[],save:0,min:"",max:"",cold:false,stock:false,sort:"pop",q:""},o||{})}
+/* ---------- search suggestions ---------- */
+function suggest(q){const b=$("sugg");if(!b)return;q=q.trim().toLowerCase();if(q.length<2){b.hidden=true;return}
+  const w=q.split(/\s+/),its=S.items.filter(i=>w.every(x=>(i.name+" "+i.subcategory+" "+(i.composition||"")).toLowerCase().includes(x))).slice(0,6);
+  const subs=[...new Set(S.items.map(i=>i.subcategory))].filter(s=>s.toLowerCase().includes(q)).slice(0,3);
+  b.innerHTML=(subs.length?`<div class="shead">Categories</div>${subs.map(s=>{const i=S.items.find(x=>x.subcategory===s);return `<a href="#shop" data-cat="${CATS.indexOf(i.category)}" data-sub="${esc(s)}"><span class="sn"><b>${esc(s)}</b><small>in ${CATN[CATS.indexOf(i.category)]}</small></span></a>`}).join("")}`:"")
+   +(its.length?`<div class="shead">Products</div>${its.map(i=>`<a href="#p-${i.id}">${pic(i,"sp")}<span class="sn"><b>${esc(i.name)}</b><small>${esc(i.subcategory)} · per ${esc(i.pack)}</small></span><span class="sv num">${fmtR(i.rate)}</span></a>`).join("")}`:`<div class="shead">No product matches “${esc(q)}”</div>`)
+   +`<button class="all" data-searchall>See all results for “${esc(q)}”</button>`;b.hidden=false}
+/* ---------- cart drawer ---------- */
+function drawerHTML(){const lines=cartLines(),t=cartTotal(),c=creditState(t);
+  return `<div class="dh"><h2>Cart <span class="muted" style="font-size:15px;font-weight:600">${lines.length} items</span></h2><button class="x" data-closecart aria-label="Close cart">${I.x}</button></div>
+  <div class="db">${lines.map(l=>`<div class="cl">${pic(l.i)}<div><b>${esc(l.i.name)}</b><small>${fmtR(l.i.rate)} per ${esc(l.i.pack)}${l.i.category===CATS[2]?" · case details at checkout":""}</small><div class="clr">${qtyBox(l.i,l.q)}<b class="num">${fmt(l.i.rate*l.q)}</b></div><button class="rm" data-rm="${l.i.id}">Remove</button></div></div>`).join("")||`<div class="empty" style="margin-top:20px">Your cart is empty.<br><br><a class="btn" href="#shop" data-closecart>Start shopping</a></div>`}</div>
+  ${lines.length?`<div class="df"><div class="tot"><span>Items</span><span class="num">${fmt(cartTax())}</span></div><div class="tot"><span>GST</span><span class="num">${fmt(t-cartTax())}</span></div><div class="tot"><span>You save against MRP</span><span class="save num">${fmt(cartMrp()-cartTax())}</span></div><div class="tot big"><span>Total</span><span class="num">${fmt(t)}</span></div>
+   ${c.st==="none"?"":`<div class="cbar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.pct}%"></i></div><small class="muted">Credit left after this order: <b>${fmt(c.left)}</b></small>`}
+   ${c.st==="block"||c.st==="none"?`<div class="alert bad">${esc(c.why)}</div>`:""}<a class="btn deal lg block" href="#checkout" data-closecart>Go to checkout</a></div>`:""}`}
+function openDrawer(){$("drawer").innerHTML=drawerHTML();$("drawer").classList.add("on");$("scrim").classList.add("on")}
+function closeDrawer(quiet){$("drawer").classList.remove("on");$("scrim").classList.remove("on")}
+async function afterCartChange(){if($("drawer").classList.contains("on"))$("drawer").innerHTML=drawerHTML();const r=route(),[p,id]=r.split("-");
+  if(!["home","shop","p","checkout"].includes(p)){refreshHeader();return}
+  const y=scrollY,rails=[...document.querySelectorAll(".rail")].map(x=>x.scrollLeft);$("app").innerHTML=storeShell();$("view").innerHTML=await P[p](+id);if(p==="shop")bindFilters();
+  document.querySelectorAll(".rail").forEach((x,k)=>x.scrollLeft=rails[k]||0);scrollTo(0,y)}
+/* ---------- back office ---------- */
+const OFF_NAV=()=>[["dash","Dashboard",I.chart],["board","Orders",I.list],["hospitals","Hospitals",I.hosp],["payments","Bills and payments",I.rupee],["demand","Combined demand",I.tag]].concat(isM()?[["catalogue","Catalogue",I.grid],["users","Users",I.users],["company","Company",I.gear]]:[]);
+async function renderOffice(r){
+  $("app").innerHTML=`<div class="office"><aside class="side"><a class="logo" href="#dash">${LOGO}<b>Cerebros</b></a>${OFF_NAV().map(([k,l,ic])=>`<a href="#${k}" class="${k===r?"on":""}">${ic}${l}${k==="board"&&S.newOrders?`<span class="badge">${S.newOrders}</span>`:""}</a>`).join("")}
+   <div class="sep"></div><a href="#home">${I.store}Open store</a><button id="pinbtn">${I.shield}Change PIN</button><button id="logout">${I.x}Log out</button><div class="me"><b>${esc(S.user.name)}</b>${isM()?"Cerebros manager":"Cerebros desk"}</div></aside>
+   <main class="omain" id="view"><div class="empty">Loading…</div></main></div>`;
+  $("view").innerHTML=await O[r]();
+}
+const kpi=(l,v,s,cls)=>`<div class="panel kpi ${cls||""}"><small>${l}</small><b class="num">${v}</b><span>${s||""}</span></div>`;
+function colChart(rows){const W=900,H=240,pad=30,mx=Math.max(1,...rows.map(r=>+r.v)),bw=(W-pad*2)/rows.length;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Billed value per day, last 30 days"><line x1="${pad}" x2="${W-pad}" y1="${H-30}" y2="${H-30}" stroke="#d0d5dd"/>
+  ${rows.map((r,k)=>{const h=(+r.v/mx)*(H-70),x=pad+k*bw+3,y=H-30-h;return `<rect x="${x}" y="${y}" width="${bw-6}" height="${Math.max(h,0)}" rx="4" fill="${+r.v===mx&&mx>1?"#ea580c":"#1d4ed8"}"><title>${dstr(r.d)}: ${fmt(r.v)}</title></rect>${+r.v===mx&&mx>1?`<text x="${x+(bw-6)/2}" y="${y-8}" text-anchor="middle" font-size="16" font-weight="800" fill="#101828">${lakh(r.v)}</text>`:""}${k%5===0?`<text x="${x+(bw-6)/2}" y="${H-8}" text-anchor="middle" font-size="14" fill="#667085">${new Date(r.d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"})}</text>`:""}`}).join("")}</svg>`}
+const hbars=(rows,lab,val)=>{const mx=Math.max(1,...rows.map(r=>+r[val]));return rows.map(r=>`<div class="hbar"><span>${esc(r[lab])}</span><i style="width:${Math.max(2,+r[val]/mx*100)}%"></i><b>${lakh(r[val])}</b></div>`).join("")||`<p class="muted" style="margin:0">No orders in the last 30 days.</p>`};
+const O={
+ async dash(){const [d,os]=await Promise.all([api("dashboard"),api("desk_orders")]);S.deskOrders=os;S.newOrders=d.new_orders;
+  return `<div class="ohead"><div><h1>Good ${new Date().getHours()<12?"morning":new Date().getHours()<17?"afternoon":"evening"}, ${esc(S.user.name.split(" ")[0])}</h1><p>${d.hospitals} hospitals · ${d.items} products live in the store</p></div><a class="btn" href="#home">${I.store.replace("<svg",'<svg width="18" height="18"')}Open store</a></div>
+  <div class="kpis">${kpi("New orders",d.new_orders,"waiting to be accepted","hot")}${kpi("In process",lakh(d.in_process),"accepted or out for delivery")}${kpi("Billed, last 30 days",lakh(d.sales_30d),"")}${kpi("To collect",lakh(d.to_collect),"all unpaid bills")}${kpi("Past pay-by date",lakh(d.overdue),"",+d.overdue>0?"badk":"")}</div>
+  <div class="panel box"><h3>Billed per day, last 30 days</h3>${colChart(d.sales_by_day)}</div>
+  <div class="split"><div class="panel box"><div style="display:flex;justify-content:space-between"><h3>Orders to act on</h3><a class="muted" href="#board">Open board →</a></div>${os.slice(0,6).map(o=>`<div class="oc2" style="box-shadow:none;border:1px solid var(--line)"><div class="r"><b>${o.order_no} · ${esc(o.hospital)}</b>${statusPill(o.status)}</div><small>${dstr(o.date)} · ${o.lines.length} items · <b class="num">${fmt(o.value)}</b>${o.delivery_slot?" · "+esc(o.delivery_slot):""}</small></div>`).join("")||`<p class="muted" style="margin:0">Nothing waiting.</p>`}</div>
+   <div style="display:flex;flex-direction:column;gap:18px"><div class="panel box"><h3>Sales by category, 30 days</h3>${hbars(d.by_category.map(r=>({c:CATN[CATS.indexOf(r.c)]||r.c,v:r.v})),"c","v")}</div><div class="panel box"><h3>Top hospitals, 30 days</h3>${hbars(d.top_hospitals,"h","v")}</div></div></div>`},
+ async board(){const os=await api("desk_orders");S.deskOrders=os;S.newOrders=os.filter(o=>o.status===0).length;const next=["Accept","Send for delivery","Mark delivered"];
+  return `<div class="ohead"><div><h1>Orders</h1><p>Move each order across as it is packed and delivered. Delivery makes the bill.</p></div></div>
+  <div class="board">${[0,1,2].map(s=>{const l=os.filter(o=>o.status===s);return `<div class="col"><h3>${STATUS[s]}<span class="pill n">${l.length}</span></h3>${l.map(o=>{const blk=["hold","overdue","docs","inactive"].includes(o.credit.reason);return `<div class="oc2"><div class="r"><b>${o.order_no}</b><b class="num">${fmt(o.value)}</b></div><div><b>${esc(o.hospital)}</b></div>
+     <small>${dstr(o.date)}${o.delivery_slot?" · "+esc(o.delivery_slot):""}${o.po_no?" · PO "+esc(o.po_no):""}</small><small>${o.lines.map(l=>esc(l.name)+" × "+(+l.qty)+(l.case_date?` (case ${dstr(l.case_date)}, ${esc(l.surgeon)})`:"")).join(", ")}</small>${o.notes?`<small>Note: ${esc(o.notes)}</small>`:""}
+     ${blk?`<div class="alert bad" style="padding:8px 10px;font-size:12.5px">${esc(o.credit.why)}</div>`:""}<div class="r"><button class="btn red sm" data-cancel="${o.id}">Cancel</button><button class="btn sm" data-next="${o.id}" ${blk&&s===0?"disabled":""}>${next[s]}</button></div></div>`}).join("")||`<p class="muted" style="text-align:center">Empty</p>`}</div>`}).join("")}</div>`},
+ async hospitals(){const hs=await api("hospitals");S.hospitals=hs;
+  return `<div class="ohead"><div><h1>Hospitals</h1><p>Credit limits and terms. Ordering stops by itself when a bill is 15 days late or the limit is crossed.</p></div>${isM()?`<button class="btn" data-hosp="new">Add hospital</button>`:""}</div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Hospital</th><th class="n">Limit</th><th class="n">Unpaid</th><th class="n">In orders</th><th>Used</th><th class="n">Oldest late</th><th>Status</th><th></th></tr></thead><tbody>
+  ${hs.map(h=>{const c=h.credit,lab={hold:"On hold",overdue:"Bill late",docs:"Papers missing",limit:"Limit used up",inactive:"Closed"}[c.reason],pct=+h.credit_limit>0?Math.min(100,c.used/h.credit_limit*100):100;
+   return `<tr><td><b>${esc(h.name)}</b><br><small class="muted">${h.terms_days}-day terms${h.is_group?" · Health1 unit":""}</small></td><td class="n">${fmt(h.credit_limit)}</td><td class="n">${fmt(c.unpaid)}</td><td class="n">${fmt(c.open_orders)}</td>
+   <td style="min-width:120px"><div class="cbar"><i class="${c.state==="block"?"b":c.state==="warn"?"w":""}" style="width:${pct}%"></i></div></td><td class="n">${c.overdue_days>0?c.overdue_days+" days":"–"}</td>
+   <td><span class="pill ${c.state==="block"?"b":c.state==="warn"?"w":"g"}">${c.state==="block"?lab:c.state==="warn"?"Near limit":"Can order"}</span></td><td>${isM()?`<button class="btn plain sm" data-hosp="${h.id}">Edit</button>`:""}</td></tr>`}).join("")}</tbody></table></div>`},
+ async payments(){const [bs,ps,hs]=await Promise.all([api("bills"),api("payments"),api("hospitals")]);S.hospitals=hs;const owing=hs.filter(h=>+h.credit.unpaid>0.5);
+  return `<div class="ohead"><div><h1>Bills and payments</h1><p>Payments settle the oldest bills first.</p></div></div>
+  <div class="kpis">${kpi("To collect",fmt(hs.reduce((s,h)=>s+ +h.credit.unpaid,0)))}${kpi("Past pay-by date",fmt(bs.filter(b=>b.late_days>0).reduce((s,b)=>s+ +b.due,0)),"",bs.some(b=>b.late_days>0)?"badk":"")}${kpi("Bills",bs.length)}</div>
+  <div class="panel box"><h3>Record a payment</h3>${owing.length?`<form class="form" id="payform"><label class="f">Hospital<select id="pay-h" required>${owing.map(h=>`<option value="${h.id}">${esc(h.name)} — owes ${fmt(h.credit.unpaid)}</option>`).join("")}</select></label>
+   <label class="f">Amount received (₹)<input id="pay-a" inputmode="decimal" required></label><label class="f">Date<input id="pay-d" type="date" value="${new Date().toLocaleDateString("en-CA")}"></label>
+   <label class="f">Mode<select id="pay-m"><option>NEFT / RTGS</option><option>Cheque</option><option>UPI</option><option>Cash</option></select></label><label class="f">Reference<input id="pay-r" placeholder="UTR or cheque number"></label><div class="wide"><button class="btn">Save payment</button></div></form>`:`<p class="muted" style="margin:0">No hospital owes anything.</p>`}</div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Bill</th><th>Hospital</th><th>Date</th><th>Pay by</th><th class="n">Amount</th><th class="n">Still to pay</th><th>Status</th><th></th></tr></thead><tbody>${bs.map(b=>`<tr><td><b>${b.bill_no}</b></td><td>${esc(b.hospital)}</td><td>${dstr(b.bill_date)}</td><td>${dstr(b.due_date)}</td><td class="n">${fmt(b.total)}</td><td class="n">${fmt(b.due)}</td><td>${billPill(b)}</td><td><button class="btn plain sm" data-bill="${b.id}">View</button></td></tr>`).join("")||`<tr><td colspan="8" class="muted">No bills yet.</td></tr>`}</tbody></table></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Received</th><th>Hospital</th><th class="n">Amount</th><th>Mode</th><th>Reference</th></tr></thead><tbody>${ps.map(p=>`<tr><td>${dstr(p.pay_date)}</td><td>${esc(p.hospital)}</td><td class="n">${fmt(p.amount)}</td><td>${esc(p.mode)}</td><td>${esc(p.ref)}</td></tr>`).join("")||`<tr><td colspan="5" class="muted">No payments yet.</td></tr>`}</tbody></table></div>`},
+ async demand(){const d=S.days||30,rows=await api("demand",{days:d});
+  return `<div class="ohead"><div><h1>Combined demand</h1><p>Every hospital's orders for the same item, added up. Quote this quantity to the company or its C&amp;F agent.</p></div><div class="fchips">${[7,30,90].map(n=>`<button class="chip ${d===n?"on":""}" data-days="${n}">Last ${n} days</button>`).join("")}</div></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Product</th><th>Supplier</th><th class="n">Hospitals</th><th class="n">Quantity</th><th class="n">Value</th></tr></thead><tbody>${rows.map(r=>`<tr><td><b>${esc(r.name)}</b><br><small class="muted">${esc(r.category)}</small></td><td>${esc(r.supplier)}</td><td class="n">${r.hospitals}</td><td class="n">${(+r.qty).toLocaleString("en-IN")} ${esc(r.pack)}</td><td class="n">${fmt(r.value)}</td></tr>`).join("")||`<tr><td colspan="5" class="muted">No orders in this period.</td></tr>`}</tbody></table></div>`},
+ async catalogue(){const its=await api("items_all");S.allItems=its;const samples=its.filter(i=>i.is_sample).length,q=(S.cq||"").toLowerCase(),cf=S.cc??-1;
+  const l=its.filter(i=>(cf<0||i.category===CATS[cf])&&(!q||(i.name+" "+(i.subcategory||"")).toLowerCase().includes(q)));
+  return `<div class="ohead"><div><h1>Catalogue</h1><p>${its.filter(i=>i.active).length} products live in the store</p></div><div class="acts"><button class="btn plain" id="bulk">Paste from Excel</button><button class="btn" data-item="new">Add product</button></div></div>
+  ${samples?`<div class="alert warn" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">${samples} products are samples with made-up rates. Remove them before real ordering starts.<button class="btn red sm" id="rmsamples">Remove ${samples} samples</button></div>`:""}
+  <div class="tools"><input type="search" id="cq" placeholder="Search products" value="${esc(S.cq||"")}"><div class="fchips"><button class="chip ${cf<0?"on":""}" data-cc="-1">All</button>${CATN.map((c,k)=>`<button class="chip ${cf===k?"on":""}" data-cc="${k}">${c}</button>`).join("")}</div></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Product</th><th>Pack</th><th class="n">MRP</th><th class="n">Rate</th><th class="n">Margin</th><th class="n">GST</th><th>Status</th><th></th></tr></thead><tbody>${l.map(i=>`<tr><td><div style="display:flex;gap:10px;align-items:center">${pic(Object.assign({},i,{subcategory:i.subcategory||"Other"}),"thumb")}<span><b>${esc(i.name)}</b><br><small class="muted">${esc(i.subcategory||i.category)}${i.brand?" · "+esc(i.brand):""}</small></span></div></td><td>${esc(i.pack)}</td><td class="n">${fmtR(i.mrp)}</td><td class="n">${fmtR(i.rate)}</td><td class="n">${i.purchase_rate?Math.round((1-i.purchase_rate/i.rate)*100)+"%":"–"}</td><td class="n">${+i.gst_rate}%</td>
+   <td>${!i.active?`<span class="pill n">Hidden</span>`:!i.in_stock?`<span class="pill b">Out of stock</span>`:i.is_sample?`<span class="pill w">Sample</span>`:`<span class="pill g">Live</span>`}</td><td><button class="btn plain sm" data-item="${i.id}">Edit</button></td></tr>`).join("")}</tbody></table></div>`},
+ async users(){const us=await api("users");S.users=us;if(!S.hospitals.length)S.hospitals=await api("hospitals");const RL={staff:"Hospital staff",owner:"Hospital owner",desk:"Cerebros desk",manager:"Cerebros manager"};
+  return `<div class="ohead"><div><h1>Users</h1><p>Everyone logs in with a mobile number and PIN.</p></div><button class="btn" data-user="new">Add user</button></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Role</th><th>Hospital</th><th>Status</th><th></th></tr></thead><tbody>${us.map(u=>`<tr><td><b>${esc(u.name)}</b></td><td>${u.mobile}</td><td>${RL[u.role]}</td><td>${esc(u.hospital||"–")}</td><td>${u.active?`<span class="pill g">Active</span>`:`<span class="pill b">Removed</span>`}</td><td><button class="btn plain sm" data-user="${u.id}">Edit</button></td></tr>`).join("")}</tbody></table></div>`},
+ async company(){const s=await api("settings_get");const f=(k,l)=>`<label class="f">${l}<input id="co-${k}" value="${esc(s["seller_"+k]||"")}"></label>`;
+  return `<div class="ohead"><div><h1>Company</h1><p>These details print on every bill.</p></div></div><form class="panel box form" id="coform">${f("name","Company name")}${f("gstin","GSTIN")}${f("dl_no","Drug licence numbers")}${f("phone","Phone")}<label class="f wide">Address<input id="co-address" value="${esc(s.seller_address||"")}"></label><div class="wide"><button class="btn">Save</button></div></form>`}
+};
+/* ---------- dialogs ---------- */
+function openDlg(html){const d=$("dlg");d.innerHTML=html;if(!d.open)d.showModal()}
+const closeDlg=()=>$("dlg").close();
+const fld=(id,l,v,extra)=>`<label class="f">${l}<input id="${id}" value="${esc(v??"")}" ${extra||""}></label>`;
+const dlgHead=t=>`<div style="display:flex;justify-content:space-between;align-items:center"><h2>${t}</h2><button type="button" class="x" data-close aria-label="Close">${I.x}</button></div>`;
+function hospDlg(h){h=h||{terms_days:30,credit_limit:0,active:true};
+  openDlg(`<form id="f-hosp">${dlgHead(h.id?"Edit hospital":"Add hospital")}<div class="form">${fld("h-name","Hospital name",h.name,"required")}${fld("h-beds","Beds",h.beds,'inputmode="numeric"')}
+  ${fld("h-gstin","GSTIN",h.gstin,'maxlength="15"')}${fld("h-dl","Drug licence number",h.dl_no)}${fld("h-dlx","Drug licence valid till",h.dl_expiry,'type="date"')}
+  ${fld("h-limit","Credit limit (₹)",+h.credit_limit,'inputmode="numeric" required')}<label class="f">Time to pay<select id="h-terms">${[30,45,60].map(n=>`<option ${+h.terms_days===n?"selected":""}>${n}</option>`).join("")}</select></label>
+  ${fld("h-sec","Security held (cheques, NACH, or 'Group unit')",h.security_note)}<label class="f wide">Delivery address<input id="h-addr" value="${esc(h.address||"")}"></label>
+  <label class="check"><input type="checkbox" id="h-group" ${h.is_group?"checked":""}>Health1 group unit</label><label class="check"><input type="checkbox" id="h-hold" ${h.on_hold?"checked":""}>Put on hold (stops ordering)</label>${h.id?`<label class="check"><input type="checkbox" id="h-active" ${h.active?"checked":""}>Account open</label>`:""}</div>
+  <div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-hosp").onsubmit=e=>{e.preventDefault();run(async()=>{await api("hospital_save",{id:h.id||"",name:$("h-name").value,beds:$("h-beds").value,gstin:$("h-gstin").value.trim(),dl_no:$("h-dl").value.trim(),dl_expiry:$("h-dlx").value,credit_limit:$("h-limit").value||0,terms_days:$("h-terms").value,security_note:$("h-sec").value.trim(),address:$("h-addr").value,is_group:$("h-group").checked,on_hold:$("h-hold").checked,active:h.id?$("h-active").checked:true});closeDlg();toast("Saved");S.hospitals=[];render()})};
+}
+function itemDlg(i){i=i||{category:CATS[0],gst_rate:5,active:true,in_stock:true,min_qty:1,pack:"piece"};const subs=[...new Set((S.allItems||[]).map(x=>x.subcategory).filter(Boolean))];
+  openDlg(`<form id="f-item">${dlgHead(i.id?"Edit product":"Add product")}<div class="form">${fld("i-name","Product name",i.name,"required")}<label class="f">Category<select id="i-cat">${CATS.map((c,k)=>`<option value="${c}" ${i.category===c?"selected":""}>${CATN[k]}</option>`).join("")}</select></label>
+  ${fld("i-sub","Sub-category",i.subcategory,'list="subl" placeholder="e.g. Antibiotics"')}<datalist id="subl">${subs.map(s=>`<option value="${esc(s)}">`).join("")}</datalist>${fld("i-pack","Sold per",i.pack,'required placeholder="vial, box of 100…"')}
+  ${fld("i-mrp","MRP (₹)",i.mrp,'inputmode="decimal" required')}${fld("i-rate","Selling rate (₹)",i.rate,'inputmode="decimal" required')}${fld("i-pr","Purchase rate (₹)",i.purchase_rate,'inputmode="decimal"')}${fld("i-gst","GST %",+i.gst_rate,'inputmode="decimal"')}
+  ${fld("i-brand","Brand",i.brand)}${fld("i-mfr","Manufacturer",i.manufacturer)}${fld("i-comp","Composition",i.composition)}${fld("i-hsn","HSN code",i.hsn)}${fld("i-sup","Supplier",i.supplier)}${fld("i-min","Minimum order",i.min_qty,'inputmode="numeric"')}
+  <label class="f wide">Picture link (https://…, optional)<input id="i-img" value="${esc(i.image_url||"")}" placeholder="Leave empty to use the drawn pack picture"></label>
+  <label class="check"><input type="checkbox" id="i-cold" ${i.cold_chain?"checked":""}>Cold chain</label><label class="check"><input type="checkbox" id="i-stock" ${i.in_stock?"checked":""}>In stock</label><label class="check"><input type="checkbox" id="i-active" ${i.active?"checked":""}>Show in store</label></div>
+  <div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-item").onsubmit=e=>{e.preventDefault();run(async()=>{await api("item_save",{id:i.id||"",name:$("i-name").value,category:$("i-cat").value,subcategory:$("i-sub").value,pack:$("i-pack").value,mrp:$("i-mrp").value,rate:$("i-rate").value,purchase_rate:$("i-pr").value,gst_rate:$("i-gst").value,brand:$("i-brand").value,manufacturer:$("i-mfr").value,composition:$("i-comp").value,hsn:$("i-hsn").value.trim(),supplier:$("i-sup").value.trim(),min_qty:$("i-min").value,image_url:$("i-img").value,cold_chain:$("i-cold").checked,in_stock:$("i-stock").checked,active:$("i-active").checked});closeDlg();toast("Saved");S.itemsAt=0;render()})};
+}
+function bulkDlg(){
+  openDlg(`<form id="f-bulk">${dlgHead("Paste products from Excel")}<p style="margin:0">Copy rows from Excel with the columns in this order:<br><b>Name · Category · Sub-category · Pack · MRP · Rate · Purchase rate · GST % · HSN · Supplier · Brand · Manufacturer</b><br><small class="muted">Category is Medicines, Consumables or Implants. A product with the same name and pack is updated.</small></p>
+  <textarea id="b-text" rows="10" required></textarea><div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Add products</button></div></form>`);
+  $("f-bulk").onsubmit=e=>{e.preventDefault();run(async()=>{
+    const num=v=>String(v||"").replace(/[₹,\s%]/g,""),cat=v=>{v=String(v||"").trim().toLowerCase();return v.startsWith("med")?CATS[0]:v.startsWith("imp")||v.startsWith("ste")?CATS[2]:v.startsWith("con")||v.startsWith("sur")?CATS[1]:v};
+    const rows=$("b-text").value.split(/\r?\n/).map(l=>l.split("\t")).filter(c=>c.length>=6&&c[0].trim()&&c[0].trim().toLowerCase()!=="name").map(c=>({name:c[0],category:cat(c[1]),subcategory:(c[2]||"").trim(),pack:c[3],mrp:num(c[4]),rate:num(c[5]),purchase_rate:num(c[6]),gst_rate:num(c[7]),hsn:(c[8]||"").trim(),supplier:(c[9]||"").trim(),brand:(c[10]||"").trim(),manufacturer:(c[11]||"").trim()}));
+    if(!rows.length)throw new Error("No rows found. Copy at least Name, Category, Sub-category, Pack, MRP and Rate from Excel.");
+    const r=await api("items_bulk",{rows});closeDlg();toast(r.rows+" products added or updated");S.itemsAt=0;render()})};
+}
+function userDlg(u){u=u||{role:"staff",active:true};const RL=[["staff","Hospital staff"],["owner","Hospital owner"],["desk","Cerebros desk"],["manager","Cerebros manager"]];
+  openDlg(`<form id="f-user">${dlgHead(u.id?"Edit login":"Add login")}<div class="form">${fld("u-name","Name",u.name,"required")}${fld("u-mobile","Mobile number",u.mobile,'inputmode="numeric" maxlength="10" required')}
+  ${fld("u-pin",u.id?"New PIN (leave empty to keep)":"PIN (4 to 6 digits)","",'inputmode="numeric" maxlength="6" '+(u.id?"":"required"))}
+  ${isM()?`<label class="f">Role<select id="u-role">${RL.map(([k,l])=>`<option value="${k}" ${u.role===k?"selected":""}>${l}</option>`).join("")}</select></label><label class="f">Hospital<select id="u-hosp"><option value="">–</option>${S.hospitals.map(h=>`<option value="${h.id}" ${u.hospital_id===h.id?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label>`:""}
+  ${u.id?`<label class="check"><input type="checkbox" id="u-active" ${u.active?"checked":""}>Can log in</label>`:""}</div><div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-user").onsubmit=e=>{e.preventDefault();run(async()=>{await api("user_save",{id:u.id||"",name:$("u-name").value,mobile:$("u-mobile").value.replace(/\D/g,"").slice(-10),pin:$("u-pin").value,role:isM()?$("u-role").value:"staff",hospital_id:isM()?$("u-hosp").value:"",active:u.id?$("u-active").checked:true});closeDlg();toast("Saved");render()})};
+}
+function deliverDlg(o){
+  openDlg(`<form id="f-del">${dlgHead("Deliver "+o.order_no)}<p style="margin:0" class="muted">${esc(o.hospital)}. Enter batch and expiry from the pack. Saving makes the bill.</p><div style="display:flex;flex-direction:column;gap:10px">${o.lines.map(l=>{const med=l.category===CATS[0];return `<div class="caseln">${pic(l)}<div><b>${esc(l.name)} × ${+l.qty}</b><div class="form"><label class="f">Batch${med?"":" (optional)"}<input data-b="${l.id}" ${med?"required":""}></label><label class="f">Expiry${med?"":" (optional)"}<input type="date" data-x="${l.id}" ${med?"required":""}></label></div></div></div>`}).join("")}</div>
+  <div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Mark delivered and make bill</button></div></form>`);
+  $("f-del").onsubmit=e=>{e.preventDefault();run(async()=>{const lines=o.lines.map(l=>({id:l.id,batch:document.querySelector(`[data-b="${l.id}"]`).value,expiry:document.querySelector(`[data-x="${l.id}"]`).value}));
+    const r=await api("order_next",{order_id:o.id,lines});closeDlg();toast("Delivered. Bill "+r.bill_no+" made");render()})};
+}
+async function billDlg(id){
+  const r=await api("bill_detail",{bill_id:id}),b=r.bill,s=r.seller,by=r.buyer,same=!s.seller_gstin||!by.gstin||s.seller_gstin.slice(0,2)===by.gstin.slice(0,2);
+  openDlg(`<div class="dbody bill"><div class="two2"><div><h2>${esc(s.seller_name||"Cerebros")}</h2><small>${esc(s.seller_address||"")}<br>${s.seller_gstin?"GSTIN "+esc(s.seller_gstin):""}${s.seller_dl_no?" · DL "+esc(s.seller_dl_no):""}${s.seller_phone?" · "+esc(s.seller_phone):""}</small></div>
+  <div style="text-align:right"><b style="font-size:18px">Tax invoice ${b.bill_no}</b><br><small>Date ${dstr(b.bill_date)} · Pay by ${dstr(b.due_date)}<br>Order ${r.order.order_no}${r.order.po_no?" · PO "+esc(r.order.po_no):""}</small></div></div>
+  <div><small class="muted">Billed to</small><br><b>${esc(by.name)}</b><br><small>${esc(by.address||"")}<br>${by.gstin?"GSTIN "+esc(by.gstin):""}${by.dl_no?" · DL "+esc(by.dl_no):""}</small></div>
+  <div class="tw"><table class="t" style="min-width:600px"><thead><tr><th>Product</th><th>HSN</th><th>Batch</th><th>Expiry</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">GST</th><th class="n">Amount</th></tr></thead><tbody>
+  ${r.order.lines.map(l=>`<tr><td>${esc(l.name)}<br><small class="muted">per ${esc(l.pack)}${l.case_date?` · case ${dstr(l.case_date)}, ${esc(l.surgeon)}`:""}</small></td><td>${esc(l.hsn)}</td><td>${esc(l.batch)}</td><td>${dstr(l.expiry)}</td><td class="n">${+l.qty}</td><td class="n">${fmtR(l.rate)}</td><td class="n">${+l.gst_rate}%</td><td class="n">${fmtR(l.qty*l.rate)}</td></tr>`).join("")}</tbody></table></div>
+  <div class="sum2"><div><span>Taxable value</span><span class="num">${fmtR(b.taxable)}</span></div>${same?`<div><span>CGST</span><span class="num">${fmtR(b.gst/2)}</span></div><div><span>SGST</span><span class="num">${fmtR(b.gst/2)}</span></div>`:`<div><span>IGST</span><span class="num">${fmtR(b.gst)}</span></div>`}
+  <div class="t"><span>Total</span><span class="num">${fmtR(b.total)}</span></div><div><span>Received</span><span class="num">${fmtR(b.paid)}</span></div><div><span>Still to pay</span><b class="num">${fmtR(b.due)}</b></div></div>
+  <div class="acts noprint"><button class="btn plain" data-close>Close</button><button class="btn" id="printbill">Print</button></div></div>`);
+}
+function pinDlg(){
+  openDlg(`<form id="f-pin">${dlgHead("Change PIN")}<div class="form">${fld("p-old","Old PIN","",'type="password" inputmode="numeric" maxlength="6" required')}${fld("p-new","New PIN (4 to 6 digits)","",'type="password" inputmode="numeric" maxlength="6" required')}</div><div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Change PIN</button></div></form>`);
+  $("f-pin").onsubmit=e=>{e.preventDefault();run(async()=>{await api("change_pin",{old:$("p-old").value,new:$("p-new").value});closeDlg();toast("PIN changed")})};
+}
+/* ---------- auth ---------- */
 function authView(setup){
-  $("tabs").innerHTML="";$("topbtns").innerHTML="";$("who").textContent="Order medicines, consumables and implants";
-  $("view").innerHTML=`<form class="card" id="authform"><h1>${setup?"Set up the first manager":"Log in"}</h1>
-  ${setup?`<label class="f">Setup code<input id="a-code" required autocomplete="off"></label><label class="f">Your name<input id="a-name" required></label>`:""}
-  <label class="f">Mobile number<input id="a-mobile" inputmode="numeric" maxlength="14" required autocomplete="username"></label>
-  <label class="f">${setup?"Choose a PIN (4 to 6 digits)":"PIN"}<input id="a-pin" type="password" inputmode="numeric" maxlength="6" required autocomplete="${setup?"new-password":"current-password"}"></label>
-  <button class="btn">${setup?"Create login":"Log in"}</button>${setup?"":`<small style="color:var(--muted)">Forgot your PIN? Ask your hospital owner or the Cerebros desk to reset it.</small>`}</form>`;
+  $("app").innerHTML=`<div class="auth"><div class="auth-a"><a class="logo" href="#">${LOGO}<b>Cerebros</b><span>Supply</span></a><div><h1>One store for every hospital supply</h1><p>Medicines, consumables and implants at group buying rates, on credit, delivered with batch and expiry on every bill.</p></div>
+   <ul><li><span>${I.tag}</span>Prices well below MRP, shown on every product</li><li><span>${I.card}</span>Order now, pay in 30 to 60 days</li><li><span>${I.truck}</span>Pick a delivery slot and track every order</li></ul></div>
+   <div class="auth-b"><form class="auth-card" id="authform"><h2>${setup?"Set up the first manager":"Log in"}</h2><p class="muted" style="margin:0">${setup?"Use the one-time setup code.":"Use the mobile number and PIN given to you."}</p>
+    ${setup?`<label class="f">Setup code<input id="a-code" required autocomplete="off"></label><label class="f">Your name<input id="a-name" required></label>`:""}
+    <label class="f">Mobile number<input id="a-mobile" inputmode="numeric" maxlength="14" required autocomplete="username" placeholder="10-digit mobile"></label>
+    <label class="f">${setup?"Choose a PIN (4 to 6 digits)":"PIN"}<input id="a-pin" type="password" inputmode="numeric" maxlength="6" required autocomplete="${setup?"new-password":"current-password"}"></label>
+    <button class="btn lg block">${setup?"Create login":"Log in"}</button>${setup?"":`<small class="muted">Forgot your PIN? Ask your hospital owner or the Cerebros desk to reset it.</small>`}</form></div></div>`;
   $("authform").onsubmit=e=>{e.preventDefault();run(async()=>{
     const d={mobile:$("a-mobile").value.replace(/\D/g,"").slice(-10),pin:$("a-pin").value};if(setup){d.code=$("a-code").value.trim().toUpperCase();d.name=$("a-name").value}
     const r=await api(setup?"setup":"login",d);S.token=r.token;store.set("cs_token",r.token);start(r.user)})};
 }
-function start(u){
-  S.user=u;const c=store.get("cs_cart_"+u.id)||{};S.cart=c.cart||{};S.caseInfo=c.caseInfo||{};
-  $("who").textContent=u.name+(u.hospital?" · "+u.hospital:" · Cerebros");
-  $("topbtns").innerHTML=`<button id="pinbtn">Change PIN</button> <button id="logout">Log out</button>`;render();
-}
+function start(u){S.user=u;if(isH())S.mode="store";render()}
 async function boot(){
   try{if(S.token){try{start(await api("me"));return}catch(e){if(S.token)throw e}}
     const s=await api("status");authView(s.needs_setup)}
-  catch(e){$("view").innerHTML=`<div class="alert bad">${esc(e.message)}</div><div><button class="btn ghost" onclick="location.reload()">Try again</button></div>`}
+  catch(e){$("app").innerHTML=`<div class="empty" style="margin:20vh auto;max-width:420px"><div class="alert bad">${esc(e.message)}</div><br><button class="btn ghost" onclick="location.reload()">Try again</button></div>`}
 }
-function openDlg(html){const d=$("dlg");d.innerHTML=html;if(!d.open)d.showModal()}
-const closeDlg=()=>$("dlg").close();
-const fld=(id,l,v,extra)=>`<label class="f">${l}<input id="${id}" value="${esc(v??"")}" ${extra||""}></label>`;
-function hospDlg(h){h=h||{terms_days:30,credit_limit:0,active:true};
-  openDlg(`<form id="f-hosp"><h2>${h.id?"Edit hospital":"Add hospital"}</h2><div class="form">${fld("h-name","Hospital name",h.name,"required")}${fld("h-beds","Beds",h.beds,'inputmode="numeric"')}
-  ${fld("h-gstin","GSTIN",h.gstin,'maxlength="15"')}${fld("h-dl","Drug licence number",h.dl_no)}${fld("h-dlx","Drug licence valid till",h.dl_expiry,'type="date"')}
-  ${fld("h-limit","Credit limit (₹)",+h.credit_limit,'inputmode="numeric" required')}<label class="f">Time to pay<select id="h-terms">${[30,45,60].map(n=>`<option ${+h.terms_days===n?"selected":""}>${n}</option>`).join("")}</select></label>
-  ${fld("h-sec","Security held (cheques, NACH, or 'Group unit')",h.security_note)}<label class="f wide">Address<input id="h-addr" value="${esc(h.address||"")}"></label>
-  <label><input type="checkbox" id="h-group" ${h.is_group?"checked":""}> Health1 group unit</label><label><input type="checkbox" id="h-hold" ${h.on_hold?"checked":""}> Put on hold (stops ordering)</label>${h.id?`<label><input type="checkbox" id="h-active" ${h.active?"checked":""}> Account open</label>`:""}</div>
-  <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
-  $("f-hosp").onsubmit=e=>{e.preventDefault();run(async()=>{await api("hospital_save",{id:h.id||"",name:$("h-name").value,beds:$("h-beds").value,gstin:$("h-gstin").value.trim(),dl_no:$("h-dl").value.trim(),dl_expiry:$("h-dlx").value,credit_limit:$("h-limit").value||0,terms_days:$("h-terms").value,security_note:$("h-sec").value.trim(),address:$("h-addr").value,is_group:$("h-group").checked,on_hold:$("h-hold").checked,active:h.id?$("h-active").checked:true});closeDlg();toast("Saved");render()})};
-}
-function itemDlg(i){i=i||{category:CATS[0],gst_rate:5,active:true,pack:"piece"};
-  openDlg(`<form id="f-item"><h2>${i.id?"Edit item":"Add item"}</h2><div class="form">${fld("i-name","Item name",i.name,"required")}<label class="f">Category<select id="i-cat">${CATS.map(c=>`<option ${i.category===c?"selected":""}>${c}</option>`).join("")}</select></label>
-  ${fld("i-pack","Sold per (vial, box of 100…)",i.pack,"required")}${fld("i-mrp","MRP (₹)",i.mrp,'inputmode="decimal" required')}${fld("i-rate","Selling rate (₹)",i.rate,'inputmode="decimal" required')}${fld("i-pr","Purchase rate (₹)",i.purchase_rate,'inputmode="decimal"')}
-  ${fld("i-gst","GST %",+i.gst_rate,'inputmode="decimal"')}${fld("i-hsn","HSN code",i.hsn)}${fld("i-sup","Supplier",i.supplier)}<label><input type="checkbox" id="i-active" ${i.active?"checked":""}> Show to hospitals</label></div>
-  <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
-  $("f-item").onsubmit=e=>{e.preventDefault();run(async()=>{await api("item_save",{id:i.id||"",name:$("i-name").value,category:$("i-cat").value,pack:$("i-pack").value,mrp:$("i-mrp").value,rate:$("i-rate").value,purchase_rate:$("i-pr").value,gst_rate:$("i-gst").value,hsn:$("i-hsn").value.trim(),supplier:$("i-sup").value.trim(),active:$("i-active").checked});closeDlg();toast("Saved");render()})};
-}
-function bulkDlg(){
-  openDlg(`<form id="f-bulk"><h2>Paste items from Excel</h2><p style="margin:0">Copy rows from Excel with the columns in this order and paste below:<br><b>Name · Category · Pack · MRP · Rate · Purchase rate · GST % · HSN · Supplier</b><br><small>Category is Medicines, Consumables or Implants. An item with the same name and pack is updated.</small></p>
-  <textarea id="b-text" rows="10" style="width:100%" required></textarea><div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Add items</button></div></form>`);
-  $("f-bulk").onsubmit=e=>{e.preventDefault();run(async()=>{
-    const num=v=>String(v||"").replace(/[₹,\s%]/g,""),cat=v=>{v=String(v||"").trim().toLowerCase();return v.startsWith("med")?CATS[0]:v.startsWith("imp")||v.startsWith("ste")?CATS[2]:v.startsWith("con")||v.startsWith("sur")?CATS[1]:v};
-    const rows=$("b-text").value.split(/\r?\n/).map(l=>l.split("\t")).filter(c=>c.length>=5&&c[0].trim()&&c[0].trim().toLowerCase()!=="name").map(c=>({name:c[0],category:cat(c[1]),pack:c[2],mrp:num(c[3]),rate:num(c[4]),purchase_rate:num(c[5]),gst_rate:num(c[6]),hsn:(c[7]||"").trim(),supplier:(c[8]||"").trim()}));
-    if(!rows.length)throw new Error("No rows found. Copy the rows from Excel, with at least Name, Category, Pack, MRP and Rate.");
-    const r=await api("items_bulk",{rows});closeDlg();toast(r.rows+" items added or updated");render()})};
-}
-function userDlg(u){u=u||{role:isM()?"staff":"staff",active:true};const RL=[["staff","Hospital staff"],["owner","Hospital owner"],["desk","Cerebros desk"],["manager","Cerebros manager"]];
-  openDlg(`<form id="f-user"><h2>${u.id?"Edit login":"Add login"}</h2><div class="form">${fld("u-name","Name",u.name,"required")}${fld("u-mobile","Mobile number",u.mobile,'inputmode="numeric" maxlength="10" required')}
-  ${fld("u-pin",u.id?"New PIN (leave empty to keep)":"PIN (4 to 6 digits)","",'inputmode="numeric" maxlength="6" '+(u.id?"":"required"))}
-  ${isM()?`<label class="f">Role<select id="u-role">${RL.map(([k,l])=>`<option value="${k}" ${u.role===k?"selected":""}>${l}</option>`).join("")}</select></label><label class="f">Hospital<select id="u-hosp"><option value="">–</option>${(S.hospitals||[]).map(h=>`<option value="${h.id}" ${u.hospital_id===h.id?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label>`:""}
-  ${u.id?`<label><input type="checkbox" id="u-active" ${u.active?"checked":""}> Can log in</label>`:""}</div><div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
-  $("f-user").onsubmit=e=>{e.preventDefault();run(async()=>{await api("user_save",{id:u.id||"",name:$("u-name").value,mobile:$("u-mobile").value.replace(/\D/g,"").slice(-10),pin:$("u-pin").value,role:isM()?$("u-role").value:"staff",hospital_id:isM()?$("u-hosp").value:"",active:u.id?$("u-active").checked:true});closeDlg();toast("Saved");render()})};
-}
-function deliverDlg(o){
-  openDlg(`<form id="f-del"><h2>Deliver ${o.order_no}</h2><p style="margin:0">${esc(o.hospital)}. Enter batch and expiry from the pack. This creates the bill.</p><div class="list">${o.lines.map(l=>{const med=l.category===CATS[0];return `<div class="row"><div class="nm"><b>${esc(l.name)} × ${+l.qty}</b><small>${l.category}</small></div>
-  <label class="f">Batch<input data-b="${l.id}" ${med?"required":""}></label><label class="f">Expiry<input type="date" data-x="${l.id}" ${med?"required":""}></label></div>`}).join("")}</div>
-  <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Mark delivered and make bill</button></div></form>`);
-  $("f-del").onsubmit=e=>{e.preventDefault();run(async()=>{const lines=o.lines.map(l=>({id:l.id,batch:document.querySelector(`[data-b="${l.id}"]`).value,expiry:document.querySelector(`[data-x="${l.id}"]`).value}));
-    const r=await api("order_next",{order_id:o.id,lines});closeDlg();toast("Delivered. Bill "+r.bill_no+" created");render()})};
-}
-async function billDlg(id){
-  const r=await api("bill_detail",{bill_id:id}),b=r.bill,s=r.seller,by=r.buyer,same=!s.seller_gstin||!by.gstin||s.seller_gstin.slice(0,2)===by.gstin.slice(0,2);
-  openDlg(`<div class="dbody bill"><div class="two"><div><h2>${esc(s.seller_name||"Cerebros")}</h2><small>${esc(s.seller_address||"")}<br>${s.seller_gstin?"GSTIN "+esc(s.seller_gstin):""} ${s.seller_dl_no?" · DL "+esc(s.seller_dl_no):""} ${s.seller_phone?" · "+esc(s.seller_phone):""}</small></div>
-  <div style="text-align:right"><b>Bill ${b.bill_no}</b><br><small>Date ${dstr(b.bill_date)} · Pay by ${dstr(b.due_date)}<br>Order ${r.order.order_no}</small></div></div>
-  <div><b>${esc(by.name)}</b><br><small>${esc(by.address||"")}<br>${by.gstin?"GSTIN "+esc(by.gstin):""} ${by.dl_no?" · DL "+esc(by.dl_no):""}</small></div>
-  <div class="tw"><table><thead><tr><th>Item</th><th>HSN</th><th>Batch</th><th>Expiry</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">GST</th><th class="n">Amount</th></tr></thead><tbody>
-  ${r.order.lines.map(l=>`<tr><td>${esc(l.name)}<br><small>per ${esc(l.pack)}${l.case_date?` · case ${dstr(l.case_date)}, ${esc(l.surgeon)}`:""}</small></td><td>${esc(l.hsn)}</td><td>${esc(l.batch)}</td><td>${dstr(l.expiry)}</td><td class="n">${+l.qty}</td><td class="n">${fmtR(l.rate)}</td><td class="n">${+l.gst_rate}%</td><td class="n">${fmtR(l.qty*l.rate)}</td></tr>`).join("")}</tbody></table></div>
-  <div class="sum"><div><span>Taxable value</span><span>${fmtR(b.taxable)}</span></div>${same?`<div><span>CGST</span><span>${fmtR(b.gst/2)}</span></div><div><span>SGST</span><span>${fmtR(b.gst/2)}</span></div>`:`<div><span>IGST</span><span>${fmtR(b.gst)}</span></div>`}
-  <div class="t"><span>Total</span><span>${fmtR(b.total)}</span></div><div><span>Received</span><span>${fmtR(b.paid)}</span></div><div><span>Still to pay</span><span>${fmtR(b.due)}</span></div></div>
-  <div class="acts noprint"><button class="btn ghost" data-close>Close</button><button class="btn" id="printbill">Print</button></div></div>`);
-}
-function pinDlg(){
-  openDlg(`<form id="f-pin"><h2>Change PIN</h2><div class="form">${fld("p-old","Old PIN","",'type="password" inputmode="numeric" maxlength="6" required')}${fld("p-new","New PIN (4 to 6 digits)","",'type="password" inputmode="numeric" maxlength="6" required')}</div><div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Change</button></div></form>`);
-  $("f-pin").onsubmit=e=>{e.preventDefault();run(async()=>{await api("change_pin",{old:$("p-old").value,new:$("p-new").value});closeDlg();toast("PIN changed")})};
-}
-function rerenderLocal(){const r=route();if(r==="order"){$("view").innerHTML=V._order();render.tabsOnly()}else render()}
-render.tabsOnly=()=>{const r=route();$("tabs").innerHTML=tabsFor().map(([k,l])=>`<a href="#${k}" class="${k===r?"on":""}">${l}${k==="cart"&&cartLines().length?`<span class="badge">${cartLines().length}</span>`:""}</a>`).join("")};
+/* ---------- events ---------- */
+function applyNav(d){const f={};if(d.cat!==undefined)f.cat=+d.cat;if(d.sub)f.subs=[d.sub];if(d.save)f.save=+d.save;if(d.cold)f.cold=true;resetF(f)}
 document.addEventListener("click",e=>{
-  const t=e.target.closest("button,a");if(!t||!S.user&&!t.closest("dialog"))return;const d=t.dataset;
+  const t=e.target.closest("button,a");
+  if(!t){const m=$("mega");if(m&&!e.target.closest("#mega"))m.hidden=true;const sg=$("sugg");if(sg&&!e.target.closest(".search"))sg.hidden=true;return}
+  const d=t.dataset;
   if("close" in d){closeDlg();return}
-  if(t.id==="logout"){run(async()=>{try{await api("logout")}catch(e){}S.token=null;S.user=null;store.del("cs_token");location.hash="";boot()});return}
+  if(!S.user)return;
+  if(t.id==="logout"){run(async()=>{try{await api("logout")}catch(x){}S.token=null;S.user=null;store.del("cs_token");location.hash="";boot()});return}
   if(t.id==="pinbtn"){pinDlg();return}
   if(t.id==="printbill"){window.print();return}
-  if(d.cat!==undefined){S.cat=+d.cat;rerenderLocal()}
-  else if(d.inc){setQty(d.inc,(S.cart[d.inc]||0)+1);rerenderLocal()}
-  else if(d.dec){setQty(d.dec,(S.cart[d.dec]||0)-1);rerenderLocal()}
-  else if(d.go){go(d.go)}
-  else if(d.days){S.days=+d.days;render()}
-  else if(d.again){const o=S.myOrders.find(x=>x.id==d.again);o.lines.forEach(l=>setQty(l.item_id,+l.qty));toast("Items added to cart");go("cart")}
-  else if(d.cancel){if(t.dataset.sure){run(async()=>{await api("cancel_order",{order_id:+d.cancel});toast("Order cancelled");render()})}else{t.dataset.sure=1;t.textContent="Tap again to cancel"}}
-  else if(d.next){const o=S.deskOrders.find(x=>x.id==d.next);if(o.status===2)deliverDlg(o);else run(async()=>{await api("order_next",{order_id:o.id});render()})}
-  else if(d.bill){run(()=>billDlg(+d.bill))}
-  else if(d.hosp){hospDlg(d.hosp==="new"?null:S.hospitals.find(h=>h.id==d.hosp))}
-  else if(d.item){itemDlg(d.item==="new"?null:S.allItems.find(i=>i.id==d.item))}
-  else if(d.user){userDlg(d.user==="new"?null:S.users.find(u=>u.id==d.user))}
-  else if(t.id==="bulk"){bulkDlg()}
-  else if(t.id==="rmsamples"){if(t.dataset.sure){run(async()=>{await api("remove_samples");toast("Sample items removed");render()})}else{t.dataset.sure=1;t.textContent="Tap again to remove"}}
-  else if(t.id==="place"){run(async()=>{
-    const lines=cartLines().map(l=>{const i=item(l.id),ci=S.caseInfo[l.id]||{};if(i.category===CATS[2]&&(!ci.case_date||!ci.surgeon))throw new Error("Fill surgery date and surgeon for "+i.name);return {item_id:l.id,qty:l.q,case_date:ci.case_date||"",surgeon:ci.surgeon||""}});
-    const r=await api("place_order",{lines});S.cart={};S.caseInfo={};saveCart();toast("Order "+r.order_no+" placed");go("orders")})}
+  if(t.id==="allcats"){const m=$("mega");m.hidden=!m.hidden;return}
+  if(t.id==="cartbtn"||t.id==="cartbtn2"){openDrawer();return}
+  if("closecart" in d){closeDrawer()}
+  if(d.cat!==undefined||d.save||d.cold||d.sub){applyNav(d);if($("mega"))$("mega").hidden=true;if(route()==="shop"&&t.getAttribute("href")==="#shop"){e.preventDefault();render()}return}
+  if(d.jump){e.preventDefault();const el=$(d.jump);if(el)el.scrollIntoView({behavior:"smooth"});return}
+  if("searchall" in d){S.f=Object.assign(S.f,{q:$("q").value.trim(),cat:-1,subs:[]});$("sugg").hidden=true;go("shop");return}
+  if(d.fcat!==undefined){e.preventDefault();S.f.cat=+d.fcat;S.f.subs=[];$("view").innerHTML=shopHTML();bindFilters();return}
+  if(d.fsub){e.preventDefault();const s=d.fsub;S.f.subs=S.f.subs.includes(s)?S.f.subs.filter(x=>x!==s):S.f.subs.concat(s);$("view").innerHTML=shopHTML();bindFilters();return}
+  if(d.fsave!==undefined){S.f.save=+d.fsave;$("view").innerHTML=shopHTML();bindFilters();return}
+  if("fclear" in d){resetF();$("view").innerHTML=shopHTML();bindFilters();const q=$("q");if(q)q.value="";return}
+  if(d.unf){const k=d.unf;if(k==="q"){S.f.q="";$("q").value=""}else if(k==="cat"){S.f.cat=-1;S.f.subs=[]}else if(k.startsWith("sub:"))S.f.subs=S.f.subs.filter(x=>x!==k.slice(4));else if(k==="save")S.f.save=0;else if(k==="cold")S.f.cold=false;else if(k==="stock")S.f.stock=false;else if(k==="price"){S.f.min="";S.f.max=""}
+    $("view").innerHTML=shopHTML();bindFilters();return}
+  if("openf" in d){$("filters").classList.add("on");return}
+  if("closef" in d){$("filters").classList.remove("on");return}
+  if(d.add){const i=item(d.add);setQty(d.add,i?i.min_qty:1);toast("Added to cart");afterCartChange();return}
+  if(d.inc){setQty(d.inc,(S.cart[d.inc]||0)+1);afterCartChange();return}
+  if(d.dec){const i=item(d.dec),n=(S.cart[d.dec]||0)-1;setQty(d.dec,i&&n<i.min_qty?0:n);afterCartChange();return}
+  if(d.rm){setQty(d.rm,0);afterCartChange();return}
+  if("pinc" in d||"pdec" in d){const q=$("pq"),i=item(location.hash.slice(3));q.value=Math.max(i?i.min_qty:1,(+q.value||0)+("pinc" in d?1:-1));return}
+  if(d.padd||d.pbuy){const id=d.padd||d.pbuy,q=$("pq")?+$("pq").value:(S.cart[id]||1);setQty(id,q);if(d.pbuy){go("checkout")}else{toast("Cart updated");afterCartChange();openDrawer()}return}
+  if(d.again){const src=(S.myOrders||[]).concat(S.curOrder?[S.curOrder]:[]).find(x=>x.id==d.again);if(!src)return;let n=0;src.lines.forEach(l=>{if(item(l.item_id)){setQty(l.item_id,+l.qty);n++}});toast(n+" products added to cart");openDrawer();refreshHeader();return}
+  if(d.cancel){if(t.dataset.sure){run(async()=>{await api("cancel_order",{order_id:+d.cancel});toast("Order cancelled");render()})}else{t.dataset.sure=1;t.textContent="Tap again to cancel"}return}
+  if(d.next){const o=S.deskOrders.find(x=>x.id==d.next);if(o.status===2)deliverDlg(o);else run(async()=>{await api("order_next",{order_id:o.id});render()});return}
+  if(d.bill){run(()=>billDlg(+d.bill));return}
+  if(d.hosp){hospDlg(d.hosp==="new"?null:S.hospitals.find(h=>h.id==d.hosp));return}
+  if(d.item){itemDlg(d.item==="new"?null:S.allItems.find(i=>i.id==d.item));return}
+  if(d.user){userDlg(d.user==="new"?null:S.users.find(u=>u.id==d.user));return}
+  if(d.days){S.days=+d.days;render();return}
+  if(d.cc!==undefined){S.cc=+d.cc;render();return}
+  if(t.id==="bulk"){bulkDlg();return}
+  if(t.id==="rmsamples"){if(t.dataset.sure){run(async()=>{await api("remove_samples");toast("Sample products removed");S.itemsAt=0;render()})}else{t.dataset.sure=1;t.textContent="Tap again to remove"}return}
+  if(t.id==="place"){run(async()=>{
+    const lines=cartLines().map(l=>{const ci=S.caseInfo[l.i.id]||{};if(l.i.category===CATS[2]&&(!ci.case_date||!ci.surgeon))throw new Error("Fill surgery date and surgeon for "+l.i.name);return{item_id:l.i.id,qty:l.q,case_date:ci.case_date||"",surgeon:ci.surgeon||""}});
+    const slot=(document.querySelector('input[name="slot"]:checked')||{}).value||"";
+    const r=await api("place_order",hp({lines,po_no:$("co-po").value,notes:$("co-notes").value,delivery_slot:slot,deliver_to:$("co-to").value}));
+    S.cart={};S.caseInfo={};S.co=null;saveCart();go("done-"+r.order_id)})}
 });
-document.addEventListener("change",e=>{const d=e.target.dataset;
-  if(d.q){setQty(d.q,+e.target.value);rerenderLocal()}
-  else if(d.cd){(S.caseInfo[d.cd]=S.caseInfo[d.cd]||{}).case_date=e.target.value;saveCart()}
-  else if(d.sg){(S.caseInfo[d.sg]=S.caseInfo[d.sg]||{}).surgeon=e.target.value.trim();saveCart()}});
-document.addEventListener("input",e=>{if(e.target.id==="search"){S.q=e.target.value;$("view").innerHTML=V._order();const s=$("search");s.focus();s.setSelectionRange(s.value.length,s.value.length)}});
+$("scrim").addEventListener("click",()=>{closeDrawer();const f=$("filters");if(f)f.classList.remove("on")});
+document.addEventListener("change",e=>{const d=e.target.dataset,id=e.target.id;
+  if(id==="forh"){S.forH=+e.target.value||null;store.set("cs_forh",S.forH);render();return}
+  if(d.q){setQty(d.q,+e.target.value);afterCartChange();return}
+  if(d.cd){(S.caseInfo[d.cd]=S.caseInfo[d.cd]||{}).case_date=e.target.value;saveCart();return}
+  if(d.sg){(S.caseInfo[d.sg]=S.caseInfo[d.sg]||{}).surgeon=e.target.value.trim();saveCart();return}
+  if(e.target.name==="slot"||["co-po","co-notes","co-to"].includes(id)){S.co={slot:(document.querySelector('input[name="slot"]:checked')||{}).value,po:$("co-po").value,notes:$("co-notes").value,to:$("co-to").value}}
+});
+document.addEventListener("input",e=>{if(e.target.id==="q")suggest(e.target.value);
+  if(e.target.id==="cq"){S.cq=e.target.value;clearTimeout(S.cqt);S.cqt=setTimeout(async()=>{const p=e.target.selectionStart;$("view").innerHTML=await O.catalogue();const c=$("cq");c.focus();c.setSelectionRange(p,p)},250)}});
+document.addEventListener("keydown",e=>{
+  if(e.target.id==="q"){const b=$("sugg"),links=b?[...b.querySelectorAll("a")]:[];let k=links.findIndex(a=>a.classList.contains("on"));
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();if(!links.length)return;links.forEach(a=>a.classList.remove("on"));k=e.key==="ArrowDown"?Math.min(links.length-1,k+1):Math.max(0,k-1);links[k].classList.add("on");return}
+    if(e.key==="Enter"){e.preventDefault();if(k>=0){links[k].click();return}S.f=Object.assign(S.f,{q:e.target.value.trim(),cat:-1,subs:[]});b.hidden=true;go("shop");return}
+    if(e.key==="Escape"&&b)b.hidden=true}
+  if(e.key==="Escape"){closeDrawer();const m=$("mega");if(m)m.hidden=true}});
 document.addEventListener("submit",e=>{
   if(e.target.id==="payform"){e.preventDefault();run(async()=>{await api("payment_add",{hospital_id:+$("pay-h").value,amount:$("pay-a").value.replace(/[₹,\s]/g,""),pay_date:$("pay-d").value,mode:$("pay-m").value,ref:$("pay-r").value.trim()});toast("Payment saved");render()})}
   else if(e.target.id==="coform"){e.preventDefault();run(async()=>{const o={};["name","gstin","dl_no","phone","address"].forEach(k=>o[k]=$("co-"+k).value.trim());await api("settings_save",o);toast("Saved")})}});
