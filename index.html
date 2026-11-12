@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Cerebros Supply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14212b;--muted:#5b6a72;--paper:#f1f4f3;--surface:#fff;--line:#d3dbd8;--accent:#0b6e69;--accent-soft:#e2f1ef;
+--good:#1d7a46;--warn:#a86400;--bad:#b3261e;--bad-soft:#fbe9e7;--warn-soft:#fdf1dc;--good-soft:#e3f3ea;
+--display:"Manrope","Segoe UI",Arial,sans-serif;--body:"Public Sans","Segoe UI",Arial,sans-serif;color-scheme:light}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top{background:var(--ink);color:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.brand{font-family:var(--display);font-weight:800;font-size:20px}.brand small{display:block;font-family:var(--body);font-weight:400;font-size:12.5px;opacity:.8}
+.top button{background:#2b3a45;color:#fff;border:0;border-radius:8px;padding:8px 12px;font-weight:600}
+.tabs{display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--line)}
+.tabs a{white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:3px solid transparent}
+.tabs a.on{color:var(--accent);border-bottom-color:var(--accent)}
+.badge{background:var(--accent);color:#fff;border-radius:99px;font-size:12px;padding:1px 8px;margin-left:6px}
+main{max-width:1040px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+h1{font-family:var(--display);font-size:22px;margin:0}h2{font-family:var(--display);font-size:17px;margin:0}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.tile b{display:block;font-family:var(--display);font-size:21px;font-variant-numeric:tabular-nums}.tile span{font-size:13px;color:var(--muted)}
+.meter{height:10px;background:#e4e9e7;border-radius:99px;overflow:hidden;margin-top:8px}.meter i{display:block;height:100%;background:var(--accent)}.meter i.w{background:var(--warn)}.meter i.b{background:var(--bad)}
+.alert{border-radius:12px;padding:12px 14px;font-weight:500}
+.alert.bad{background:var(--bad-soft);border:1px solid #efb8b2;color:#7a1a14}.alert.warn{background:var(--warn-soft);border:1px solid #ecd9b0;color:#5e3a00}.alert.good{background:var(--good-soft);border:1px solid #b7dcc6;color:#0f5a31}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tools input[type=search]{flex:1 1 220px}
+input,select,textarea{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);max-width:100%}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:9px 14px;font-weight:600;color:var(--muted)}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.row .nm{flex:1 1 260px;min-width:0}.row .nm b{display:block}.row .nm small{color:var(--muted)}
+.price{text-align:right;font-variant-numeric:tabular-nums;min-width:120px}.price b{font-size:18px;font-family:var(--display)}.price s{color:var(--muted);font-size:13px}
+.save{color:var(--good);font-size:13px;font-weight:600}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.qty button{border:0;background:#eef2f1;width:40px;height:40px;font-size:20px;font-weight:700}.qty input{width:62px;height:40px;border:0;text-align:center;font-weight:700;padding:0;border-radius:0}
+.btn{border:0;border-radius:10px;background:var(--accent);color:#fff;padding:11px 16px;font-weight:700}
+.btn.ghost{background:#fff;color:var(--accent);border:1.5px solid var(--accent)}.btn.red{background:#fff;color:var(--bad);border:1.5px solid var(--bad)}
+.btn.small{padding:8px 12px;font-size:14px}.btn:disabled{background:#b9c4c1;border-color:#b9c4c1;color:#fff;cursor:not-allowed}
+.pill{display:inline-block;border-radius:99px;padding:3px 10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.pill.g{background:var(--good-soft);color:var(--good)}.pill.w{background:var(--warn-soft);color:var(--warn)}.pill.b{background:var(--bad-soft);color:var(--bad)}.pill.n{background:#e8edf0;color:#3d4c55}
+.case{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px;background:var(--accent-soft);padding:10px;border-radius:10px}
+label.f{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px;flex:1 1 180px}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.sum div{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}.sum .t{font-family:var(--display);font-size:20px;font-weight:800;border-top:1px solid var(--line);padding-top:8px}
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px}th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}tr:last-child td{border-bottom:0}
+.empty{color:var(--muted);padding:24px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:12px}
+.steps{display:flex;gap:4px;margin-top:6px}.steps i{height:6px;flex:1;border-radius:9px;background:#dfe6e3}.steps i.d{background:var(--accent)}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 16px;border-radius:10px;max-width:92vw;display:none;z-index:50}
+.toast.err{background:var(--bad)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;max-width:420px;margin:6vh auto 0;width:100%}
+.form{display:flex;flex-wrap:wrap;gap:10px}.form .wide{flex-basis:100%}
+dialog{border:0;border-radius:14px;padding:18px;width:min(720px,94vw);max-height:90vh}dialog::backdrop{background:rgba(20,33,43,.5)}
+dialog form,dialog .dbody{display:flex;flex-direction:column;gap:12px}
+.acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.bill h2{font-size:20px}.bill .two{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}.bill small{color:var(--muted)}
+@media print{body>*:not(dialog){display:none!important}dialog{position:static;width:100%;max-height:none;padding:0}dialog::backdrop{display:none}.noprint{display:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">Cerebros Supply<small id="who">Order medicines, consumables and implants</small></div><div id="topbtns"></div></header>
+<nav class="tabs" id="tabs"></nav>
+<main id="view"><div class="empty">Loading…</div></main>
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const API="https://dwukvdtacwvnudqjlwrb.supabase.co/rest/v1/rpc/cerebros_api", KEY="sb_publishable_P7ywy1hZFdiJ-joKi_pEqA_JcO79gh5";
+const CATS=["Medicines","Consumables","Implants and stents"], STATUS={0:"Placed",1:"Accepted",2:"Out for delivery",3:"Delivered",9:"Cancelled"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>"₹"+Math.round(+n||0).toLocaleString("en-IN");
+const fmtR=n=>"₹"+(+n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
+const dstr=d=>d?new Date(d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"2-digit"}):"";
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const S={token:store.get("cs_token"),user:null,cat:-1,q:"",cart:{},caseInfo:{},items:[],credit:null,busy:false};
+function toast(t,err){const e=$("toast");e.textContent=t;e.className="toast"+(err?" err":"");e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",err?5000:2600)}
+async function api(action,data){
+  let r,j;
+  try{r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY},body:JSON.stringify({p_action:action,p_token:S.token,p_data:data||{}})});j=await r.json()}
+  catch(e){throw new Error("No connection. Check the internet and try again.")}
+  const msg=!r.ok?(j&&j.message)||"Something went wrong":(j&&j.error)||null;
+  if(msg){if(msg==="Please log in again"){S.token=null;S.user=null;store.del("cs_token");boot()}throw new Error(msg)}
+  return j;
+}
+const run=async(fn)=>{if(S.busy)return;S.busy=true;try{await fn()}catch(e){toast(e.message,true)}finally{S.busy=false}};
+const isH=()=>["staff","owner"].includes(S.user.role), isM=()=>S.user.role==="manager";
+function tabsFor(){const r=S.user.role;
+  if(isH())return [["order","Order items"],["cart","Cart"],["orders","My orders"],["bills","Bills and credit"]].concat(r==="owner"?[["users","Staff"]]:[]);
+  return [["desk-orders","Orders"],["hospitals","Hospitals"],["payments","Bills and payments"],["demand","Combined demand"]].concat(isM()?[["items","Items and rates"],["users","Users"],["company","Company"]]:[]);}
+const route=()=>{const h=location.hash.slice(1),ok=tabsFor().map(t=>t[0]);return ok.includes(h)?h:ok[0]};
+function go(n){if(location.hash==="#"+n)render();else location.hash=n}
+const cartLines=()=>Object.entries(S.cart).filter(([id,q])=>q>0&&S.items.some(i=>i.id==id)).map(([id,q])=>({id:+id,q}));
+const item=id=>S.items.find(i=>i.id==id);
+const lineVal=l=>{const i=item(l.id);return i.rate*l.q*(1+i.gst_rate/100)};
+const cartTotal=()=>cartLines().reduce((s,l)=>s+lineVal(l),0);
+function saveCart(){store.set("cs_cart_"+S.user.id,{cart:S.cart,caseInfo:S.caseInfo})}
+function setQty(id,q){q=Math.max(0,Math.min(100000,Math.round(q)||0));if(q)S.cart[id]=q;else delete S.cart[id];saveCart()}
+function creditView(c,extra){
+  extra=extra||0;const used=+c.used+extra,lim=+c.limit;let st=c.state,why=c.why;
+  if(st!=="block"&&used>lim){st="block";why="This order takes you "+fmt(used-lim)+" over your credit limit. Pay a bill or reduce the order."}
+  else if(st==="ok"&&used>lim*.85){st="warn";why="You are close to your credit limit."}
+  const pct=lim>0?Math.min(100,used/lim*100):100;
+  return {st,html:`<div class="strip"><div class="tile"><b>${fmt(Math.max(0,lim-used))}</b><span>Credit left of ${fmt(lim)}</span><div class="meter"><i class="${st==="block"?"b":st==="warn"?"w":""}" style="width:${pct}%"></i></div></div>
+  <div class="tile"><b>${fmt(c.unpaid)}</b><span>Unpaid bills</span></div><div class="tile"><b>${c.terms} days</b><span>Time to pay each bill</span></div>
+  <div class="tile"><b>${c.overdue_days>0?c.overdue_days+" days":"None"}</b><span>Oldest bill past pay-by date</span></div></div>
+  ${st==="block"?`<div class="alert bad">Ordering is stopped. ${esc(why)}</div>`:st==="warn"?`<div class="alert warn">${esc(why)}</div>`:""}`};
+}
+const qtyBox=(id,n)=>`<div class="qty"><button data-dec="${id}" aria-label="Less">−</button><input id="q-${id}" data-q="${id}" inputmode="numeric" value="${n}"><button data-inc="${id}" aria-label="More">+</button></div>`;
+const orderLines=o=>o.lines.map(l=>esc(l.name)+" × "+(+l.qty)+(l.case_date?` (case ${dstr(l.case_date)}, ${esc(l.surgeon)})`:"")).join(", ");
+const V={
+ async order(){
+  [S.items,S.credit]=await Promise.all([api("catalog"),api("credit")]);
+  return V._order();
+ },
+ _order(){
+  const q=S.q.trim().toLowerCase(),list=S.items.filter(i=>(S.cat<0||i.category===CATS[S.cat])&&(!q||i.name.toLowerCase().includes(q)));
+  return `<h1>Order items</h1>${creditView(S.credit,cartTotal()).html}
+  <div class="tools"><input id="search" type="search" placeholder="Search item name" value="${esc(S.q)}"><button class="chip ${S.cat<0?"on":""}" data-cat="-1">All</button>${CATS.map((c,i)=>`<button class="chip ${S.cat===i?"on":""}" data-cat="${i}">${c}</button>`).join("")}</div>
+  <div class="list">${list.map(i=>{const n=S.cart[i.id]||0;return `<div class="row"><div class="nm"><b>${esc(i.name)}</b><small>${i.category} · per ${esc(i.pack)} · GST ${+i.gst_rate}%${i.category===CATS[2]?" · ordered for a named case":""}</small></div>
+   <div class="price"><b>${fmtR(i.rate)}</b><br><s>MRP ${fmtR(i.mrp)}</s>${+i.mrp>+i.rate?` <span class="save">${Math.round((1-i.rate/i.mrp)*100)}% below MRP</span>`:""}</div>
+   ${n?qtyBox(i.id,n):`<button class="btn ghost" data-inc="${i.id}">Add</button>`}</div>`}).join("")||`<div class="empty">No item matches. Try a shorter name.</div>`}</div>
+  ${cartLines().length?`<button class="btn" data-go="cart">Go to cart · ${fmt(cartTotal())}</button>`:""}`;
+ },
+ async cart(){
+  [S.items,S.credit]=await Promise.all([api("catalog"),api("credit")]);
+  const lines=cartLines();if(!lines.length)return `<h1>Cart</h1><div class="empty">Your cart is empty.</div><button class="btn ghost" data-go="order">Order items</button>`;
+  const t=cartTotal(),cv=creditView(S.credit,t),tax=lines.reduce((s,l)=>s+item(l.id).rate*l.q,0),mrp=lines.reduce((s,l)=>s+item(l.id).mrp*l.q,0);
+  return `<h1>Cart</h1>${cv.html}<div class="list">${lines.map(l=>{const i=item(l.id),ci=S.caseInfo[i.id]||{};return `<div class="row"><div class="nm"><b>${esc(i.name)}</b><small>${fmtR(i.rate)} per ${esc(i.pack)}</small></div>${qtyBox(i.id,l.q)}<div class="price"><b>${fmt(i.rate*l.q)}</b></div>
+   ${i.category===CATS[2]?`<div class="case"><label class="f">Surgery date<input type="date" id="cd-${i.id}" data-cd="${i.id}" value="${esc(ci.case_date||"")}"></label><label class="f">Surgeon<input id="sg-${i.id}" data-sg="${i.id}" placeholder="Surgeon name" value="${esc(ci.surgeon||"")}"></label></div>`:""}</div>`}).join("")}</div>
+  <div class="sum"><div><span>Items</span><span>${fmt(tax)}</span></div><div><span>GST</span><span>${fmt(t-tax)}</span></div><div><span>Saving against MRP</span><span class="save">${fmt(mrp-tax)}</span></div><div class="t"><span>Order value</span><span>${fmt(t)}</span></div></div>
+  <button class="btn" id="place" ${cv.st==="block"?"disabled":""}>Place order</button>`;
+ },
+ async orders(){
+  const os=await api("my_orders");S.myOrders=os;
+  return `<h1>My orders</h1><div class="list">${os.map(o=>`<div class="row"><div class="nm"><b>${o.order_no} · ${fmt(o.value)}</b><small>${dstr(o.date)} · ${orderLines(o)}${o.bill_no?" · Bill "+o.bill_no:""}</small>
+   ${o.status===9?"":`<div class="steps">${[0,1,2,3].map(i=>`<i class="${i<=o.status?"d":""}"></i>`).join("")}</div>`}</div>
+   <span class="pill ${o.status===3?"g":o.status===9?"b":"n"}">${STATUS[o.status]}</span>
+   ${o.status===0?`<button class="btn red small" data-cancel="${o.id}">Cancel</button>`:""}<button class="btn ghost small" data-again="${o.id}">Order again</button></div>`).join("")||`<div class="empty">No orders yet.</div>`}</div>`;
+ },
+ async bills(){
+  const r=await api("my_bills");
+  return `<h1>Bills and credit</h1>${creditView(r.credit).html}${billTable(r.bills,false)}`;
+ },
+ async "desk-orders"(){
+  const os=await api("desk_orders");S.deskOrders=os;const next=["Accept","Send for delivery","Mark delivered"];
+  return `<h1>Orders</h1><div class="strip"><div class="tile"><b>${os.filter(o=>o.status===0).length}</b><span>New orders</span></div><div class="tile"><b>${fmt(os.reduce((s,o)=>s+ +o.value,0))}</b><span>Value in process</span></div></div>
+  <div class="list">${os.map(o=>{const blk=["hold","overdue","docs","inactive"].includes(o.credit.reason);return `<div class="row"><div class="nm"><b>${o.order_no} · ${esc(o.hospital)}</b><small>${dstr(o.date)} · ${fmt(o.value)} · ${orderLines(o)}</small>${blk?`<div><small style="color:var(--bad)">${esc(o.credit.why)}</small></div>`:""}</div>
+   <span class="pill ${blk?"b":"n"}">${blk?"Hospital stopped":STATUS[o.status]}</span><button class="btn red small" data-cancel="${o.id}">Cancel</button>
+   <button class="btn small" data-next="${o.id}" ${blk&&o.status===0?"disabled":""}>${next[o.status]}</button></div>`}).join("")||`<div class="empty">Nothing waiting.</div>`}</div>`;
+ },
+ async hospitals(){
+  const hs=await api("hospitals");S.hospitals=hs;
+  return `<h1>Hospitals</h1>${isM()?`<div><button class="btn" data-hosp="new">Add hospital</button></div>`:""}<div class="tw"><table><thead><tr><th>Hospital</th><th class="n">Limit</th><th class="n">Unpaid</th><th class="n">In orders</th><th class="n">Oldest late</th><th>Status</th><th></th></tr></thead><tbody>
+  ${hs.map(h=>{const c=h.credit,lab={hold:"On hold",overdue:"Bill late",docs:"Papers missing",limit:"Limit used up",inactive:"Closed"}[c.reason];return `<tr><td>${esc(h.name)}<br><small>${h.terms_days}-day terms${h.is_group?" · group unit":""}</small></td><td class="n">${fmt(h.credit_limit)}</td><td class="n">${fmt(c.unpaid)}</td><td class="n">${fmt(c.open_orders)}</td><td class="n">${c.overdue_days>0?c.overdue_days+" days":"–"}</td>
+   <td><span class="pill ${c.state==="block"?"b":c.state==="warn"?"w":"g"}">${c.state==="block"?lab:c.state==="warn"?"Near limit":"Can order"}</span></td><td>${isM()?`<button class="btn ghost small" data-hosp="${h.id}">Edit</button>`:""}</td></tr>`}).join("")}</tbody></table></div>`;
+ },
+ async payments(){
+  const [bs,ps,hs]=await Promise.all([api("bills"),api("payments"),api("hospitals")]);S.hospitals=hs;
+  const owing=hs.filter(h=>+h.credit.unpaid>0.5);
+  return `<h1>Bills and payments</h1><div class="strip"><div class="tile"><b>${fmt(hs.reduce((s,h)=>s+ +h.credit.unpaid,0))}</b><span>To collect</span></div><div class="tile"><b>${fmt(bs.filter(b=>b.late_days>0).reduce((s,b)=>s+ +b.due,0))}</b><span>Past pay-by date</span></div></div>
+  <h2>Record a payment</h2>${owing.length?`<form class="form" id="payform"><label class="f">Hospital<select id="pay-h" required>${owing.map(h=>`<option value="${h.id}">${esc(h.name)} — owes ${fmt(h.credit.unpaid)}</option>`).join("")}</select></label>
+   <label class="f">Amount received<input id="pay-a" inputmode="decimal" required></label><label class="f">Date<input id="pay-d" type="date" value="${new Date().toLocaleDateString("en-CA")}"></label>
+   <label class="f">Mode<select id="pay-m"><option>NEFT / RTGS</option><option>Cheque</option><option>UPI</option><option>Cash</option></select></label><label class="f">Reference<input id="pay-r" placeholder="UTR or cheque number"></label>
+   <div class="wide"><button class="btn">Save payment</button> <small>Oldest bills are settled first.</small></div></form>`:`<div class="empty">No hospital owes anything.</div>`}
+  <h2>Bills</h2>${billTable(bs,true)}
+  <h2>Payments received</h2><div class="tw"><table><thead><tr><th>Date</th><th>Hospital</th><th class="n">Amount</th><th>Mode</th><th>Reference</th></tr></thead><tbody>${ps.map(p=>`<tr><td>${dstr(p.pay_date)}</td><td>${esc(p.hospital)}</td><td class="n">${fmt(p.amount)}</td><td>${esc(p.mode)}</td><td>${esc(p.ref)}</td></tr>`).join("")||`<tr><td colspan="5">None yet.</td></tr>`}</tbody></table></div>`;
+ },
+ async demand(){
+  const d=S.days||30,rows=await api("demand",{days:d});
+  return `<h1>Combined demand</h1><div class="tools">${[7,30,90].map(n=>`<button class="chip ${d===n?"on":""}" data-days="${n}">Last ${n} days</button>`).join("")}</div>
+  <div class="alert good">Every hospital's orders for the same item add up here. Quote this quantity when asking the company or its C&amp;F agent for a better rate.</div>
+  <div class="tw"><table><thead><tr><th>Item</th><th>Supplier</th><th class="n">Hospitals</th><th class="n">Quantity</th><th class="n">Value</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.name)}<br><small>${r.category}</small></td><td>${esc(r.supplier)}</td><td class="n">${r.hospitals}</td><td class="n">${(+r.qty).toLocaleString("en-IN")} ${esc(r.pack)}</td><td class="n">${fmt(r.value)}</td></tr>`).join("")||`<tr><td colspan="5">No orders in this period.</td></tr>`}</tbody></table></div>`;
+ },
+ async items(){
+  const its=await api("items_all");S.allItems=its;const samples=its.filter(i=>i.is_sample).length;
+  return `<h1>Items and rates</h1><div class="tools"><button class="btn" data-item="new">Add item</button><button class="btn ghost" id="bulk">Paste from Excel</button>${samples?`<button class="btn red" id="rmsamples">Remove ${samples} sample items</button>`:""}</div>
+  ${samples?`<div class="alert warn">${samples} items are samples with made-up rates. Remove them before real ordering starts.</div>`:""}
+  <div class="tw"><table><thead><tr><th>Item</th><th>Pack</th><th class="n">MRP</th><th class="n">Rate</th><th class="n">Purchase</th><th class="n">GST</th><th>Supplier</th><th></th></tr></thead><tbody>${its.map(i=>`<tr><td>${esc(i.name)}<br><small>${i.category}${i.active?"":" · hidden"}${i.is_sample?" · sample":""}</small></td><td>${esc(i.pack)}</td><td class="n">${fmtR(i.mrp)}</td><td class="n">${fmtR(i.rate)}</td><td class="n">${i.purchase_rate==null?"–":fmtR(i.purchase_rate)}</td><td class="n">${+i.gst_rate}%</td><td>${esc(i.supplier)}</td><td><button class="btn ghost small" data-item="${i.id}">Edit</button></td></tr>`).join("")}</tbody></table></div>`;
+ },
+ async users(){
+  const us=await api("users");S.users=us;if(isM()&&!S.hospitals)S.hospitals=await api("hospitals");
+  const RL={staff:"Hospital staff",owner:"Hospital owner",desk:"Cerebros desk",manager:"Cerebros manager"};
+  return `<h1>${isM()?"Users":"Staff"}</h1><div><button class="btn" data-user="new">Add ${isM()?"user":"staff"}</button></div><div class="tw"><table><thead><tr><th>Name</th><th>Mobile</th><th>Role</th><th>Hospital</th><th>Status</th><th></th></tr></thead><tbody>
+  ${us.map(u=>`<tr><td>${esc(u.name)}</td><td>${u.mobile}</td><td>${RL[u.role]}</td><td>${esc(u.hospital||"–")}</td><td><span class="pill ${u.active?"g":"b"}">${u.active?"Active":"Removed"}</span></td><td>${isM()||u.role==="staff"?`<button class="btn ghost small" data-user="${u.id}">Edit</button>`:""}</td></tr>`).join("")}</tbody></table></div>`;
+ },
+ async company(){
+  const s=await api("settings_get");const f=(k,l)=>`<label class="f">${l}<input id="co-${k}" value="${esc(s["seller_"+k]||"")}"></label>`;
+  return `<h1>Company</h1><p style="margin:0;color:var(--muted)">These details print on every bill.</p><form class="form" id="coform">${f("name","Company name")}${f("gstin","GSTIN")}${f("dl_no","Drug licence numbers")}${f("phone","Phone")}<label class="f wide">Address<input id="co-address" value="${esc(s.seller_address||"")}"></label><div class="wide"><button class="btn">Save</button></div></form>`;
+ }
+};
+function billTable(bs,showH){return `<div class="tw"><table><thead><tr><th>Bill</th>${showH?"<th>Hospital</th>":""}<th>Date</th><th>Pay by</th><th class="n">Amount</th><th class="n">Still to pay</th><th>Status</th><th></th></tr></thead><tbody>
+ ${bs.map(b=>`<tr><td>${b.bill_no}</td>${showH?`<td>${esc(b.hospital)}</td>`:""}<td>${dstr(b.bill_date)}</td><td>${dstr(b.due_date)}</td><td class="n">${fmt(b.total)}</td><td class="n">${fmt(b.due)}</td>
+ <td>${+b.due<=0.5?`<span class="pill g">Paid</span>`:b.late_days>0?`<span class="pill b">${b.late_days} days late</span>`:`<span class="pill n">Not due yet</span>`}</td><td><button class="btn ghost small" data-bill="${b.id}">View</button></td></tr>`).join("")||`<tr><td colspan="8">No bills yet.</td></tr>`}</tbody></table></div>`}
+async function render(){
+  if(!S.user)return;const r=route();
+  $("tabs").innerHTML=tabsFor().map(([k,l])=>`<a href="#${k}" class="${k===r?"on":""}">${l}${k==="cart"&&cartLines().length?`<span class="badge">${cartLines().length}</span>`:""}</a>`).join("");
+  try{$("view").innerHTML=await V[r]()}catch(e){if(S.user)$("view").innerHTML=`<div class="alert bad">${esc(e.message)}</div><div><button class="btn ghost" data-go="${r}">Try again</button></div>`}
+}
+function authView(setup){
+  $("tabs").innerHTML="";$("topbtns").innerHTML="";$("who").textContent="Order medicines, consumables and implants";
+  $("view").innerHTML=`<form class="card" id="authform"><h1>${setup?"Set up the first manager":"Log in"}</h1>
+  ${setup?`<label class="f">Setup code<input id="a-code" required autocomplete="off"></label><label class="f">Your name<input id="a-name" required></label>`:""}
+  <label class="f">Mobile number<input id="a-mobile" inputmode="numeric" maxlength="14" required autocomplete="username"></label>
+  <label class="f">${setup?"Choose a PIN (4 to 6 digits)":"PIN"}<input id="a-pin" type="password" inputmode="numeric" maxlength="6" required autocomplete="${setup?"new-password":"current-password"}"></label>
+  <button class="btn">${setup?"Create login":"Log in"}</button>${setup?"":`<small style="color:var(--muted)">Forgot your PIN? Ask your hospital owner or the Cerebros desk to reset it.</small>`}</form>`;
+  $("authform").onsubmit=e=>{e.preventDefault();run(async()=>{
+    const d={mobile:$("a-mobile").value.replace(/\D/g,"").slice(-10),pin:$("a-pin").value};if(setup){d.code=$("a-code").value.trim().toUpperCase();d.name=$("a-name").value}
+    const r=await api(setup?"setup":"login",d);S.token=r.token;store.set("cs_token",r.token);start(r.user)})};
+}
+function start(u){
+  S.user=u;const c=store.get("cs_cart_"+u.id)||{};S.cart=c.cart||{};S.caseInfo=c.caseInfo||{};
+  $("who").textContent=u.name+(u.hospital?" · "+u.hospital:" · Cerebros");
+  $("topbtns").innerHTML=`<button id="pinbtn">Change PIN</button> <button id="logout">Log out</button>`;render();
+}
+async function boot(){
+  try{if(S.token){try{start(await api("me"));return}catch(e){if(S.token)throw e}}
+    const s=await api("status");authView(s.needs_setup)}
+  catch(e){$("view").innerHTML=`<div class="alert bad">${esc(e.message)}</div><div><button class="btn ghost" onclick="location.reload()">Try again</button></div>`}
+}
+function openDlg(html){const d=$("dlg");d.innerHTML=html;if(!d.open)d.showModal()}
+const closeDlg=()=>$("dlg").close();
+const fld=(id,l,v,extra)=>`<label class="f">${l}<input id="${id}" value="${esc(v??"")}" ${extra||""}></label>`;
+function hospDlg(h){h=h||{terms_days:30,credit_limit:0,active:true};
+  openDlg(`<form id="f-hosp"><h2>${h.id?"Edit hospital":"Add hospital"}</h2><div class="form">${fld("h-name","Hospital name",h.name,"required")}${fld("h-beds","Beds",h.beds,'inputmode="numeric"')}
+  ${fld("h-gstin","GSTIN",h.gstin,'maxlength="15"')}${fld("h-dl","Drug licence number",h.dl_no)}${fld("h-dlx","Drug licence valid till",h.dl_expiry,'type="date"')}
+  ${fld("h-limit","Credit limit (₹)",+h.credit_limit,'inputmode="numeric" required')}<label class="f">Time to pay<select id="h-terms">${[30,45,60].map(n=>`<option ${+h.terms_days===n?"selected":""}>${n}</option>`).join("")}</select></label>
+  ${fld("h-sec","Security held (cheques, NACH, or 'Group unit')",h.security_note)}<label class="f wide">Address<input id="h-addr" value="${esc(h.address||"")}"></label>
+  <label><input type="checkbox" id="h-group" ${h.is_group?"checked":""}> Health1 group unit</label><label><input type="checkbox" id="h-hold" ${h.on_hold?"checked":""}> Put on hold (stops ordering)</label>${h.id?`<label><input type="checkbox" id="h-active" ${h.active?"checked":""}> Account open</label>`:""}</div>
+  <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-hosp").onsubmit=e=>{e.preventDefault();run(async()=>{await api("hospital_save",{id:h.id||"",name:$("h-name").value,beds:$("h-beds").value,gstin:$("h-gstin").value.trim(),dl_no:$("h-dl").value.trim(),dl_expiry:$("h-dlx").value,credit_limit:$("h-limit").value||0,terms_days:$("h-terms").value,security_note:$("h-sec").value.trim(),address:$("h-addr").value,is_group:$("h-group").checked,on_hold:$("h-hold").checked,active:h.id?$("h-active").checked:true});closeDlg();toast("Saved");render()})};
+}
+function itemDlg(i){i=i||{category:CATS[0],gst_rate:5,active:true,pack:"piece"};
+  openDlg(`<form id="f-item"><h2>${i.id?"Edit item":"Add item"}</h2><div class="form">${fld("i-name","Item name",i.name,"required")}<label class="f">Category<select id="i-cat">${CATS.map(c=>`<option ${i.category===c?"selected":""}>${c}</option>`).join("")}</select></label>
+  ${fld("i-pack","Sold per (vial, box of 100…)",i.pack,"required")}${fld("i-mrp","MRP (₹)",i.mrp,'inputmode="decimal" required')}${fld("i-rate","Selling rate (₹)",i.rate,'inputmode="decimal" required')}${fld("i-pr","Purchase rate (₹)",i.purchase_rate,'inputmode="decimal"')}
+  ${fld("i-gst","GST %",+i.gst_rate,'inputmode="decimal"')}${fld("i-hsn","HSN code",i.hsn)}${fld("i-sup","Supplier",i.supplier)}<label><input type="checkbox" id="i-active" ${i.active?"checked":""}> Show to hospitals</label></div>
+  <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-item").onsubmit=e=>{e.preventDefault();run(async()=>{await api("item_save",{id:i.id||"",name:$("i-name").value,category:$("i-cat").value,pack:$("i-pack").value,mrp:$("i-mrp").value,rate:$("i-rate").value,purchase_rate:$("i-pr").value,gst_rate:$("i-gst").value,hsn:$("i-hsn").value.trim(),supplier:$("i-sup").value.trim(),active:$("i-active").checked});closeDlg();toast("Saved");render()})};
+}
+function bulkDlg(){
+  openDlg(`<form id="f-bulk"><h2>Paste items from Excel</h2><p style="margin:0">Copy rows from Excel with the columns in this order and paste below:<br><b>Name · Category · Pack · MRP · Rate · Purchase rate · GST % · HSN · Supplier</b><br><small>Category is Medicines, Consumables or Implants. An item with the same name and pack is updated.</small></p>
+  <textarea id="b-text" rows="10" style="width:100%" required></textarea><div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Add items</button></div></form>`);
+  $("f-bulk").onsubmit=e=>{e.preventDefault();run(async()=>{
+    const num=v=>String(v||"").replace(/[₹,\s%]/g,""),cat=v=>{v=String(v||"").trim().toLowerCase();return v.startsWith("med")?CATS[0]:v.startsWith("imp")||v.startsWith("ste")?CATS[2]:v.startsWith("con")||v.startsWith("sur")?CATS[1]:v};
+    const rows=$("b-text").value.split(/\r?\n/).map(l=>l.split("\t")).filter(c=>c.length>=5&&c[0].trim()&&c[0].trim().toLowerCase()!=="name").map(c=>({name:c[0],category:cat(c[1]),pack:c[2],mrp:num(c[3]),rate:num(c[4]),purchase_rate:num(c[5]),gst_rate:num(c[6]),hsn:(c[7]||"").trim(),supplier:(c[8]||"").trim()}));
+    if(!rows.length)throw new Error("No rows found. Copy the rows from Excel, with at least Name, Category, Pack, MRP and Rate.");
+    const r=await api("items_bulk",{rows});closeDlg();toast(r.rows+" items added or updated");render()})};
+}
+function userDlg(u){u=u||{role:isM()?"staff":"staff",active:true};const RL=[["staff","Hospital staff"],["owner","Hospital owner"],["desk","Cerebros desk"],["manager","Cerebros manager"]];
+  openDlg(`<form id="f-user"><h2>${u.id?"Edit login":"Add login"}</h2><div class="form">${fld("u-name","Name",u.name,"required")}${fld("u-mobile","Mobile number",u.mobile,'inputmode="numeric" maxlength="10" required')}
+  ${fld("u-pin",u.id?"New PIN (leave empty to keep)":"PIN (4 to 6 digits)","",'inputmode="numeric" maxlength="6" '+(u.id?"":"required"))}
+  ${isM()?`<label class="f">Role<select id="u-role">${RL.map(([k,l])=>`<option value="${k}" ${u.role===k?"selected":""}>${l}</option>`).join("")}</select></label><label class="f">Hospital<select id="u-hosp"><option value="">–</option>${(S.hospitals||[]).map(h=>`<option value="${h.id}" ${u.hospital_id===h.id?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label>`:""}
+  ${u.id?`<label><input type="checkbox" id="u-active" ${u.active?"checked":""}> Can log in</label>`:""}</div><div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-user").onsubmit=e=>{e.preventDefault();run(async()=>{await api("user_save",{id:u.id||"",name:$("u-name").value,mobile:$("u-mobile").value.replace(/\D/g,"").slice(-10),pin:$("u-pin").value,role:isM()?$("u-role").value:"staff",hospital_id:isM()?$("u-hosp").value:"",active:u.id?$("u-active").checked:true});closeDlg();toast("Saved");render()})};
+}
+function deliverDlg(o){
+  openDlg(`<form id="f-del"><h2>Deliver ${o.order_no}</h2><p style="margin:0">${esc(o.hospital)}. Enter batch and expiry from the pack. This creates the bill.</p><div class="list">${o.lines.map(l=>{const med=l.category===CATS[0];return `<div class="row"><div class="nm"><b>${esc(l.name)} × ${+l.qty}</b><small>${l.category}</small></div>
+  <label class="f">Batch<input data-b="${l.id}" ${med?"required":""}></label><label class="f">Expiry<input type="date" data-x="${l.id}" ${med?"required":""}></label></div>`}).join("")}</div>
+  <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Mark delivered and make bill</button></div></form>`);
+  $("f-del").onsubmit=e=>{e.preventDefault();run(async()=>{const lines=o.lines.map(l=>({id:l.id,batch:document.querySelector(`[data-b="${l.id}"]`).value,expiry:document.querySelector(`[data-x="${l.id}"]`).value}));
+    const r=await api("order_next",{order_id:o.id,lines});closeDlg();toast("Delivered. Bill "+r.bill_no+" created");render()})};
+}
+async function billDlg(id){
+  const r=await api("bill_detail",{bill_id:id}),b=r.bill,s=r.seller,by=r.buyer,same=!s.seller_gstin||!by.gstin||s.seller_gstin.slice(0,2)===by.gstin.slice(0,2);
+  openDlg(`<div class="dbody bill"><div class="two"><div><h2>${esc(s.seller_name||"Cerebros")}</h2><small>${esc(s.seller_address||"")}<br>${s.seller_gstin?"GSTIN "+esc(s.seller_gstin):""} ${s.seller_dl_no?" · DL "+esc(s.seller_dl_no):""} ${s.seller_phone?" · "+esc(s.seller_phone):""}</small></div>
+  <div style="text-align:right"><b>Bill ${b.bill_no}</b><br><small>Date ${dstr(b.bill_date)} · Pay by ${dstr(b.due_date)}<br>Order ${r.order.order_no}</small></div></div>
+  <div><b>${esc(by.name)}</b><br><small>${esc(by.address||"")}<br>${by.gstin?"GSTIN "+esc(by.gstin):""} ${by.dl_no?" · DL "+esc(by.dl_no):""}</small></div>
+  <div class="tw"><table><thead><tr><th>Item</th><th>HSN</th><th>Batch</th><th>Expiry</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">GST</th><th class="n">Amount</th></tr></thead><tbody>
+  ${r.order.lines.map(l=>`<tr><td>${esc(l.name)}<br><small>per ${esc(l.pack)}${l.case_date?` · case ${dstr(l.case_date)}, ${esc(l.surgeon)}`:""}</small></td><td>${esc(l.hsn)}</td><td>${esc(l.batch)}</td><td>${dstr(l.expiry)}</td><td class="n">${+l.qty}</td><td class="n">${fmtR(l.rate)}</td><td class="n">${+l.gst_rate}%</td><td class="n">${fmtR(l.qty*l.rate)}</td></tr>`).join("")}</tbody></table></div>
+  <div class="sum"><div><span>Taxable value</span><span>${fmtR(b.taxable)}</span></div>${same?`<div><span>CGST</span><span>${fmtR(b.gst/2)}</span></div><div><span>SGST</span><span>${fmtR(b.gst/2)}</span></div>`:`<div><span>IGST</span><span>${fmtR(b.gst)}</span></div>`}
+  <div class="t"><span>Total</span><span>${fmtR(b.total)}</span></div><div><span>Received</span><span>${fmtR(b.paid)}</span></div><div><span>Still to pay</span><span>${fmtR(b.due)}</span></div></div>
+  <div class="acts noprint"><button class="btn ghost" data-close>Close</button><button class="btn" id="printbill">Print</button></div></div>`);
+}
+function pinDlg(){
+  openDlg(`<form id="f-pin"><h2>Change PIN</h2><div class="form">${fld("p-old","Old PIN","",'type="password" inputmode="numeric" maxlength="6" required')}${fld("p-new","New PIN (4 to 6 digits)","",'type="password" inputmode="numeric" maxlength="6" required')}</div><div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn">Change</button></div></form>`);
+  $("f-pin").onsubmit=e=>{e.preventDefault();run(async()=>{await api("change_pin",{old:$("p-old").value,new:$("p-new").value});closeDlg();toast("PIN changed")})};
+}
+function rerenderLocal(){const r=route();if(r==="order"){$("view").innerHTML=V._order();render.tabsOnly()}else render()}
+render.tabsOnly=()=>{const r=route();$("tabs").innerHTML=tabsFor().map(([k,l])=>`<a href="#${k}" class="${k===r?"on":""}">${l}${k==="cart"&&cartLines().length?`<span class="badge">${cartLines().length}</span>`:""}</a>`).join("")};
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button,a");if(!t||!S.user&&!t.closest("dialog"))return;const d=t.dataset;
+  if("close" in d){closeDlg();return}
+  if(t.id==="logout"){run(async()=>{try{await api("logout")}catch(e){}S.token=null;S.user=null;store.del("cs_token");location.hash="";boot()});return}
+  if(t.id==="pinbtn"){pinDlg();return}
+  if(t.id==="printbill"){window.print();return}
+  if(d.cat!==undefined){S.cat=+d.cat;rerenderLocal()}
+  else if(d.inc){setQty(d.inc,(S.cart[d.inc]||0)+1);rerenderLocal()}
+  else if(d.dec){setQty(d.dec,(S.cart[d.dec]||0)-1);rerenderLocal()}
+  else if(d.go){go(d.go)}
+  else if(d.days){S.days=+d.days;render()}
+  else if(d.again){const o=S.myOrders.find(x=>x.id==d.again);o.lines.forEach(l=>setQty(l.item_id,+l.qty));toast("Items added to cart");go("cart")}
+  else if(d.cancel){if(t.dataset.sure){run(async()=>{await api("cancel_order",{order_id:+d.cancel});toast("Order cancelled");render()})}else{t.dataset.sure=1;t.textContent="Tap again to cancel"}}
+  else if(d.next){const o=S.deskOrders.find(x=>x.id==d.next);if(o.status===2)deliverDlg(o);else run(async()=>{await api("order_next",{order_id:o.id});render()})}
+  else if(d.bill){run(()=>billDlg(+d.bill))}
+  else if(d.hosp){hospDlg(d.hosp==="new"?null:S.hospitals.find(h=>h.id==d.hosp))}
+  else if(d.item){itemDlg(d.item==="new"?null:S.allItems.find(i=>i.id==d.item))}
+  else if(d.user){userDlg(d.user==="new"?null:S.users.find(u=>u.id==d.user))}
+  else if(t.id==="bulk"){bulkDlg()}
+  else if(t.id==="rmsamples"){if(t.dataset.sure){run(async()=>{await api("remove_samples");toast("Sample items removed");render()})}else{t.dataset.sure=1;t.textContent="Tap again to remove"}}
+  else if(t.id==="place"){run(async()=>{
+    const lines=cartLines().map(l=>{const i=item(l.id),ci=S.caseInfo[l.id]||{};if(i.category===CATS[2]&&(!ci.case_date||!ci.surgeon))throw new Error("Fill surgery date and surgeon for "+i.name);return {item_id:l.id,qty:l.q,case_date:ci.case_date||"",surgeon:ci.surgeon||""}});
+    const r=await api("place_order",{lines});S.cart={};S.caseInfo={};saveCart();toast("Order "+r.order_no+" placed");go("orders")})}
+});
+document.addEventListener("change",e=>{const d=e.target.dataset;
+  if(d.q){setQty(d.q,+e.target.value);rerenderLocal()}
+  else if(d.cd){(S.caseInfo[d.cd]=S.caseInfo[d.cd]||{}).case_date=e.target.value;saveCart()}
+  else if(d.sg){(S.caseInfo[d.sg]=S.caseInfo[d.sg]||{}).surgeon=e.target.value.trim();saveCart()}});
+document.addEventListener("input",e=>{if(e.target.id==="search"){S.q=e.target.value;$("view").innerHTML=V._order();const s=$("search");s.focus();s.setSelectionRange(s.value.length,s.value.length)}});
+document.addEventListener("submit",e=>{
+  if(e.target.id==="payform"){e.preventDefault();run(async()=>{await api("payment_add",{hospital_id:+$("pay-h").value,amount:$("pay-a").value.replace(/[₹,\s]/g,""),pay_date:$("pay-d").value,mode:$("pay-m").value,ref:$("pay-r").value.trim()});toast("Payment saved");render()})}
+  else if(e.target.id==="coform"){e.preventDefault();run(async()=>{const o={};["name","gstin","dl_no","phone","address"].forEach(k=>o[k]=$("co-"+k).value.trim());await api("settings_save",o);toast("Saved")})}});
+window.addEventListener("hashchange",render);
+boot();
+</script>
+</body>
+</html>
