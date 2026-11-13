@@ -92,6 +92,22 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
 .ccard small{opacity:.75;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}.ccard .big{font-size:28px;font-weight:800;margin:4px 0 12px}
 .ccard .bar{height:8px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}.ccard .bar i{display:block;height:100%;background:#34d399}.ccard .bar i.w{background:#fbbf24}.ccard .bar i.b{background:#f87171}
 .ccard .row2{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;opacity:.85}
+.newh{margin-top:6px;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}.newh span{color:var(--muted);font-size:13.5px}
+.ccard .big em{font-style:normal;font-size:15px;font-weight:600;opacity:.8}
+.paybox{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:2px 12px;background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px}
+.paybox span{font-size:12.5px;opacity:.8}.paybox b{grid-row:span 2;align-self:center;font-size:20px}.paybox i{font-style:normal;font-size:13px;opacity:.9}
+.paybox.w{background:rgba(251,191,36,.22)}.paybox.b{background:rgba(248,113,113,.28)}
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.steps4 div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:13.5px;color:var(--muted)}
+.steps4 div b{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:14.5px;margin-bottom:4px}.steps4 div i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#eef2f7;color:var(--muted);font-size:12.5px;font-weight:800}
+.steps4 div.d i{background:#059669;color:#fff}.steps4 div.c{border-color:#1d4ed8;box-shadow:0 0 0 3px #dbe5ff}.steps4 div.c i{background:#1d4ed8;color:#fff}
+.docs{display:flex;flex-direction:column;gap:10px}.doc{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.doc .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#f2f5fb;color:#1d4ed8}.doc .ic svg{width:22px;height:22px}
+.doc.ok .ic{background:#e7f8ef;color:#059669}.doc.bad .ic{background:#fdecec;color:#dc2626}.doc.wait .ic{background:#fff6e5;color:#d97706}
+.doc b{display:block}.doc small{color:var(--muted)}.doc .r{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.files{margin-top:6px;display:flex;flex-direction:column;gap:4px}.files div{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+.lock{max-width:980px;margin:0 auto;padding:24px 18px 60px}.lockbar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:#0f2a6b;color:#fff}
+.lockbar .logo b{color:#fff}.qcard{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;text-align:left;margin-bottom:10px}.qcard .acts{justify-content:flex-end;margin:0}
+@media(max-width:760px){.steps4{grid-template-columns:1fr 1fr}.doc{grid-template-columns:36px 1fr}.doc .r{grid-column:1/-1;justify-content:flex-start}.qcard{grid-template-columns:1fr}}
 .mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini div{background:#f7f9fc;border-radius:12px;padding:10px 12px}.mini b{display:block;font-size:17px}.mini small{color:var(--muted);font-size:12px}
 .sec{margin:30px 0 14px;display:flex;align-items:end;justify-content:space-between;gap:12px}.sec a{color:var(--brand-2);font-weight:700;font-size:14px}
 .cats3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -381,12 +397,18 @@ function setQty(id,q){const i=item(id);q=Math.round(+q)||0;if(i&&q>0&&q<i.min_qt
 async function ensureItems(force){if(force||!S.items.length||Date.now()-S.itemsAt>120000){S.items=await api("catalog");S.itemsAt=Date.now()}}
 async function loadCredit(){if(isH()||S.forH){try{S.home=await api("home",hp());S.credit=S.home.credit}catch(e){S.home=null;S.credit=null;if(!isH())toast(e.message,true)}}else{S.home=null;S.credit=null}}
 function creditState(extra){const c=S.credit;if(!c)return{st:"none",why:isH()?"":"Choose the hospital you are ordering for."};
-  const used=+c.used+(extra||0),lim=+c.limit;let st=c.state,why=c.why;
-  if(st!=="block"&&used>lim){st="block";why="This order takes the account "+fmt(used-lim)+" over its credit limit. Pay a bill or reduce the order."}
-  else if(st==="ok"&&used>lim*.85){st="warn";why="Close to the credit limit."}
-  return{st,why,used,lim,left:Math.max(0,lim-used),pct:lim>0?Math.min(100,used/lim*100):100}}
+  const used=+c.used+(extra||0),lim=c.limit==null?null:+c.limit;let st=c.state,why=c.why;
+  if(st!=="block"&&lim!=null&&used>lim){st="block";why="This order is more than the account can carry right now. Pay a bill or reduce the order."}
+  return{st,why,used,terms:+c.terms||30,grace:+c.grace,next:c.next_due,nextAmt:+c.next_due_amount,due7:+c.due_7,late:+c.late_amount,od:+c.overdue_days,unpaid:+c.unpaid,open:+c.open_orders,docs:c.docs}}
+const addDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toLocaleDateString("en-CA")};
+function termCard(c,name){if(c.st==="none")return `<div class="ccard"><small>Credit period</small><div class="big">–</div><div class="row2"><span>Choose a hospital</span></div></div>`;
+  const tone=c.od>0?(c.st==="block"?"b":"w"):"";
+  return `<div class="ccard"><small>${esc(name||"Your hospital")} · credit period</small><div class="big"><span class="num">${c.terms}</span> days <em>to pay each bill</em></div>
+   <div class="paybox ${tone}">${c.late>0.5?`<span>Past pay-by date</span><b class="num">${fmt(c.late)}</b><i>${c.od} days late${c.st==="block"?" · ordering stopped":` · ordering stops after ${c.grace} days`}</i>`
+     :c.next?`<span>Next payment</span><b class="num">${fmt(c.nextAmt)}</b><i>by ${dstr(c.next)}</i>`:`<span>Nothing to pay right now</span><b>All bills clear</b><i>A bill is due ${c.terms} days after delivery</i>`}</div>
+   <div class="row2"><span>Unpaid bills ${fmt(c.unpaid)}</span><span>Due in 7 days ${fmt(c.due7)}</span></div></div>`}
 /* ---------- routing ---------- */
-const STORE_R=/^(home|shop|checkout|orders|account|p-\d+|o-\d+|done-\d+)$/, OFFICE_R=["dash","board","hospitals","payments","catalogue","demand","users","company"];
+const STORE_R=/^(home|shop|checkout|orders|account|docs|p-\d+|o-\d+|done-\d+)$/, OFFICE_R=["dash","access","board","hospitals","payments","catalogue","demand","users","company"];
 function route(){const h=location.hash.slice(1);
   if(isH())return STORE_R.test(h)?h:"home";
   if(STORE_R.test(h)){S.mode="store";store.set("cs_mode","store");return h}
@@ -395,11 +417,26 @@ function route(){const h=location.hash.slice(1);
 function go(n){if(location.hash==="#"+n)render();else location.hash=n}
 async function render(){
   if(!S.user)return;closeDrawer(true);const r=route();window.scrollTo(0,0);
+  if(S.user.access==="applicant"){try{await renderApplicant()}catch(e){$("app").innerHTML=`<div class="lock"><div class="alert bad">${esc(e.message)}</div></div>`}return}
   try{
     if(r.match(STORE_R)&&(isH()||S.mode==="store")){await renderStore(r)}
     else await renderOffice(r);
   }catch(e){const v=$("view");if(v)v.innerHTML=`<div class="alert bad">${esc(e.message)}</div><p><button class="btn ghost" data-go="${r}">Try again</button></p>`}
 }
+/* ---------- applicant: no prices, no catalogue, only papers ---------- */
+async function renderApplicant(){const [types,a,r]=await Promise.all([docTypes(),api("application"),api("doc_list")]);const st=r.state,req=types.filter(t=>t.required);
+  const done=req.filter(t=>r.docs.some(d=>d.type===t.code&&d.status!=="rejected")).length,checked=req.filter(t=>r.docs.some(d=>d.type===t.code&&d.status==="verified")).length;
+  if(a.hospital.status==="approved"){const me=await api("me");S.user=Object.assign(S.user,me);return render()}
+  const step=done<req.length?1:checked<req.length?2:3;
+  $("app").innerHTML=`<div class="lockbar"><a class="logo" href="#">${LOGO}<b>Cerebros</b><span>Supply</span></a><div class="acts"><button class="btn plain sm" id="pinbtn">Change PIN</button><button class="btn plain sm" id="logout">Log out</button></div></div>
+  <div class="lock"><h1 style="margin:6px 0 4px">${esc(a.hospital.name)}</h1><div class="muted">Application received ${dstr(a.hospital.applied_at)}. Prices and ordering open once Cerebros approves the hospital.</div>
+   <div class="steps4"><div class="d"><b><i>${I.check.replace("<svg",'<svg width="14" height="14"')}</i>Applied</b>Hospital and owner details sent</div>
+    <div class="${step>1?"d":"c"}"><b><i>${step>1?I.check.replace("<svg",'<svg width="14" height="14"'):"2"}</i>Upload papers</b>${done} of ${req.length} required documents uploaded</div>
+    <div class="${step>2?"d":step===2?"c":""}"><b><i>${step>2?I.check.replace("<svg",'<svg width="14" height="14"'):"3"}</i>Cerebros checks</b>${checked} of ${req.length} checked</div>
+    <div class="${step===3?"c":""}"><b><i>4</i>Approved</b>Store opens with your credit period</div></div>
+   ${r.docs.some(d=>d.status==="rejected")?`<div class="alert bad" style="margin-bottom:12px">Some documents were not accepted. Read the reason under each one and upload again.</div>`:""}
+   ${step===3?`<div class="alert info" style="margin-bottom:12px">All papers are checked. Cerebros will approve the hospital and call you.</div>`:""}
+   <div class="sec"><h2>Documents</h2></div>${docsHTML(r,types,{canUpload:true})}</div>`}
 /* ---------- store shell ---------- */
 function storeShell(){
   const c=creditState(),cnt=cartCount();
@@ -408,8 +445,8 @@ function storeShell(){
    <a class="logo" href="#home">${LOGO}<b>Cerebros</b><span>Supply</span></a>
    <div class="search">${I.search.replace("<svg",'<svg class="si"')}<input id="q" type="search" placeholder="Search 70+ medicines, consumables and implants" autocomplete="off" value="${esc(S.f.q)}" aria-label="Search products"><div id="sugg" class="sugg" hidden></div></div>
    <div class="hact">
-    ${!isH()?`<label class="forh hide-s">Ordering for<select id="forh"><option value="">Choose hospital</option>${S.hospitals.map(h=>`<option value="${h.id}" ${h.id==S.forH?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label><a class="hbtn hide-s" href="#dash">${I.grid}<span>Back office</span></a>`:""}
-    <a class="hbtn hide-s" href="#account">${I.card}<span class="two"><small>Credit left</small><b>${c.st==="none"?"–":fmt(c.left)}</b></span></a>
+    ${!isH()?`<label class="forh hide-s">Ordering for<select id="forh"><option value="">Choose hospital</option>${S.hospitals.filter(h=>h.status==="approved"&&h.active).map(h=>`<option value="${h.id}" ${h.id==S.forH?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label><a class="hbtn hide-s" href="#dash">${I.grid}<span>Back office</span></a>`:""}
+    <a class="hbtn hide-s" href="#account">${I.card}<span class="two"><small>${c.late>0.5?"Past due":c.next?"Pay by "+dstr(c.next).replace(/ \d{4}$/,""):"Credit"}</small><b>${c.st==="none"?"–":c.late>0.5?fmt(c.late):c.next?fmt(c.nextAmt):c.terms+" days"}</b></span></a>
     <a class="hbtn hide-s" href="#orders">${I.box}<span class="two"><small>Track</small><b>Orders</b></span></a>
     <button class="hbtn cartbtn" id="cartbtn" aria-label="Open cart">${I.cart}${cnt?`<span class="cnt">${cnt}</span>`:""}<span class="two"><small>Cart</small><b>${fmt(cartTotal())}</b></span></button>
    </div></div>
@@ -423,7 +460,8 @@ function storeShell(){
 async function renderStore(r){
   const tasks=[ensureItems()];if(!isH()&&!S.hospitals.length)tasks.push(api("hospitals").then(h=>S.hospitals=h));
   await Promise.all(tasks);
-  if(!isH()&&!S.forH){const g=S.hospitals.find(h=>h.credit&&h.credit.state!=="block")||S.hospitals[0];if(g){S.forH=g.id;store.set("cs_forh",g.id)}}
+  if(!isH()&&S.forH&&!S.hospitals.some(h=>h.id==S.forH&&h.status==="approved")){S.forH=null;store.del("cs_forh")}
+  if(!isH()&&!S.forH){const ok=S.hospitals.filter(h=>h.status==="approved"&&h.active),g=ok.find(h=>h.credit&&h.credit.state!=="block")||ok[0];if(g){S.forH=g.id;store.set("cs_forh",g.id)}}
   loadCart();await loadCredit();
   $("app").innerHTML=storeShell();
   const [p,id]=r.split("-");
@@ -453,10 +491,9 @@ const P={
   <section class="hero"><div class="hero-a"><h1>Hospital supplies at group buying rates</h1><p>Medicines, consumables and implants, bought with the combined volume of every hospital on Cerebros, billed on credit.</p>
     <div class="hs"><div><b class="num">${its.length}</b><small>products</small></div><div><b class="num">${avg}%</b><small>average below MRP</small></div><div><b class="num">${c.st==="none"?"30–60":S.credit.terms}</b><small>days to pay</small></div></div>
     <p><a class="btn deal lg" href="#shop" data-cat="-1" style="margin-top:6px">Shop all products</a></p>${hero?`<span class="art">${art(hero)}</span>`:""}</div>
-   <div class="hero-b"><div class="ccard"><small>${esc(h&&h.hospital?h.hospital.name:"Your hospital")} · credit available</small><div class="big num">${c.st==="none"?"–":fmt(c.left)}</div>
-     <div class="bar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.st==="none"?0:c.pct}%"></i></div><div class="row2"><span>Used ${c.st==="none"?"–":fmt(c.used)}</span><span>Limit ${c.st==="none"?"–":fmt(c.lim)}</span></div></div>
-    ${c.st==="block"?`<div class="alert bad">${esc(c.why)}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
-    <div class="mini"><div><b class="num">${h?h.open_orders:0}</b><small>orders on the way</small></div><div><b class="num">${S.credit&&S.credit.overdue_days>0?S.credit.overdue_days+" days":"None"}</b><small>oldest bill late</small></div></div>
+   <div class="hero-b">${termCard(c,h&&h.hospital?h.hospital.name:"")}
+    ${c.st==="block"?`<div class="alert bad">${esc(c.why)}${c.docs&&!c.docs.ok&&isH()?` <a href="#docs"><b>Open documents</b></a>`:""}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
+    <div class="mini"><div><b class="num">${h?h.open_orders:0}</b><small>orders on the way</small></div><div><b class="num">${c.st==="none"?"–":fmt(c.unpaid)}</b><small>unpaid bills</small></div></div>
     <a class="btn plain block" href="#account">View bills and statement</a></div></section>
   <div class="cats3">${CATS.map((cat,ci)=>{const l=its.filter(i=>i.category===cat);return `<a class="cat3" href="#shop" data-cat="${ci}"><span class="pic cp" style="--pbg:#f2f5fb">${l[0]?art(l.find(i=>kind(i)!=="box")||l[0]):""}</span><span><b>${CATN[ci]}</b><small>${l.length} products · up to ${l.length?Math.max(...l.map(off)):0}% off</small></span></a>`}).join("")}</div>
   ${again.length?`<div id="again">${rail("Order again",again)}</div>`:""}
@@ -496,10 +533,10 @@ const P={
   <aside class="panel summ"><h3>Order summary</h3><div style="display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto">${lines.map(l=>`<div class="sl">${pic(l.i)}<span>${esc(l.i.name)} × ${l.q}</span><b class="num">${fmt(l.i.rate*l.q)}</b></div>`).join("")}</div>
    <div class="tot"><span>Items</span><span class="num">${fmt(cartTax())}</span></div><div class="tot"><span>GST</span><span class="num">${fmt(t-cartTax())}</span></div><div class="tot"><span>Saving against MRP</span><span class="save num">${fmt(cartMrp()-cartTax())}</span></div>
    <div class="tot big"><span>Order value</span><span class="num">${fmt(t)}</span></div>
-   ${c.st==="none"?"":`<div class="cbar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.pct}%"></i></div><div class="tot"><span class="muted">Credit left after this order</span><b class="num">${fmt(c.left)}</b></div>`}
+   ${c.st==="none"?"":`<div class="tot"><span class="muted">Credit period</span><b>${c.terms} days</b></div><div class="tot"><span class="muted">Pay this bill by about</span><b>${dstr(addDays(c.terms+1))}</b></div>`}
    ${c.st==="block"||c.st==="none"?`<div class="alert bad">${esc(c.why)}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
    <button class="btn deal lg block" id="place" ${c.st==="block"||c.st==="none"?"disabled":""}>Place order · ${fmt(t)}</button>
-   <small class="muted">Billed on ${S.credit?S.credit.terms:30}-day credit. The bill is made when the order is delivered.</small></aside></div>`;
+   <small class="muted">The bill is made when the order is delivered. The ${c.terms||30}-day credit period starts from that day.</small></aside></div>`;
  },
  async done(id){const o=await api("order_detail",{order_id:id});
   return `<div class="panel done"><span class="ok">${I.check}</span><h1>Order placed</h1><p class="muted" style="margin:0">Order <b>${o.order_no}</b> for <b>${fmt(o.value)}</b> is with the Cerebros desk${o.delivery_slot?`, for delivery <b>${esc(o.delivery_slot.toLowerCase())}</b>`:""}.</p>
@@ -518,17 +555,47 @@ const P={
   <div class="panel tw"><table class="otable"><thead><tr><th>Product</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">Amount</th></tr></thead><tbody>
    ${o.lines.map(l=>`<tr><td><a class="it" href="#p-${l.item_id}">${pic(l)}<span><b>${esc(l.name)}</b><br><small class="muted">per ${esc(l.pack)}${l.case_date?` · case ${dstr(l.case_date)}, ${esc(l.surgeon)}`:""}${l.batch?` · batch ${esc(l.batch)}, exp ${dstr(l.expiry)}`:""}</small></span></a></td><td class="n">${+l.qty}</td><td class="n">${fmtR(l.rate)}</td><td class="n">${fmt(l.qty*l.rate)}</td></tr>`).join("")}
    <tr><td colspan="3" class="n"><b>Total with GST</b></td><td class="n"><b>${fmt(o.value)}</b></td></tr></tbody></table></div>`},
+ async docs(){const [types,r]=await Promise.all([docTypes(),api("doc_list",hp())]);const st=r.state,own=S.user.role==="owner"||isM()||S.user.role==="desk";
+  return `<div class="crumbs"><a href="#home">Home</a>›<a href="#account">Account</a>›<span>Documents</span></div><div class="lhead"><div><h1>Licences and documents</h1><div class="muted">Kept on record by Cerebros. Medicines are supplied only against valid drug licences.</div></div></div>
+  ${st.ok?(st.expiring.length?`<div class="alert warn">${st.expiring.map(x=>esc(x.label)+" expires on "+dstr(x.till)).join(". ")}. Upload the renewed copy before then, or ordering stops.</div>`:`<div class="alert good">All required documents are checked and valid.</div>`)
+    :`<div class="alert bad">Ordering is stopped until every required document is uploaded and checked.${st.missing.length?" Missing: "+st.missing.map(esc).join(", ")+".":""}</div>`}
+  ${own?"":`<div class="alert info">Only the hospital owner can upload documents.</div>`}
+  ${docsHTML(r,types,{canUpload:own})}`},
  async account(){const r=await api("my_bills",hp());S.credit=r.credit;const c=creditState(),bs=r.bills,late=bs.filter(b=>b.late_days>0);
-  let staff="";if(S.user.role==="owner"){const us=await api("users");S.users=us;staff=`<div class="sec"><h2>Staff logins</h2><button class="btn sm" data-user="new">Add staff</button></div><div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Status</th><th></th></tr></thead><tbody>${us.map(u=>`<tr><td>${esc(u.name)}${u.role==="owner"?" <span class='pill n'>Owner</span>":""}</td><td>${u.mobile}</td><td>${u.active?`<span class="pill g">Active</span>`:`<span class="pill b">Removed</span>`}</td><td>${u.role==="staff"?`<button class="btn plain sm" data-user="${u.id}">Edit</button>`:""}</td></tr>`).join("")}</tbody></table></div>`}
-  return `<div class="crumbs"><a href="#home">Home</a>›<span>Account</span></div><div class="lhead"><h1>Bills and credit</h1><div class="acts">${isH()?`<button class="btn plain" id="pinbtn">Change PIN</button><button class="btn plain" id="logout">Log out</button>`:""}</div></div>
-  <div class="acc"><div style="display:flex;flex-direction:column;gap:14px"><div class="ccard"><small>Credit available</small><div class="big num">${fmt(c.left)}</div><div class="bar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.pct}%"></i></div><div class="row2"><span>Used ${fmt(c.used)}</span><span>Limit ${fmt(c.lim)}</span></div></div>
+  let staff="";if(S.user.role==="owner"){const us=await api("users");S.users=us;staff=`<div class="sec"><h2>Staff logins</h2><button class="btn sm" data-user="new">Add staff</button></div><p class="muted" style="margin:-6px 0 10px">Only staff approved by Cerebros can log in and see prices. New staff wait for approval.</p><div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Access</th><th></th></tr></thead><tbody>${us.map(u=>`<tr><td>${esc(u.name)}${u.role==="owner"?" <span class='pill n'>Owner</span>":""}</td><td>${u.mobile}</td><td>${userPill(u)}</td><td>${u.role==="staff"?`<button class="btn plain sm" data-user="${u.id}">Edit</button>`:""}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="crumbs"><a href="#home">Home</a>›<span>Account</span></div><div class="lhead"><h1>Bills and payments</h1><div class="acts">${isH()?`<a class="btn plain" href="#docs">Documents</a><button class="btn plain" id="pinbtn">Change PIN</button><button class="btn plain" id="logout">Log out</button>`:""}</div></div>
+  <div class="acc"><div style="display:flex;flex-direction:column;gap:14px">${termCard(c,S.user.hospital||"")}
     ${c.st==="block"?`<div class="alert bad">Ordering is stopped. ${esc(c.why)}</div>`:c.st==="warn"?`<div class="alert warn">${esc(c.why)}</div>`:""}
-    <div class="mini"><div><b class="num">${fmt(r.credit.unpaid)}</b><small>unpaid bills</small></div><div><b class="num">${fmt(r.credit.open_orders)}</b><small>in open orders</small></div><div><b class="num">${r.credit.terms} days</b><small>to pay each bill</small></div><div><b class="num">${fmt(late.reduce((s,b)=>s+ +b.due,0))}</b><small>past pay-by date</small></div></div>
-    <div class="alert good">Pay on time for three months in a row and Cerebros can extend your time to pay.</div></div>
+    <div class="mini"><div><b class="num">${fmt(c.unpaid)}</b><small>unpaid bills</small></div><div><b class="num">${fmt(c.due7)}</b><small>due in the next 7 days</small></div><div><b class="num">${fmt(late.reduce((s,b)=>s+ +b.due,0))}</b><small>past pay-by date</small></div><div><b class="num">${fmt(c.open)}</b><small>in orders not yet billed</small></div></div>
+    <div class="alert info">Each bill is due ${c.terms} days after delivery. A bill more than ${c.grace} days past its pay-by date stops new orders until it is paid.</div></div>
    <div><div class="panel tw"><table class="t"><thead><tr><th>Bill</th><th>Date</th><th>Pay by</th><th class="n">Amount</th><th class="n">Still to pay</th><th>Status</th><th></th></tr></thead><tbody>${bs.map(b=>`<tr><td><b>${b.bill_no}</b></td><td>${dstr(b.bill_date)}</td><td>${dstr(b.due_date)}</td><td class="n">${fmt(b.total)}</td><td class="n">${fmt(b.due)}</td><td>${billPill(b)}</td><td><button class="btn plain sm" data-bill="${b.id}">View</button></td></tr>`).join("")||`<tr><td colspan="7" class="muted">No bills yet. A bill is made when an order is delivered.</td></tr>`}</tbody></table></div>${staff}</div></div>`}
 };
 const statusPill=s=>`<span class="pill ${s===3?"g":s===9?"b":s===2?"w":"blue"}">${STATUS[s]}</span>`;
 const billPill=b=>+b.due<=0.5?`<span class="pill g">Paid</span>`:b.late_days>0?`<span class="pill b">${b.late_days} days late</span>`:`<span class="pill n">Not due yet</span>`;
+const userPill=u=>!u.active?`<span class="pill b">Removed</span>`:u.status==="pending"?`<span class="pill w">Waiting for Cerebros approval</span>`:u.status==="rejected"?`<span class="pill b">Not approved</span>`:`<span class="pill g">Approved</span>`;
+const DOCI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></svg>';
+/* documents: one row per document type, with the files under it */
+function docsHTML(r,types,o){o=o||{};const st=r.state;
+  return `<div class="docs">${types.map(t=>{const fs=r.docs.filter(d=>d.type===t.code),ver=fs.find(d=>d.status==="verified"&&!d.expired),wait=fs.find(d=>d.status==="submitted"),rej=!ver&&!wait&&fs.find(d=>d.status==="rejected");
+    const cls=ver?"ok":wait?"wait":rej||(t.required&&!ver)?"bad":"";
+    const line=ver?`Checked${ver.valid_till?` · valid till ${dstr(ver.valid_till)}`:""}${ver.doc_no?` · ${esc(ver.doc_no)}`:""}`:wait?"Uploaded · being checked by Cerebros":rej?`Not accepted: ${esc(rej.note||"")}`:t.required?"Required · not uploaded":"Optional";
+    return `<div class="doc ${cls}"><span class="ic">${ver?I.check:DOCI}</span><div><b>${esc(t.label)}${t.required?"":` <span class="pill n">Optional</span>`}</b><small>${line}</small>${t.hint&&!ver?`<br><small>${esc(t.hint)}</small>`:""}
+      ${fs.length?`<div class="files">${fs.map(d=>`<div>${d.status==="verified"?`<span class="pill g">Checked</span>`:d.status==="submitted"?`<span class="pill w">Being checked</span>`:`<span class="pill b">Not accepted</span>`}${d.expired?`<span class="pill b">Expired</span>`:""}<a href="#" data-docview="${d.id}">${esc(d.file_name)}</a><small>${Math.max(1,Math.round(d.size/1024))} KB · ${dstr(d.uploaded_at)}${d.by?" · "+esc(d.by):""}</small>
+        ${o.desk&&d.status==="submitted"?`<button class="btn sm" data-dockok="${d.id}">Accept</button><button class="btn plain sm" data-docrej="${d.id}">Reject</button>`:""}
+        ${o.canUpload&&(d.status!=="verified"||isM())?`<button class="btn plain sm" data-docdel="${d.id}">Remove</button>`:""}</div>`).join("")}</div>`:""}</div>
+      <div class="r">${o.canUpload?`<button class="btn ${ver?"plain":""} sm" data-docup="${t.code}">${ver?"Upload renewal":fs.length?"Upload again":"Upload"}</button>`:""}</div></div>`}).join("")}</div>`}
+async function docTypes(){if(!S.docTypes)S.docTypes=await api("doc_types");return S.docTypes}
+function uploadDlg(code,hid){const t=S.docTypes.find(x=>x.code===code);
+  openDlg(`<form id="f-doc">${dlgHead("Upload "+esc(t.label))}<p class="muted" style="margin:0">PDF, JPG or PNG, up to 5 MB. A clear scan or phone photo of the whole page.</p><div class="form">
+   ${t.has_no?fld("d-no","Number printed on it","",'required maxlength="60"'):""}${t.has_expiry?fld("d-till","Valid till","",`type="date" required min="${addDays(0)}"`):""}
+   <label class="f wide">File<input type="file" id="d-file" accept="application/pdf,image/jpeg,image/png" required></label></div>
+   <div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Upload</button></div></form>`);
+  $("f-doc").onsubmit=e=>{e.preventDefault();run(async()=>{const f=$("d-file").files[0];if(!f)throw new Error("Choose the file");if(f.size>5*1024*1024)throw new Error("The file is larger than 5 MB. Scan it at a lower size.");
+    const data=await new Promise((ok,no)=>{const rd=new FileReader();rd.onload=()=>ok(String(rd.result).split(",")[1]);rd.onerror=()=>no(new Error("The file could not be read"));rd.readAsDataURL(f)});
+    await api("doc_upload",Object.assign({type:code,file_name:f.name,data,doc_no:$("d-no")?$("d-no").value:"",valid_till:$("d-till")?$("d-till").value:""},hid?{hospital_id:hid}:{}));
+    closeDlg();toast(isH()||S.user.access==="applicant"?"Uploaded. Cerebros will check it.":"Uploaded");await afterDocs()})}}
+async function viewDoc(id){const w=window.open("","_blank");const r=await api("doc_get",{id});const b=atob(r.data),a=new Uint8Array(b.length);for(let k=0;k<b.length;k++)a[k]=b.charCodeAt(k);
+  const url=URL.createObjectURL(new Blob([a],{type:r.mime}));if(w)w.location.href=url;else{const l=document.createElement("a");l.href=url;l.download=r.file_name;l.click()}}
 const trackHTML=s=>`<div class="track">${[0,1,2,3].map(k=>`<div class="${k<=s?"d":""} ${k===s+1?"c":""}">${STATUS[k]}</div>`).join("")}</div>`;
 /* ---------- listing ---------- */
 function filtered(){const f=S.f,q=f.q.trim().toLowerCase(),words=q.split(/\s+/).filter(Boolean);
@@ -569,7 +636,7 @@ function drawerHTML(){const lines=cartLines(),t=cartTotal(),c=creditState(t);
   return `<div class="dh"><h2>Cart <span class="muted" style="font-size:15px;font-weight:600">${lines.length} items</span></h2><button class="x" data-closecart aria-label="Close cart">${I.x}</button></div>
   <div class="db">${lines.map(l=>`<div class="cl">${pic(l.i)}<div><b>${esc(l.i.name)}</b><small>${fmtR(l.i.rate)} per ${esc(l.i.pack)}${l.i.category===CATS[2]?" · case details at checkout":""}</small><div class="clr">${qtyBox(l.i,l.q)}<b class="num">${fmt(l.i.rate*l.q)}</b></div><button class="rm" data-rm="${l.i.id}">Remove</button></div></div>`).join("")||`<div class="empty" style="margin-top:20px">Your cart is empty.<br><br><a class="btn" href="#shop" data-closecart>Start shopping</a></div>`}</div>
   ${lines.length?`<div class="df"><div class="tot"><span>Items</span><span class="num">${fmt(cartTax())}</span></div><div class="tot"><span>GST</span><span class="num">${fmt(t-cartTax())}</span></div><div class="tot"><span>You save against MRP</span><span class="save num">${fmt(cartMrp()-cartTax())}</span></div><div class="tot big"><span>Total</span><span class="num">${fmt(t)}</span></div>
-   ${c.st==="none"?"":`<div class="cbar"><i class="${c.st==="block"?"b":c.st==="warn"?"w":""}" style="width:${c.pct}%"></i></div><small class="muted">Credit left after this order: <b>${fmt(c.left)}</b></small>`}
+   ${c.st==="none"?"":`<small class="muted">On ${c.terms}-day credit. Pay ${c.terms} days after delivery, around <b>${dstr(addDays(c.terms+1))}</b>.</small>`}
    ${c.st==="block"||c.st==="none"?`<div class="alert bad">${esc(c.why)}</div>`:""}<a class="btn deal lg block" href="#checkout" data-closecart>Go to checkout</a></div>`:""}`}
 function openDrawer(){$("drawer").innerHTML=drawerHTML();$("drawer").classList.add("on");$("scrim").classList.add("on")}
 function closeDrawer(quiet){$("drawer").classList.remove("on");$("scrim").classList.remove("on")}
@@ -578,9 +645,9 @@ async function afterCartChange(){if($("drawer").classList.contains("on"))$("draw
   const y=scrollY,rails=[...document.querySelectorAll(".rail")].map(x=>x.scrollLeft);$("app").innerHTML=storeShell();$("view").innerHTML=await P[p](+id);if(p==="shop")bindFilters();
   document.querySelectorAll(".rail").forEach((x,k)=>x.scrollLeft=rails[k]||0);scrollTo(0,y)}
 /* ---------- back office ---------- */
-const OFF_NAV=()=>[["dash","Dashboard",I.chart],["board","Orders",I.list],["hospitals","Hospitals",I.hosp],["payments","Bills and payments",I.rupee],["demand","Combined demand",I.tag]].concat(isM()?[["catalogue","Catalogue",I.grid],["users","Users",I.users],["company","Company",I.gear]]:[]);
+const OFF_NAV=()=>[["dash","Dashboard",I.chart],["access","Access and documents",I.shield],["board","Orders",I.list],["hospitals","Hospitals",I.hosp],["payments","Bills and payments",I.rupee],["demand","Combined demand",I.tag]].concat(isM()?[["catalogue","Catalogue",I.grid],["users","Users",I.users],["company","Company",I.gear]]:[]);
 async function renderOffice(r){
-  $("app").innerHTML=`<div class="office"><aside class="side"><a class="logo" href="#dash">${LOGO}<b>Cerebros</b></a>${OFF_NAV().map(([k,l,ic])=>`<a href="#${k}" class="${k===r?"on":""}">${ic}${l}${k==="board"&&S.newOrders?`<span class="badge">${S.newOrders}</span>`:""}</a>`).join("")}
+  $("app").innerHTML=`<div class="office"><aside class="side"><a class="logo" href="#dash">${LOGO}<b>Cerebros</b></a>${OFF_NAV().map(([k,l,ic])=>`<a href="#${k}" class="${k===r?"on":""}">${ic}${l}${k==="board"&&S.newOrders?`<span class="badge">${S.newOrders}</span>`:""}${k==="access"&&S.accessN?`<span class="badge">${S.accessN}</span>`:""}</a>`).join("")}
    <div class="sep"></div><a href="#home">${I.store}Open store</a><button id="pinbtn">${I.shield}Change PIN</button><button id="logout">${I.x}Log out</button><div class="me"><b>${esc(S.user.name)}</b>${isM()?"Cerebros manager":"Cerebros desk"}</div></aside>
    <main class="omain" id="view"><div class="empty">Loading…</div></main></div>`;
   $("view").innerHTML=await O[r]();
@@ -591,8 +658,9 @@ function colChart(rows){const W=900,H=240,pad=30,mx=Math.max(1,...rows.map(r=>+r
   ${rows.map((r,k)=>{const h=(+r.v/mx)*(H-70),x=pad+k*bw+3,y=H-30-h;return `<rect x="${x}" y="${y}" width="${bw-6}" height="${Math.max(h,0)}" rx="4" fill="${+r.v===mx&&mx>1?"#ea580c":"#1d4ed8"}"><title>${dstr(r.d)}: ${fmt(r.v)}</title></rect>${+r.v===mx&&mx>1?`<text x="${x+(bw-6)/2}" y="${y-8}" text-anchor="middle" font-size="16" font-weight="800" fill="#101828">${lakh(r.v)}</text>`:""}${k%5===0?`<text x="${x+(bw-6)/2}" y="${H-8}" text-anchor="middle" font-size="14" fill="#667085">${new Date(r.d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"})}</text>`:""}`}).join("")}</svg>`}
 const hbars=(rows,lab,val)=>{const mx=Math.max(1,...rows.map(r=>+r[val]));return rows.map(r=>`<div class="hbar"><span>${esc(r[lab])}</span><i style="width:${Math.max(2,+r[val]/mx*100)}%"></i><b>${lakh(r[val])}</b></div>`).join("")||`<p class="muted" style="margin:0">No orders in the last 30 days.</p>`};
 const O={
- async dash(){const [d,os]=await Promise.all([api("dashboard"),api("desk_orders")]);S.deskOrders=os;S.newOrders=d.new_orders;
-  return `<div class="ohead"><div><h1>Good ${new Date().getHours()<12?"morning":new Date().getHours()<17?"afternoon":"evening"}, ${esc(S.user.name.split(" ")[0])}</h1><p>${d.hospitals} hospitals · ${d.items} products live in the store</p></div><a class="btn" href="#home">${I.store.replace("<svg",'<svg width="18" height="18"')}Open store</a></div>
+ async dash(){const [d,os]=await Promise.all([api("dashboard"),api("desk_orders")]);S.deskOrders=os;S.newOrders=d.new_orders;S.accessN=d.access_waiting+d.docs_waiting;
+  return `<div class="ohead"><div><h1>Good ${new Date().getHours()<12?"morning":new Date().getHours()<17?"afternoon":"evening"}, ${esc(S.user.name.split(" ")[0])}</h1><p>${d.hospitals} approved hospitals · ${d.items} products live in the store</p></div><a class="btn" href="#home">${I.store.replace("<svg",'<svg width="18" height="18"')}Open store</a></div>
+  ${d.access_waiting+d.docs_waiting?`<a class="alert warn" href="#access" style="display:block;margin-bottom:16px;text-decoration:none"><b>${d.access_waiting} access requests and ${d.docs_waiting} documents</b> are waiting for you to check. Open Access and documents →</a>`:""}
   <div class="kpis">${kpi("New orders",d.new_orders,"waiting to be accepted","hot")}${kpi("In process",lakh(d.in_process),"accepted or out for delivery")}${kpi("Billed, last 30 days",lakh(d.sales_30d),"")}${kpi("To collect",lakh(d.to_collect),"all unpaid bills")}${kpi("Past pay-by date",lakh(d.overdue),"",+d.overdue>0?"badk":"")}</div>
   <div class="panel box"><h3>Billed per day, last 30 days</h3>${colChart(d.sales_by_day)}</div>
   <div class="split"><div class="panel box"><div style="display:flex;justify-content:space-between"><h3>Orders to act on</h3><a class="muted" href="#board">Open board →</a></div>${os.slice(0,6).map(o=>`<div class="oc2" style="box-shadow:none;border:1px solid var(--line)"><div class="r"><b>${o.order_no} · ${esc(o.hospital)}</b>${statusPill(o.status)}</div><small>${dstr(o.date)} · ${o.lines.length} items · <b class="num">${fmt(o.value)}</b>${o.delivery_slot?" · "+esc(o.delivery_slot):""}</small></div>`).join("")||`<p class="muted" style="margin:0">Nothing waiting.</p>`}</div>
@@ -602,13 +670,31 @@ const O={
   <div class="board">${[0,1,2].map(s=>{const l=os.filter(o=>o.status===s);return `<div class="col"><h3>${STATUS[s]}<span class="pill n">${l.length}</span></h3>${l.map(o=>{const blk=["hold","overdue","docs","inactive"].includes(o.credit.reason);return `<div class="oc2"><div class="r"><b>${o.order_no}</b><b class="num">${fmt(o.value)}</b></div><div><b>${esc(o.hospital)}</b></div>
      <small>${dstr(o.date)}${o.delivery_slot?" · "+esc(o.delivery_slot):""}${o.po_no?" · PO "+esc(o.po_no):""}</small><small>${o.lines.map(l=>esc(l.name)+" × "+(+l.qty)+(l.case_date?` (case ${dstr(l.case_date)}, ${esc(l.surgeon)})`:"")).join(", ")}</small>${o.notes?`<small>Note: ${esc(o.notes)}</small>`:""}
      ${blk?`<div class="alert bad" style="padding:8px 10px;font-size:12.5px">${esc(o.credit.why)}</div>`:""}<div class="r"><button class="btn red sm" data-cancel="${o.id}">Cancel</button><button class="btn sm" data-next="${o.id}" ${blk&&s===0?"disabled":""}>${next[s]}</button></div></div>`}).join("")||`<p class="muted" style="text-align:center">Empty</p>`}</div>`}).join("")}</div>`},
- async hospitals(){const hs=await api("hospitals");S.hospitals=hs;
-  return `<div class="ohead"><div><h1>Hospitals</h1><p>Credit limits and terms. Ordering stops by itself when a bill is 15 days late or the limit is crossed.</p></div>${isM()?`<button class="btn" data-hosp="new">Add hospital</button>`:""}</div>
-  <div class="panel tw"><table class="t"><thead><tr><th>Hospital</th><th class="n">Limit</th><th class="n">Unpaid</th><th class="n">In orders</th><th>Used</th><th class="n">Oldest late</th><th>Status</th><th></th></tr></thead><tbody>
-  ${hs.map(h=>{const c=h.credit,lab={hold:"On hold",overdue:"Bill late",docs:"Papers missing",limit:"Limit used up",inactive:"Closed"}[c.reason],pct=+h.credit_limit>0?Math.min(100,c.used/h.credit_limit*100):100;
-   return `<tr><td><b>${esc(h.name)}</b><br><small class="muted">${h.terms_days}-day terms${h.is_group?" · Health1 unit":""}</small></td><td class="n">${fmt(h.credit_limit)}</td><td class="n">${fmt(c.unpaid)}</td><td class="n">${fmt(c.open_orders)}</td>
-   <td style="min-width:120px"><div class="cbar"><i class="${c.state==="block"?"b":c.state==="warn"?"w":""}" style="width:${pct}%"></i></div></td><td class="n">${c.overdue_days>0?c.overdue_days+" days":"–"}</td>
-   <td><span class="pill ${c.state==="block"?"b":c.state==="warn"?"w":"g"}">${c.state==="block"?lab:c.state==="warn"?"Near limit":"Can order"}</span></td><td>${isM()?`<button class="btn plain sm" data-hosp="${h.id}">Edit</button>`:""}</td></tr>`}).join("")}</tbody></table></div>`},
+ async access(){const [q,types]=await Promise.all([api("access_queue"),docTypes()]);S.accessQ=q;S.accessN=q.hospitals.length+q.staff.length+q.docs.length;
+  const renew=q.docs.filter(d=>d.hospital_status!=="applied");
+  return `<div class="ohead"><div><h1>Access and documents</h1><p>Only hospitals you approve, and staff you approve, can log in and see prices. Medicines go only against checked, valid drug licences.</p></div></div>
+  <div class="sec"><h2>New hospitals <span class="pill n">${q.hospitals.length}</span></h2></div>
+  ${q.hospitals.map(h=>{const req=types.filter(t=>t.required).length,ok=req-h.docs.missing.length-h.docs.waiting.length;
+   return `<div class="panel box qcard"><div><b style="font-size:16px">${esc(h.name)}</b> <span class="muted">· ${esc(h.city||"")}${h.beds?" · "+h.beds+" beds":""}</span><br>
+    <small class="muted">Applied ${dstr(h.applied_at)} by ${esc(h.contact_name||"")} · ${esc(h.contact_mobile||"")}${h.gstin?" · GSTIN "+esc(h.gstin):""}</small><br>
+    <small>${h.docs.ok?`<span class="pill g">All required papers checked</span>`:`<span class="pill ${h.docs.waiting.length?"w":"b"}">${h.files} files uploaded · ${h.docs.waiting.length} to check · ${h.docs.missing.length} missing</span>`}</small></div>
+    <div class="acts"><button class="btn ${h.docs.ok?"plain":""} sm" data-hdocs="${h.id}">Check papers</button>${isM()?`<button class="btn sm" data-happrove="${h.id}" ${h.docs.ok?"":"disabled title='Check all required papers first'"}>Approve</button><button class="btn red sm" data-hreject="${h.id}">Reject</button>`:""}</div></div>`}).join("")||`<p class="muted">No hospital is waiting.</p>`}
+  <div class="sec"><h2>Staff waiting for access <span class="pill n">${q.staff.length}</span></h2></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Hospital</th><th>Added by</th><th>Date</th><th></th></tr></thead><tbody>${q.staff.map(u=>`<tr><td><b>${esc(u.name)}</b></td><td>${u.mobile}</td><td>${esc(u.hospital)}</td><td>${esc(u.requested_by||"")}</td><td>${dstr(u.created_at)}</td>
+   <td><div class="acts"><button class="btn sm" data-uok="${u.id}">Approve</button><button class="btn plain sm" data-uno="${u.id}">Reject</button></div></td></tr>`).join("")||`<tr><td colspan="6" class="muted">No staff waiting.</td></tr>`}</tbody></table></div>
+  <div class="sec"><h2>Renewals and new papers to check <span class="pill n">${renew.length}</span></h2></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Hospital</th><th>Document</th><th>Number</th><th>Valid till</th><th>File</th><th></th></tr></thead><tbody>${renew.map(d=>`<tr><td><b>${esc(d.hospital)}</b></td><td>${esc(d.label)}</td><td>${esc(d.doc_no||"–")}</td><td>${d.valid_till?dstr(d.valid_till):"–"}</td><td><a href="#" data-docview="${d.id}">${esc(d.file_name)}</a></td>
+   <td><div class="acts"><button class="btn sm" data-dockok="${d.id}">Accept</button><button class="btn plain sm" data-docrej="${d.id}">Reject</button></div></td></tr>`).join("")||`<tr><td colspan="6" class="muted">Nothing to check.</td></tr>`}</tbody></table></div>`},
+ async hospitals(){const hs=await api("hospitals");S.hospitals=hs;const SL={applied:["w","Applied"],approved:["g","Approved"],rejected:["b","Not approved"],suspended:["b","Access paused"]};
+  return `<div class="ohead"><div><h1>Hospitals</h1><p>Each hospital pays every bill within its credit period. Ordering stops by itself when a bill runs past its grace days, or a licence expires.</p></div>${isM()?`<button class="btn" data-hosp="new">Add hospital</button>`:""}</div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Hospital</th><th>Credit period</th><th class="n">Unpaid</th><th class="n">Past pay-by</th><th>Next payment</th><th>Papers</th><th class="n">Staff</th><th>Ordering</th><th></th></tr></thead><tbody>
+  ${hs.map(h=>{const c=h.credit,lab={hold:"On hold",overdue:"Bill late",docs:"Papers due",limit:"Over limit",inactive:SL[h.status][1]}[c.reason],s=SL[h.status]||SL.approved;
+   return `<tr><td><b>${esc(h.name)}</b><br><small class="muted">${esc(h.city||"")}${h.is_group?(h.city?" · ":"")+"Health1 unit":""}</small> ${h.status!=="approved"?`<span class="pill ${s[0]}">${s[1]}</span>`:""}</td>
+   <td><b>${h.terms_days} days</b><br><small class="muted">+${h.grace_days} days grace${h.credit_limit!=null?" · max "+lakh(h.credit_limit):""}</small></td><td class="n">${fmt(c.unpaid)}</td>
+   <td class="n">${+c.late_amount>0.5?`<b style="color:var(--bad,#dc2626)">${fmt(c.late_amount)}</b><br><small class="muted">${c.overdue_days} days</small>`:"–"}</td><td>${c.next_due?`${fmt(c.next_due_amount)}<br><small class="muted">by ${dstr(c.next_due)}</small>`:"–"}</td>
+   <td>${c.docs.ok?(c.docs.expiring.length?`<span class="pill w">Renewal due</span>`:`<span class="pill g">Valid</span>`):`<span class="pill b">${c.docs.missing.length} missing</span>`}${c.docs.waiting.length?` <span class="pill w">${c.docs.waiting.length} to check</span>`:""}</td><td class="n">${h.staff}</td>
+   <td><span class="pill ${c.state==="block"?"b":c.state==="warn"?"w":"g"}">${c.state==="block"?lab:c.state==="warn"?"Watch":"Can order"}</span></td>
+   <td><div class="acts"><button class="btn plain sm" data-hdocs="${h.id}">Papers</button>${isM()?`<button class="btn plain sm" data-hosp="${h.id}">Edit</button>`:""}</div></td></tr>`}).join("")}</tbody></table></div>`},
  async payments(){const [bs,ps,hs]=await Promise.all([api("bills"),api("payments"),api("hospitals")]);S.hospitals=hs;const owing=hs.filter(h=>+h.credit.unpaid>0.5);
   return `<div class="ohead"><div><h1>Bills and payments</h1><p>Payments settle the oldest bills first.</p></div></div>
   <div class="kpis">${kpi("To collect",fmt(hs.reduce((s,h)=>s+ +h.credit.unpaid,0)))}${kpi("Past pay-by date",fmt(bs.filter(b=>b.late_days>0).reduce((s,b)=>s+ +b.due,0)),"",bs.some(b=>b.late_days>0)?"badk":"")}${kpi("Bills",bs.length)}</div>
@@ -628,8 +714,8 @@ const O={
   <div class="panel tw"><table class="t"><thead><tr><th>Product</th><th>Pack</th><th class="n">MRP</th><th class="n">Rate</th><th class="n">Margin</th><th class="n">GST</th><th>Status</th><th></th></tr></thead><tbody>${l.map(i=>`<tr><td><div style="display:flex;gap:10px;align-items:center">${pic(Object.assign({},i,{subcategory:i.subcategory||"Other"}),"thumb")}<span><b>${esc(i.name)}</b><br><small class="muted">${esc(i.subcategory||i.category)}${i.brand?" · "+esc(i.brand):""}</small></span></div></td><td>${esc(i.pack)}</td><td class="n">${fmtR(i.mrp)}</td><td class="n">${fmtR(i.rate)}</td><td class="n">${i.purchase_rate?Math.round((1-i.purchase_rate/i.rate)*100)+"%":"–"}</td><td class="n">${+i.gst_rate}%</td>
    <td>${!i.active?`<span class="pill n">Hidden</span>`:!i.in_stock?`<span class="pill b">Out of stock</span>`:i.is_sample?`<span class="pill w">Sample</span>`:`<span class="pill g">Live</span>`}</td><td><button class="btn plain sm" data-item="${i.id}">Edit</button></td></tr>`).join("")}</tbody></table></div>`},
  async users(){const us=await api("users");S.users=us;if(!S.hospitals.length)S.hospitals=await api("hospitals");const RL={staff:"Hospital staff",owner:"Hospital owner",desk:"Cerebros desk",manager:"Cerebros manager"};
-  return `<div class="ohead"><div><h1>Users</h1><p>Everyone logs in with a mobile number and PIN.</p></div><button class="btn" data-user="new">Add user</button></div>
-  <div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Role</th><th>Hospital</th><th>Status</th><th></th></tr></thead><tbody>${us.map(u=>`<tr><td><b>${esc(u.name)}</b></td><td>${u.mobile}</td><td>${RL[u.role]}</td><td>${esc(u.hospital||"–")}</td><td>${u.active?`<span class="pill g">Active</span>`:`<span class="pill b">Removed</span>`}</td><td><button class="btn plain sm" data-user="${u.id}">Edit</button></td></tr>`).join("")}</tbody></table></div>`},
+  return `<div class="ohead"><div><h1>Users</h1><p>Everyone logs in with a mobile number and PIN. Staff added by a hospital owner wait for your approval.</p></div><button class="btn" data-user="new">Add user</button></div>
+  <div class="panel tw"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Role</th><th>Hospital</th><th>Access</th><th></th></tr></thead><tbody>${us.map(u=>`<tr><td><b>${esc(u.name)}</b></td><td>${u.mobile}</td><td>${RL[u.role]}</td><td>${esc(u.hospital||"–")}</td><td>${userPill(u)}</td><td><div class="acts">${u.status==="pending"&&u.active?`<button class="btn sm" data-uok="${u.id}">Approve</button>`:""}<button class="btn plain sm" data-user="${u.id}">Edit</button></div></td></tr>`).join("")}</tbody></table></div>`},
  async company(){const s=await api("settings_get");const f=(k,l)=>`<label class="f">${l}<input id="co-${k}" value="${esc(s["seller_"+k]||"")}"></label>`;
   return `<div class="ohead"><div><h1>Company</h1><p>These details print on every bill.</p></div></div><form class="panel box form" id="coform">${f("name","Company name")}${f("gstin","GSTIN")}${f("dl_no","Drug licence numbers")}${f("phone","Phone")}<label class="f wide">Address<input id="co-address" value="${esc(s.seller_address||"")}"></label><div class="wide"><button class="btn">Save</button></div></form>`}
 };
@@ -638,15 +724,32 @@ function openDlg(html){const d=$("dlg");d.innerHTML=html;if(!d.open)d.showModal(
 const closeDlg=()=>$("dlg").close();
 const fld=(id,l,v,extra)=>`<label class="f">${l}<input id="${id}" value="${esc(v??"")}" ${extra||""}></label>`;
 const dlgHead=t=>`<div style="display:flex;justify-content:space-between;align-items:center"><h2>${t}</h2><button type="button" class="x" data-close aria-label="Close">${I.x}</button></div>`;
-function hospDlg(h){h=h||{terms_days:30,credit_limit:0,active:true};
-  openDlg(`<form id="f-hosp">${dlgHead(h.id?"Edit hospital":"Add hospital")}<div class="form">${fld("h-name","Hospital name",h.name,"required")}${fld("h-beds","Beds",h.beds,'inputmode="numeric"')}
-  ${fld("h-gstin","GSTIN",h.gstin,'maxlength="15"')}${fld("h-dl","Drug licence number",h.dl_no)}${fld("h-dlx","Drug licence valid till",h.dl_expiry,'type="date"')}
-  ${fld("h-limit","Credit limit (₹)",+h.credit_limit,'inputmode="numeric" required')}<label class="f">Time to pay<select id="h-terms">${[30,45,60].map(n=>`<option ${+h.terms_days===n?"selected":""}>${n}</option>`).join("")}</select></label>
-  ${fld("h-sec","Security held (cheques, NACH, or 'Group unit')",h.security_note)}<label class="f wide">Delivery address<input id="h-addr" value="${esc(h.address||"")}"></label>
+function hospDlg(h){h=h||{terms_days:30,grace_days:15,credit_limit:null,active:true,status:"approved"};const T=[15,21,30,45,60,90];if(!T.includes(+h.terms_days))T.push(+h.terms_days);
+  openDlg(`<form id="f-hosp">${dlgHead(h.id?"Edit hospital":"Add hospital")}<div class="form">${fld("h-name","Hospital name",h.name,"required")}${fld("h-city","City",h.city)}${fld("h-beds","Beds",h.beds,'inputmode="numeric"')}${fld("h-gstin","GSTIN",h.gstin,'maxlength="15"')}
+  ${fld("h-cn","Contact person",h.contact_name)}${fld("h-cm","Contact mobile",h.contact_mobile,'inputmode="numeric" maxlength="10"')}
+  <label class="f">Credit period<select id="h-terms">${T.sort((a,b)=>a-b).map(n=>`<option value="${n}" ${+h.terms_days===n?"selected":""}>${n} days</option>`).join("")}</select></label>
+  <label class="f">Grace before ordering stops<select id="h-grace">${[0,3,7,15,30].concat([+h.grace_days].filter(x=>![0,3,7,15,30].includes(x))).map(n=>`<option value="${n}" ${+h.grace_days===n?"selected":""}>${n} days after pay-by date</option>`).join("")}</select></label>
+  ${fld("h-limit","Maximum outstanding, ₹ (optional)",h.credit_limit??"",'inputmode="numeric" placeholder="Leave empty for no cap"')}
+  <label class="f wide">Delivery address<input id="h-addr" value="${esc(h.address||"")}"></label>
   <label class="check"><input type="checkbox" id="h-group" ${h.is_group?"checked":""}>Health1 group unit</label><label class="check"><input type="checkbox" id="h-hold" ${h.on_hold?"checked":""}>Put on hold (stops ordering)</label>${h.id?`<label class="check"><input type="checkbox" id="h-active" ${h.active?"checked":""}>Account open</label>`:""}</div>
-  <div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
-  $("f-hosp").onsubmit=e=>{e.preventDefault();run(async()=>{await api("hospital_save",{id:h.id||"",name:$("h-name").value,beds:$("h-beds").value,gstin:$("h-gstin").value.trim(),dl_no:$("h-dl").value.trim(),dl_expiry:$("h-dlx").value,credit_limit:$("h-limit").value||0,terms_days:$("h-terms").value,security_note:$("h-sec").value.trim(),address:$("h-addr").value,is_group:$("h-group").checked,on_hold:$("h-hold").checked,active:h.id?$("h-active").checked:true});closeDlg();toast("Saved");S.hospitals=[];render()})};
+  <p class="muted" style="margin:0;font-size:13px">Drug licence and GST details are taken from the documents once you check them.</p>
+  <div class="acts">${h.id&&h.status==="approved"?`<button type="button" class="btn red" data-hsuspend="${h.id}" style="margin-right:auto">Pause access</button>`:""}${h.id&&h.status==="suspended"?`<button type="button" class="btn ghost" data-hreinstate="${h.id}" style="margin-right:auto">Give access back</button>`:""}<button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
+  $("f-hosp").onsubmit=e=>{e.preventDefault();run(async()=>{await api("hospital_save",{id:h.id||"",name:$("h-name").value,city:$("h-city").value,beds:$("h-beds").value,gstin:$("h-gstin").value.trim(),contact_name:$("h-cn").value,contact_mobile:$("h-cm").value.replace(/\D/g,""),
+    credit_limit:$("h-limit").value.replace(/[₹,\s]/g,""),terms_days:$("h-terms").value,grace_days:$("h-grace").value,address:$("h-addr").value,is_group:$("h-group").checked,on_hold:$("h-hold").checked,active:h.id?$("h-active").checked:true});closeDlg();toast("Saved");S.hospitals=[];render()})};
 }
+async function openHospDocs(hid){const [types,r]=await Promise.all([docTypes(),api("doc_list",{hospital_id:hid})]);S.docHid=hid;const h=(S.hospitals||[]).find(x=>x.id==hid)||(S.accessQ&&S.accessQ.hospitals.find(x=>x.id==hid))||{name:"Hospital"};
+  openDlg(`<div id="dlg-docs-host">${dlgHead("Papers · "+esc(h.name))}<p class="muted" style="margin:0">Open each file, check the name, number and date against the form, then accept or reject.</p>${docsHTML(r,types,{desk:true,canUpload:true})}
+   <div class="acts"><button type="button" class="btn plain" data-close>Close</button>${isM()&&h.status==="applied"?`<button class="btn" data-happrove="${hid}" ${r.state.ok?"":"disabled"}>Approve hospital</button>`:""}</div></div>`)}
+function decideDlg(kind,id){const cfg={hreject:["Reject this application","Reason (the hospital sees this)","Reject","reject"],hsuspend:["Pause access","Reason (optional)","Pause access","suspend"],docrej:["Reject document","What is wrong (the hospital sees this)","Reject",""],uno:["Reject staff login","","Reject",""]}[kind];
+  openDlg(`<form id="f-dec">${dlgHead(cfg[0])}${cfg[1]?`<label class="f">${cfg[1]}<textarea id="dec-note" rows="3" ${kind==="hsuspend"?"":"required"}></textarea></label>`:`<p>They will not be able to log in.</p>`}<div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn red">${cfg[2]}</button></div></form>`);
+  $("f-dec").onsubmit=e=>{e.preventDefault();run(async()=>{const note=$("dec-note")?$("dec-note").value:"";
+    if(kind==="docrej")await api("doc_check",{id,decision:"reject",note});else if(kind==="uno")await api("user_decide",{id,decision:"reject"});else await api("hospital_decide",{id,decision:cfg[3],note});
+    closeDlg();toast("Done");await afterDocs()})}}
+async function afterDocs(){if(S.fromDocs){S.fromDocs=false;await render();await openHospDocs(S.docHid)}else await render()}
+function approveDlg(id){const h=(S.accessQ&&S.accessQ.hospitals.find(x=>x.id==id))||{name:"this hospital"};
+  openDlg(`<form id="f-appr">${dlgHead("Approve "+esc(h.name))}<p style="margin:0">The owner can log in, see prices and order, and add staff for you to approve.</p><label class="f">Credit period<select id="ap-terms">${[15,21,30,45,60,90].map(n=>`<option value="${n}" ${n===30?"selected":""}>${n} days</option>`).join("")}</select></label>
+   <div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Approve</button></div></form>`);
+  $("f-appr").onsubmit=e=>{e.preventDefault();run(async()=>{await api("hospital_decide",{id,decision:"approve",terms_days:$("ap-terms").value});closeDlg();toast("Approved");S.hospitals=[];render()})}}
 function itemDlg(i){i=i||{category:CATS[0],gst_rate:5,active:true,in_stock:true,min_qty:1,pack:"piece"};const subs=[...new Set((S.allItems||[]).map(x=>x.subcategory).filter(Boolean))];
   openDlg(`<form id="f-item">${dlgHead(i.id?"Edit product":"Add product")}<div class="form">${fld("i-name","Product name",i.name,"required")}<label class="f">Category<select id="i-cat">${CATS.map((c,k)=>`<option value="${c}" ${i.category===c?"selected":""}>${CATN[k]}</option>`).join("")}</select></label>
   ${fld("i-sub","Sub-category",i.subcategory,'list="subl" placeholder="e.g. Antibiotics"')}<datalist id="subl">${subs.map(s=>`<option value="${esc(s)}">`).join("")}</datalist>${fld("i-pack","Sold per",i.pack,'required placeholder="vial, box of 100…"')}
@@ -671,7 +774,7 @@ function userDlg(u){u=u||{role:"staff",active:true};const RL=[["staff","Hospital
   ${fld("u-pin",u.id?"New PIN (leave empty to keep)":"PIN (4 to 6 digits)","",'inputmode="numeric" maxlength="6" '+(u.id?"":"required"))}
   ${isM()?`<label class="f">Role<select id="u-role">${RL.map(([k,l])=>`<option value="${k}" ${u.role===k?"selected":""}>${l}</option>`).join("")}</select></label><label class="f">Hospital<select id="u-hosp"><option value="">–</option>${S.hospitals.map(h=>`<option value="${h.id}" ${u.hospital_id===h.id?"selected":""}>${esc(h.name)}</option>`).join("")}</select></label>`:""}
   ${u.id?`<label class="check"><input type="checkbox" id="u-active" ${u.active?"checked":""}>Can log in</label>`:""}</div><div class="acts"><button type="button" class="btn plain" data-close>Cancel</button><button class="btn">Save</button></div></form>`);
-  $("f-user").onsubmit=e=>{e.preventDefault();run(async()=>{await api("user_save",{id:u.id||"",name:$("u-name").value,mobile:$("u-mobile").value.replace(/\D/g,"").slice(-10),pin:$("u-pin").value,role:isM()?$("u-role").value:"staff",hospital_id:isM()?$("u-hosp").value:"",active:u.id?$("u-active").checked:true});closeDlg();toast("Saved");render()})};
+  $("f-user").onsubmit=e=>{e.preventDefault();run(async()=>{const r=await api("user_save",{id:u.id||"",name:$("u-name").value,mobile:$("u-mobile").value.replace(/\D/g,"").slice(-10),pin:$("u-pin").value,role:isM()?$("u-role").value:"staff",hospital_id:isM()?$("u-hosp").value:"",active:u.id?$("u-active").checked:true});closeDlg();toast(r.pending?"Saved. They can log in once Cerebros approves.":"Saved");render()})};
 }
 function deliverDlg(o){
   openDlg(`<form id="f-del">${dlgHead("Deliver "+o.order_no)}<p style="margin:0" class="muted">${esc(o.hospital)}. Enter batch and expiry from the pack. Saving makes the bill.</p><div style="display:flex;flex-direction:column;gap:10px">${o.lines.map(l=>{const med=l.category===CATS[0];return `<div class="caseln">${pic(l)}<div><b>${esc(l.name)} × ${+l.qty}</b><div class="form"><label class="f">Batch${med?"":" (optional)"}<input data-b="${l.id}" ${med?"required":""}></label><label class="f">Expiry${med?"":" (optional)"}<input type="date" data-x="${l.id}" ${med?"required":""}></label></div></div></div>`}).join("")}</div>
@@ -695,14 +798,24 @@ function pinDlg(){
   $("f-pin").onsubmit=e=>{e.preventDefault();run(async()=>{await api("change_pin",{old:$("p-old").value,new:$("p-new").value});closeDlg();toast("PIN changed")})};
 }
 /* ---------- auth ---------- */
+function applyView(){
+  $("app").querySelector(".auth-b").innerHTML=`<form class="auth-card" id="applyform"><h2>Apply for access</h2><p class="muted" style="margin:0">For hospitals that want to buy from Cerebros. After you apply, upload your drug licences and registration. Prices open once Cerebros approves the hospital.</p>
+   <label class="f">Hospital name<input id="ap-h" required maxlength="120"></label><label class="f">City<input id="ap-city" required maxlength="60"></label>
+   <label class="f">Beds (optional)<input id="ap-beds" inputmode="numeric" maxlength="4"></label><label class="f">GSTIN (optional)<input id="ap-gst" maxlength="15" style="text-transform:uppercase"></label>
+   <label class="f">Your name (owner or director)<input id="ap-name" required maxlength="80"></label><label class="f">Your mobile number<input id="ap-mob" inputmode="numeric" maxlength="10" required autocomplete="username"></label>
+   <label class="f">Choose a PIN (4 to 6 digits)<input id="ap-pin" type="password" inputmode="numeric" maxlength="6" required autocomplete="new-password"></label>
+   <button class="btn lg block">Apply</button><small class="muted">Already have a login? <a href="#" id="tologin"><b>Log in</b></a></small></form>`;
+  $("applyform").onsubmit=e=>{e.preventDefault();run(async()=>{const r=await api("apply",{hospital:$("ap-h").value,city:$("ap-city").value,beds:$("ap-beds").value.replace(/\D/g,""),gstin:$("ap-gst").value.trim().toUpperCase(),name:$("ap-name").value,mobile:$("ap-mob").value.replace(/\D/g,"").slice(-10),pin:$("ap-pin").value});
+    S.token=r.token;store.set("cs_token",r.token);start(r.user)})}}
 function authView(setup){
   $("app").innerHTML=`<div class="auth"><div class="auth-a"><a class="logo" href="#">${LOGO}<b>Cerebros</b><span>Supply</span></a><div><h1>One store for every hospital supply</h1><p>Medicines, consumables and implants at group buying rates, on credit, delivered with batch and expiry on every bill.</p></div>
-   <ul><li><span>${I.tag}</span>Prices well below MRP, shown on every product</li><li><span>${I.card}</span>Order now, pay in 30 to 60 days</li><li><span>${I.truck}</span>Pick a delivery slot and track every order</li></ul></div>
+   <ul><li><span>${I.shield}</span>Only approved hospitals and their approved staff can see prices</li><li><span>${I.card}</span>Order now, pay within your credit period</li><li><span>${I.truck}</span>Pick a delivery slot and track every order</li></ul></div>
    <div class="auth-b"><form class="auth-card" id="authform"><h2>${setup?"Set up the first manager":"Log in"}</h2><p class="muted" style="margin:0">${setup?"Use the one-time setup code.":"Use the mobile number and PIN given to you."}</p>
     ${setup?`<label class="f">Setup code<input id="a-code" required autocomplete="off"></label><label class="f">Your name<input id="a-name" required></label>`:""}
     <label class="f">Mobile number<input id="a-mobile" inputmode="numeric" maxlength="14" required autocomplete="username" placeholder="10-digit mobile"></label>
     <label class="f">${setup?"Choose a PIN (4 to 6 digits)":"PIN"}<input id="a-pin" type="password" inputmode="numeric" maxlength="6" required autocomplete="${setup?"new-password":"current-password"}"></label>
-    <button class="btn lg block">${setup?"Create login":"Log in"}</button>${setup?"":`<small class="muted">Forgot your PIN? Ask your hospital owner or the Cerebros desk to reset it.</small>`}</form></div></div>`;
+    <button class="btn lg block">${setup?"Create login":"Log in"}</button>${setup?"":`<small class="muted">Forgot your PIN? Ask your hospital owner or the Cerebros desk to reset it.</small><div class="newh"><b>New hospital?</b><span>Apply for access. Cerebros checks your licences before prices open.</span><button type="button" class="btn ghost block" id="toapply">Apply for access</button></div>`}</form></div></div>`;
+  if(!setup)$("toapply").onclick=applyView;
   $("authform").onsubmit=e=>{e.preventDefault();run(async()=>{
     const d={mobile:$("a-mobile").value.replace(/\D/g,"").slice(-10),pin:$("a-pin").value};if(setup){d.code=$("a-code").value.trim().toUpperCase();d.name=$("a-name").value}
     const r=await api(setup?"setup":"login",d);S.token=r.token;store.set("cs_token",r.token);start(r.user)})};
@@ -719,8 +832,21 @@ document.addEventListener("click",e=>{
   const t=e.target.closest("button,a");
   if(!t){const m=$("mega");if(m&&!e.target.closest("#mega"))m.hidden=true;const sg=$("sugg");if(sg&&!e.target.closest(".search"))sg.hidden=true;return}
   const d=t.dataset;
-  if("close" in d){closeDlg();return}
+  if("close" in d){closeDlg();S.fromDocs=false;return}
+  if(t.id==="tologin"){e.preventDefault();boot();return}
   if(!S.user)return;
+  if(d.docview){e.preventDefault();run(()=>viewDoc(+d.docview));return}
+  if(d.docup){S.fromDocs=!!$("dlg-docs-host");run(async()=>{await docTypes();uploadDlg(d.docup,isH()||S.user.access==="applicant"?null:(S.fromDocs?S.docHid:S.forH))});return}
+  if(d.docdel){if(t.dataset.sure){const fd=!!$("dlg-docs-host");run(async()=>{await api("doc_delete",{id:+d.docdel});toast("Removed");S.fromDocs=fd;await afterDocs()})}else{t.dataset.sure=1;t.textContent="Tap again to remove"}return}
+  if(d.dockok){const fd=!!$("dlg-docs-host");run(async()=>{await api("doc_check",{id:+d.dockok,decision:"verify"});toast("Accepted");S.fromDocs=fd;await afterDocs()});return}
+  if(d.docrej){S.fromDocs=!!$("dlg-docs-host");decideDlg("docrej",+d.docrej);return}
+  if(d.hdocs){run(()=>openHospDocs(+d.hdocs));return}
+  if(d.happrove){approveDlg(+d.happrove);return}
+  if(d.hreject){decideDlg("hreject",+d.hreject);return}
+  if(d.hsuspend){decideDlg("hsuspend",+d.hsuspend);return}
+  if(d.hreinstate){run(async()=>{await api("hospital_decide",{id:+d.hreinstate,decision:"reinstate"});closeDlg();toast("Access given back");render()});return}
+  if(d.uok){run(async()=>{await api("user_decide",{id:+d.uok,decision:"approve"});toast("Approved. They can log in now.");render()});return}
+  if(d.uno){decideDlg("uno",+d.uno);return}
   if(t.id==="logout"){run(async()=>{try{await api("logout")}catch(x){}S.token=null;S.user=null;store.del("cs_token");location.hash="";boot()});return}
   if(t.id==="pinbtn"){pinDlg();return}
   if(t.id==="printbill"){window.print();return}
